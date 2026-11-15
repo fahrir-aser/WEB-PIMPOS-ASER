@@ -28,18 +28,13 @@
             background-size: cover;
             background-position: center;
         }
-        /* Animasi Berjalan Lembut dari Kanan ke Kiri */
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Sembunyikan scrollbar bawaan pada slider */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        .animate-marquee {
-            display: flex;
-            width: max-content;
-            animation: marquee 25s linear infinite;
-        }
-        .animate-marquee:hover {
-            animation-play-state: paused; /* Berhenti saat kursor diarahkan ke atasnya */
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -140,17 +135,36 @@
         </div>
     </section>
 
-    <!-- KARTU DOKUMENTASI KEGIATAN MADRASAH -->
-    <section class="py-20 bg-white">
+    <!-- KARTU DOKUMENTASI KEGIATAN MADRASAH (5 KOLOM BERJEJER + TOMBOL PANAH + PAUSE ON HOVER) -->
+    <section class="py-20 bg-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
                 <h2 class="text-3xl font-bold text-slate-900 mb-2">Dokumentasi Kegiatan Madrasah</h2>
                 <p class="text-slate-600 max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
             </div>
-            <div id="dokumentasi-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="col-span-full text-center py-10 text-slate-400">
-                    <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat dokumentasi kegiatan...
+
+            <!-- Container Slider dengan Tombol Navigasi Kiri & Kanan -->
+            <div class="relative group">
+                <!-- Tombol Panah Kiri -->
+                <button onclick="scrollDokumentasi('left')" class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 lg:-ml-6 z-20 bg-white/90 hover:bg-primary hover:text-white text-slate-800 w-12 h-12 rounded-full shadow-lg border border-slate-200 flex items-center justify-center transition duration-300 focus:outline-none">
+                    <i class="fa-solid fa-chevron-left text-lg"></i>
+                </button>
+
+                <!-- Wadah List Berjejer ke Samping (5 Kolom) -->
+                <div id="dokumentasi-container" 
+                     class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth px-2 py-4"
+                     onmouseenter="stopAutoScroll()" 
+                     onmouseleave="startAutoScroll()">
+                    <!-- Data dimuat otomatis oleh JavaScript -->
+                    <div class="w-full text-center py-10 text-slate-400">
+                        <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat dokumentasi kegiatan...
+                    </div>
                 </div>
+
+                <!-- Tombol Panah Kanan -->
+                <button onclick="scrollDokumentasi('right')" class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 lg:-mr-6 z-20 bg-white/90 hover:bg-primary hover:text-white text-slate-800 w-12 h-12 rounded-full shadow-lg border border-slate-200 flex items-center justify-center transition duration-300 focus:outline-none">
+                    <i class="fa-solid fa-chevron-right text-lg"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -170,7 +184,7 @@
         </div>
     </section>
 
-    <!-- WIDGET JADWAL SHOLAT BERJALAN LEMBUT (MENTOK KIRI KANAN) -->
+    <!-- WIDGET JADWAL SHOLAT BERJALAN LEMBUT -->
     <section class="w-full bg-[#dceee0] py-10 border-y border-emerald-200 overflow-hidden shadow-inner relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
@@ -185,11 +199,8 @@
             </div>
         </div>
 
-        <!-- Wadah Animasi Berjalan dari Kanan ke Kiri -->
         <div class="w-full overflow-hidden">
-            <div id="marquee-container" class="animate-marquee flex gap-4 px-4">
-                <!-- Data Sholat Dimuat Dinamis -->
-            </div>
+            <div id="marquee-container" class="animate-marquee flex gap-4 px-4"></div>
         </div>
     </section>
 
@@ -325,10 +336,12 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT KONEKSI & JADWAL SHOLAT BERJALAN -->
+    <!-- JAVASCRIPT SLIDER & JADWAL SHOLAT -->
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
         const ADMIN_TOKEN = "admin123";
+
+        let autoScrollInterval = null;
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -385,14 +398,46 @@
             fetchJadwalSholat();
         });
 
-        // Fungsi Ambil Jadwal Sholat Aktif dengan Cadangan Fallback
+        // Kontrol Slider Dokumentasi Berjalan Otomatis & Tombol Panah
+        function scrollDokumentasi(direction) {
+            const container = document.getElementById('dokumentasi-container');
+            const scrollAmount = 300; // Lebar geser
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        function startAutoScroll() {
+            const container = document.getElementById('dokumentasi-container');
+            if (!autoScrollInterval) {
+                autoScrollInterval = setInterval(() => {
+                    if (container) {
+                        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                            container.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            container.scrollBy({ left: 250, behavior: 'smooth' });
+                        }
+                    }
+                }, 3000); // Bergeser setiap 3 detik
+            }
+        }
+
+        function stopAutoScroll() {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        }
+
+        // Ambil Jadwal Sholat Bantaeng
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
-
-            const cityId = '1303'; // ID Kab. Bantaeng
+            const cityId = '1303'; // Kab. Bantaeng
             const url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${year}/${month}/${day}`;
 
             fetch(url)
@@ -415,29 +460,20 @@
                         useFallbackSchedule();
                     }
                 })
-                .catch(err => {
-                    console.warn('API eksternal diblokir/gagal, menggunakan jadwal cadangan.');
-                    useFallbackSchedule();
-                });
+                .catch(err => { useFallbackSchedule(); });
         }
 
-        // Jadwal Cadangan Agar Tidak Pernah Kosong (--:--)
         function useFallbackSchedule() {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('sholat-tanggal').innerText = new Date().toLocaleDateString('id-ID', options);
             renderMarquee([
-                {title: 'Imsak', time: '04:12'},
-                {title: 'Subuh', time: '04:22'},
-                {title: 'Terbit', time: '05:36'},
-                {title: 'Dhuha', time: '06:06'},
-                {title: 'Dzuhur', time: '11:55'},
-                {title: 'Ashar', time: '15:16'},
-                {title: 'Maghrib', time: '18:05'},
-                {title: 'Isya', time: '19:18'}
+                {title: 'Imsak', time: '04:12'}, {title: 'Subuh', time: '04:22'},
+                {title: 'Terbit', time: '05:36'}, {title: 'Dhuha', time: '06:06'},
+                {title: 'Dzuhur', time: '11:55'}, {title: 'Ashar', time: '15:16'},
+                {title: 'Maghrib', time: '18:05'}, {title: 'Isya', time: '19:18'}
             ]);
         }
 
-        // Render Kartu Berjalan (Marquee duplikat 2x agar animasi mulus tanpa jeda)
         function renderMarquee(list) {
             const container = document.getElementById('marquee-container');
             const htmlCards = list.map(item => `
@@ -446,8 +482,6 @@
                     <span class="block text-xl font-extrabold text-emerald-950 mt-1">${item.time}</span>
                 </div>
             `).join('');
-
-            // Duplikat konten dua kali agar putaran animasi berjalan mulus tanpa putus
             container.innerHTML = htmlCards + htmlCards;
         }
 
@@ -473,20 +507,23 @@
         function renderDokumentasi(items) {
             const container = document.getElementById('dokumentasi-container');
             if(!items || items.length === 0) {
-                container.innerHTML = '<div class="col-span-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
+                container.innerHTML = '<div class="w-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
                 return;
             }
             container.innerHTML = items.map(item => `
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
+                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 flex-shrink-0 w-72 group">
                     <div class="h-48 overflow-hidden relative">
                         <img src="${item.URL_Foto}" alt="${item.Judul}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-5">
                         <span class="text-xs text-primary font-semibold">${item.Tanggal}</span>
-                        <h3 class="font-bold text-slate-900 mt-1 text-base">${item.Judul}</h3>
+                        <h3 class="font-bold text-slate-900 mt-1 text-base line-clamp-1">${item.Judul}</h3>
                     </div>
                 </div>
             `).join('');
+            
+            // Mulai animasi berjalan otomatis setelah data dimuat
+            startAutoScroll();
         }
 
         function renderBerita(items) {
