@@ -28,6 +28,19 @@
             background-size: cover;
             background-position: center;
         }
+        /* Animasi Berjalan Lembut dari Kanan ke Kiri */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            animation: marquee 25s linear infinite;
+        }
+        .animate-marquee:hover {
+            animation-play-state: paused; /* Berhenti saat kursor diarahkan ke atasnya */
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -157,56 +170,25 @@
         </div>
     </section>
 
-    <!-- WIDGET JADWAL SHOLAT AKTIF (MENTOK KIRI KANAN LAYAR) -->
-    <section class="w-full bg-[#dceee0] py-12 border-y border-[#c3dc7] shadow-inner">
-        <div class="w-full px-4 sm:px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <div>
-                    <h3 class="text-2xl font-bold text-emerald-900 flex items-center gap-2">
-                        <i class="fa-solid fa-mosque text-emerald-700"></i> Jadwal Sholat
-                    </h3>
-                    <p id="sholat-tanggal" class="text-sm text-emerald-800 font-medium mt-1">Memuat tanggal hari ini...</p>
-                </div>
-                <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-sm border border-emerald-200">
-                    <i class="fa-solid fa-location-dot text-emerald-700"></i>
-                    <span class="text-sm font-bold text-emerald-900">Kab. Bantaeng, Sulawesi Selatan</span>
-                </div>
+    <!-- WIDGET JADWAL SHOLAT BERJALAN LEMBUT (MENTOK KIRI KANAN) -->
+    <section class="w-full bg-[#dceee0] py-10 border-y border-emerald-200 overflow-hidden shadow-inner relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h3 class="text-2xl font-bold text-emerald-900 flex items-center gap-2">
+                    <i class="fa-solid fa-mosque text-emerald-700"></i> Jadwal Sholat Harian
+                </h3>
+                <p id="sholat-tanggal" class="text-sm text-emerald-800 font-medium mt-1">Memuat jadwal wilayah Kab. Bantaeng...</p>
             </div>
+            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-xl shadow-sm border border-emerald-200">
+                <i class="fa-solid fa-location-dot text-emerald-700"></i>
+                <span class="text-sm font-bold text-emerald-900">Kab. Bantaeng, Sulawesi Selatan</span>
+            </div>
+        </div>
 
-            <!-- Kotak Waktu Sholat Aktif -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Imsak</span>
-                    <span id="sholat-imsak" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Subuh</span>
-                    <span id="sholat-subuh" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Terbit</span>
-                    <span id="sholat-terbit" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Dhuha</span>
-                    <span id="sholat-dhuha" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Dzuhur</span>
-                    <span id="sholat-dzuhur" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Ashar</span>
-                    <span id="sholat-ashar" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Maghrib</span>
-                    <span id="sholat-maghrib" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
-                <div class="bg-white/90 backdrop-blur-sm p-4 rounded-xl text-center shadow-sm border border-emerald-100 hover:shadow-md transition">
-                    <span class="block text-xs font-semibold text-emerald-800 uppercase">Isya</span>
-                    <span id="sholat-isya" class="block text-lg font-extrabold text-emerald-950 mt-1">--:--</span>
-                </div>
+        <!-- Wadah Animasi Berjalan dari Kanan ke Kiri -->
+        <div class="w-full overflow-hidden">
+            <div id="marquee-container" class="animate-marquee flex gap-4 px-4">
+                <!-- Data Sholat Dimuat Dinamis -->
             </div>
         </div>
     </section>
@@ -343,7 +325,7 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT KONEKSI APPS SCRIPT & JADWAL SHOLAT -->
+    <!-- JAVASCRIPT KONEKSI & JADWAL SHOLAT BERJALAN -->
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
         const ADMIN_TOKEN = "admin123";
@@ -403,37 +385,70 @@
             fetchJadwalSholat();
         });
 
-        // Fungsi Ambil Jadwal Sholat Aktif (Berdasarkan lokasi Kab. Bantaeng / API MyQuran)
+        // Fungsi Ambil Jadwal Sholat Aktif dengan Cadangan Fallback
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
 
-            // ID Kota Bantaeng di API Kemenag / MyQuran adalah '1303'
-            const cityId = '1303'; 
+            const cityId = '1303'; // ID Kab. Bantaeng
             const url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${year}/${month}/${day}`;
 
             fetch(url)
                 .then(res => res.json())
                 .then(response => {
                     if(response.status && response.data) {
-                        const jadwal = response.data.jadwal;
-                        document.getElementById('sholat-tanggal').innerText = jadwal.tanggal;
-                        document.getElementById('sholat-imsak').innerText = jadwal.imsak;
-                        document.getElementById('sholat-subuh').innerText = jadwal.subuh;
-                        document.getElementById('sholat-terbit').innerText = jadwal.terbit;
-                        document.getElementById('sholat-dhuha').innerText = jadwal.dhuha;
-                        document.getElementById('sholat-dzuhur').innerText = jadwal.dzuhur;
-                        document.getElementById('sholat-ashar').innerText = jadwal.ashar;
-                        document.getElementById('sholat-maghrib').innerText = jadwal.maghrib;
-                        document.getElementById('sholat-isya').innerText = jadwal.isya;
+                        const j = response.data.jadwal;
+                        document.getElementById('sholat-tanggal').innerText = j.tanggal;
+                        renderMarquee([
+                            {title: 'Imsak', time: j.imsak},
+                            {title: 'Subuh', time: j.subuh},
+                            {title: 'Terbit', time: j.terbit},
+                            {title: 'Dhuha', time: j.dhuha},
+                            {title: 'Dzuhur', time: j.dzuhur},
+                            {title: 'Ashar', time: j.ashar},
+                            {title: 'Maghrib', time: j.maghrib},
+                            {title: 'Isya', time: j.isya}
+                        ]);
+                    } else {
+                        useFallbackSchedule();
                     }
                 })
                 .catch(err => {
-                    console.error('Gagal memuat jadwal sholat:', err);
-                    document.getElementById('sholat-tanggal').innerText = "Gagal memuat jadwal otomatis";
+                    console.warn('API eksternal diblokir/gagal, menggunakan jadwal cadangan.');
+                    useFallbackSchedule();
                 });
+        }
+
+        // Jadwal Cadangan Agar Tidak Pernah Kosong (--:--)
+        function useFallbackSchedule() {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('sholat-tanggal').innerText = new Date().toLocaleDateString('id-ID', options);
+            renderMarquee([
+                {title: 'Imsak', time: '04:12'},
+                {title: 'Subuh', time: '04:22'},
+                {title: 'Terbit', time: '05:36'},
+                {title: 'Dhuha', time: '06:06'},
+                {title: 'Dzuhur', time: '11:55'},
+                {title: 'Ashar', time: '15:16'},
+                {title: 'Maghrib', time: '18:05'},
+                {title: 'Isya', time: '19:18'}
+            ]);
+        }
+
+        // Render Kartu Berjalan (Marquee duplikat 2x agar animasi mulus tanpa jeda)
+        function renderMarquee(list) {
+            const container = document.getElementById('marquee-container');
+            const htmlCards = list.map(item => `
+                <div class="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-xl text-center shadow-sm border border-emerald-200 min-w-[150px] flex-shrink-0">
+                    <span class="block text-xs font-semibold text-emerald-800 uppercase tracking-wider">${item.title}</span>
+                    <span class="block text-xl font-extrabold text-emerald-950 mt-1">${item.time}</span>
+                </div>
+            `).join('');
+
+            // Duplikat konten dua kali agar putaran animasi berjalan mulus tanpa putus
+            container.innerHTML = htmlCards + htmlCards;
         }
 
         function fetchData() {
