@@ -28,13 +28,18 @@
             background-size: cover;
             background-position: center;
         }
-        /* Sembunyikan scrollbar bawaan pada slider */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
+        /* Animasi Berjalan Halus Kanan ke Kiri */
+        @keyframes scrollDok {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .animate-dok-scroll {
+            display: flex;
+            width: max-content;
+            animation: scrollDok 30s linear infinite;
+        }
+        .animate-dok-scroll:hover {
+            animation-play-state: paused; /* Berhenti saat kursor diarahkan ke foto */
         }
     </style>
 </head>
@@ -135,36 +140,20 @@
         </div>
     </section>
 
-    <!-- KARTU DOKUMENTASI KEGIATAN MADRASAH (5 KOLOM BERJEJER + TOMBOL PANAH + PAUSE ON HOVER) -->
+    <!-- DOKUMENTASI KEGIATAN MADRASAH (LEBAR PENUH KIRI-KANAN & BERJALAN HALUS) -->
     <section class="py-20 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900 mb-2">Dokumentasi Kegiatan Madrasah</h2>
-                <p class="text-slate-600 max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
-            </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Dokumentasi Kegiatan Madrasah</h2>
+            <p class="text-slate-600 max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
+        </div>
 
-            <!-- Container Slider dengan Tombol Navigasi Kiri & Kanan -->
-            <div class="relative group">
-                <!-- Tombol Panah Kiri -->
-                <button onclick="scrollDokumentasi('left')" class="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 lg:-ml-6 z-20 bg-white/90 hover:bg-primary hover:text-white text-slate-800 w-12 h-12 rounded-full shadow-lg border border-slate-200 flex items-center justify-center transition duration-300 focus:outline-none">
-                    <i class="fa-solid fa-chevron-left text-lg"></i>
-                </button>
-
-                <!-- Wadah List Berjejer ke Samping (5 Kolom) -->
-                <div id="dokumentasi-container" 
-                     class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth px-2 py-4"
-                     onmouseenter="stopAutoScroll()" 
-                     onmouseleave="startAutoScroll()">
-                    <!-- Data dimuat otomatis oleh JavaScript -->
-                    <div class="w-full text-center py-10 text-slate-400">
-                        <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat dokumentasi kegiatan...
-                    </div>
+        <!-- Wadah Lebar Penuh (Full Width Container) -->
+        <div class="w-full overflow-hidden relative py-4">
+            <div id="dokumentasi-container" class="animate-dok-scroll flex gap-6 px-3">
+                <!-- Kartu dokumentasi dimuat dan diduplikasi otomatis agar berjalan halus -->
+                <div class="text-center py-10 text-slate-400 w-full">
+                    <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat dokumentasi kegiatan...
                 </div>
-
-                <!-- Tombol Panah Kanan -->
-                <button onclick="scrollDokumentasi('right')" class="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 lg:-mr-6 z-20 bg-white/90 hover:bg-primary hover:text-white text-slate-800 w-12 h-12 rounded-full shadow-lg border border-slate-200 flex items-center justify-center transition duration-300 focus:outline-none">
-                    <i class="fa-solid fa-chevron-right text-lg"></i>
-                </button>
             </div>
         </div>
     </section>
@@ -200,7 +189,7 @@
         </div>
 
         <div class="w-full overflow-hidden">
-            <div id="marquee-container" class="animate-marquee flex gap-4 px-4"></div>
+            <div id="marquee-container" class="animate-dok-scroll flex gap-4 px-4"></div>
         </div>
     </section>
 
@@ -336,12 +325,10 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT SLIDER & JADWAL SHOLAT -->
+    <!-- JAVASCRIPT ANIMASI & JADWAL SHOLAT -->
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
         const ADMIN_TOKEN = "admin123";
-
-        let autoScrollInterval = null;
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -398,40 +385,6 @@
             fetchJadwalSholat();
         });
 
-        // Kontrol Slider Dokumentasi Berjalan Otomatis & Tombol Panah
-        function scrollDokumentasi(direction) {
-            const container = document.getElementById('dokumentasi-container');
-            const scrollAmount = 300; // Lebar geser
-            if (direction === 'left') {
-                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-            } else {
-                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-            }
-        }
-
-        function startAutoScroll() {
-            const container = document.getElementById('dokumentasi-container');
-            if (!autoScrollInterval) {
-                autoScrollInterval = setInterval(() => {
-                    if (container) {
-                        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
-                            container.scrollTo({ left: 0, behavior: 'smooth' });
-                        } else {
-                            container.scrollBy({ left: 250, behavior: 'smooth' });
-                        }
-                    }
-                }, 3000); // Bergeser setiap 3 detik
-            }
-        }
-
-        function stopAutoScroll() {
-            if (autoScrollInterval) {
-                clearInterval(autoScrollInterval);
-                autoScrollInterval = null;
-            }
-        }
-
-        // Ambil Jadwal Sholat Bantaeng
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
@@ -447,14 +400,10 @@
                         const j = response.data.jadwal;
                         document.getElementById('sholat-tanggal').innerText = j.tanggal;
                         renderMarquee([
-                            {title: 'Imsak', time: j.imsak},
-                            {title: 'Subuh', time: j.subuh},
-                            {title: 'Terbit', time: j.terbit},
-                            {title: 'Dhuha', time: j.dhuha},
-                            {title: 'Dzuhur', time: j.dzuhur},
-                            {title: 'Ashar', time: j.ashar},
-                            {title: 'Maghrib', time: j.maghrib},
-                            {title: 'Isya', time: j.isya}
+                            {title: 'Imsak', time: j.imsak}, {title: 'Subuh', time: j.subuh},
+                            {title: 'Terbit', time: j.terbit}, {title: 'Dhuha', time: j.dhuha},
+                            {title: 'Dzuhur', time: j.dzuhur}, {title: 'Ashar', time: j.ashar},
+                            {title: 'Maghrib', time: j.maghrib}, {title: 'Isya', time: j.isya}
                         ]);
                     } else {
                         useFallbackSchedule();
@@ -510,7 +459,7 @@
                 container.innerHTML = '<div class="w-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
                 return;
             }
-            container.innerHTML = items.map(item => `
+            const htmlCards = items.map(item => `
                 <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 flex-shrink-0 w-72 group">
                     <div class="h-48 overflow-hidden relative">
                         <img src="${item.URL_Foto}" alt="${item.Judul}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
@@ -522,8 +471,8 @@
                 </div>
             `).join('');
             
-            // Mulai animasi berjalan otomatis setelah data dimuat
-            startAutoScroll();
+            // Duplikat 2x agar animasi berjalan halus tanpa putus (infinite loop)
+            container.innerHTML = htmlCards + htmlCards;
         }
 
         function renderBerita(items) {
