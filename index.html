@@ -157,7 +157,7 @@
         </div>
     </section>
 
-    <!-- SECTION BERITA TERKINI & TERPOPULER (MODEL REFERENSI) -->
+    <!-- SECTION BERITA TERKINI & TERPOPULER -->
     <section class="py-20 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -168,8 +168,6 @@
                         <h2 class="text-2xl font-bold text-slate-900 uppercase tracking-wide">Terkini</h2>
                         <a href="#berita-lainnya" class="text-xs font-semibold text-slate-600 hover:text-brandGreen transition">Lainnya →</a>
                     </div>
-
-                    <!-- Grid 2 Berita Besar -->
                     <div id="berita-terkini-container" class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="col-span-full text-center py-10 text-slate-400">
                             <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat berita terkini...
@@ -177,15 +175,12 @@
                     </div>
                 </div>
 
-                <!-- SISI KANAN: TERPOPULER (4 BERITA BERJEJER KE BAWAH DENGAN NOMOR) -->
+                <!-- SISI KANAN: TERPOPULER -->
                 <div class="lg:col-span-4">
                     <div class="mb-8 border-b-2 border-brandGreen pb-3">
                         <h2 class="text-2xl font-bold text-slate-900 uppercase tracking-wide">Terpopuler</h2>
                     </div>
-
-                    <!-- List Berita Terpopuler -->
                     <div id="berita-terpopuler-container" class="space-y-6">
-                        <!-- Dimuat otomatis -->
                         <div class="text-center py-6 text-slate-400 text-sm">Memuat berita terpopuler...</div>
                     </div>
                 </div>
@@ -194,18 +189,28 @@
         </div>
     </section>
 
-    <!-- MODAL DETAIL BACA BERITA -->
-    <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
-            <button onclick="closeNewsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+    <!-- MODAL DETAIL BACA BERITA (DIPERBAIKI: FOTO UTUH & TOMBOL KELUAR JELAS) -->
+    <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] p-6 sm:p-8 shadow-2xl relative flex flex-col">
+            <!-- Tombol Keluar (X) Melayang di Pojok Kanan Atas -->
+            <button onclick="closeNewsModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-10 h-10 rounded-full flex items-center justify-center transition z-20 shadow-sm focus:outline-none">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <span id="modal-news-date" class="text-xs text-brandGreen font-semibold block mb-1"></span>
-            <h3 id="modal-news-title" class="text-2xl font-bold text-slate-900 mb-4"></h3>
-            <div class="h-64 rounded-xl overflow-hidden mb-6 shadow-md">
-                <img id="modal-news-img" src="" alt="Foto Berita" class="w-full h-full object-cover">
+
+            <!-- Bagian Konten yang Bisa di-Scroll ke Bawah -->
+            <div class="overflow-y-auto pr-2 space-y-4">
+                <div>
+                    <span id="modal-news-date" class="text-xs text-brandGreen font-semibold block mb-1"></span>
+                    <h3 id="modal-news-title" class="text-2xl font-bold text-slate-900 pr-10"></h3>
+                </div>
+                
+                <!-- Foto Tampil Utuh Menyesuaikan Aslinya (Tanpa Terpotong) -->
+                <div class="w-full rounded-xl overflow-hidden bg-slate-100 shadow-md">
+                    <img id="modal-news-img" src="" alt="Foto Berita" class="w-full h-auto object-contain max-h-[450px] mx-auto">
+                </div>
+                
+                <div id="modal-news-content" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line pt-2"></div>
             </div>
-            <div id="modal-news-content" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line"></div>
         </div>
     </div>
 
@@ -510,7 +515,6 @@
             container.innerHTML = htmlCards + htmlCards;
         }
 
-        // FUNGSI RENDER BERITA: 2 KARTU DI KIRI (TERKINI) & 4 KE BAWAH DI KANAN (TERPOPULER)
         function renderBeritaLayout(items) {
             const terkiniContainer = document.getElementById('berita-terkini-container');
             const terpopulerContainer = document.getElementById('berita-terpopuler-container');
@@ -537,7 +541,7 @@
                 </div>
             `).join('');
 
-            // 4 Berita Terpopuler Berjejer ke Bawah dengan Nomor Besar (Kanan)
+            // 4 Berita Terpopuler Berjejer ke Bawah (Kanan)
             const terpopulerList = items.slice(2, 6);
             if(terpopulerList.length === 0) {
                 terpopulerContainer.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Belum ada berita terpopuler tambahan.</div>';
@@ -556,7 +560,7 @@
             `).join('');
         }
 
-        // Buka Modal Detail Berita Saat Diklik
+        // Buka Modal Detail Berita
         function openNewsDetail(item) {
             document.getElementById('modal-news-title').innerText = item.Judul;
             document.getElementById('modal-news-date').innerText = item.Tanggal;
@@ -565,6 +569,7 @@
             document.getElementById('news-modal').classList.remove('hidden');
         }
 
+        // Tutup Modal Detail Berita & Kembali ke Halaman Web
         function closeNewsModal() {
             document.getElementById('news-modal').classList.add('hidden');
         }
