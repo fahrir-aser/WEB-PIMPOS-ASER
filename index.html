@@ -157,6 +157,22 @@
         </div>
     </section>
 
+    <!-- TEKS STATISTIK BERJALAN DI ATAS BERITA -->
+    <section class="w-full bg-white border-y border-slate-200 shadow-sm overflow-hidden py-3">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center">
+            <!-- Label Hijau Tua Kiri -->
+            <div class="bg-brandGreen text-white text-xs font-bold px-4 py-2 rounded-lg uppercase tracking-wider flex-shrink-0 z-10 shadow-sm mr-4 flex items-center gap-2">
+                <i class="fa-solid fa-chart-line"></i> <span>STATISTIK & INFO</span>
+            </div>
+            <!-- Wadah Teks Berjalan -->
+            <div class="w-full overflow-hidden relative">
+                <div id="statistik-ticker" class="animate-dok-scroll flex items-center gap-8 text-sm font-semibold text-slate-700">
+                    <span class="text-slate-400">Memuat informasi statistik santri...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION BERITA TERKINI & TERPOPULER -->
     <section class="py-20 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -189,26 +205,20 @@
         </div>
     </section>
 
-    <!-- MODAL DETAIL BACA BERITA (DIPERBAIKI: FOTO UTUH & TOMBOL KELUAR JELAS) -->
+    <!-- MODAL DETAIL BACA BERITA -->
     <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] p-6 sm:p-8 shadow-2xl relative flex flex-col">
-            <!-- Tombol Keluar (X) Melayang di Pojok Kanan Atas -->
             <button onclick="closeNewsModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-10 h-10 rounded-full flex items-center justify-center transition z-20 shadow-sm focus:outline-none">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-
-            <!-- Bagian Konten yang Bisa di-Scroll ke Bawah -->
             <div class="overflow-y-auto pr-2 space-y-4">
                 <div>
                     <span id="modal-news-date" class="text-xs text-brandGreen font-semibold block mb-1"></span>
                     <h3 id="modal-news-title" class="text-2xl font-bold text-slate-900 pr-10"></h3>
                 </div>
-                
-                <!-- Foto Tampil Utuh Menyesuaikan Aslinya (Tanpa Terpotong) -->
                 <div class="w-full rounded-xl overflow-hidden bg-slate-100 shadow-md">
                     <img id="modal-news-img" src="" alt="Foto Berita" class="w-full h-auto object-contain max-h-[450px] mx-auto">
                 </div>
-                
                 <div id="modal-news-content" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line pt-2"></div>
             </div>
         </div>
@@ -281,7 +291,7 @@
         </div>
     </div>
 
-    <!-- MODAL DASHBOARD ADMIN -->
+    <!-- MODAL DASHBOARD ADMIN (DITAMBAH TAB: INFO BERJALAN) -->
     <div id="admin-dashboard-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
             <button onclick="closeAdminDashboard()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
@@ -298,9 +308,10 @@
             </div>
 
             <!-- Tab Navigation Admin -->
-            <div class="flex space-x-2 mb-6 border-b border-slate-100 pb-3">
+            <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-100 pb-3">
                 <button onclick="switchTab('dok')" id="tab-btn-dok" class="px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-white transition">Upload Dokumentasi</button>
                 <button onclick="switchTab('berita')" id="tab-btn-berita" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition">Upload Berita</button>
+                <button onclick="switchTab('stat')" id="tab-btn-stat" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition">Info Berjalan</button>
                 <button onclick="switchTab('banner')" id="tab-btn-banner" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition">Ganti Banner</button>
             </div>
 
@@ -344,7 +355,22 @@
                 </form>
             </div>
 
-            <!-- Form Tab 3: Ganti Banner Utama -->
+            <!-- Form Tab 3: Tambah Info / Jumlah Siswa Berjalan -->
+            <div id="form-tab-stat" class="space-y-4 hidden">
+                <h4 class="font-bold text-slate-800 text-sm">Tambah Teks / Jumlah Siswa Berjalan</h4>
+                <p class="text-xs text-slate-500">Masukkan data statistik atau jumlah siswa yang ingin ditampilkan berjalan di atas berita. Gunakan tanda titik (•) sebagai pemisah antar informasi.</p>
+                <form onsubmit="submitStatistik(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1">Teks Informasi Berjalan</label>
+                        <textarea id="stat-teks" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-primary" placeholder="Contoh: Jumlah Siswa MA: 150 Orang • Jumlah Siswa MTs: 200 Orang • Total Seluruh Santri: 350 Orang"></textarea>
+                    </div>
+                    <button type="submit" id="btn-submit-stat" class="w-full bg-brandGreen hover:bg-green-700 text-white font-semibold py-3 rounded-xl text-sm transition">
+                        Simpan ke Database & Tampilkan di Web
+                    </button>
+                </form>
+            </div>
+
+            <!-- Form Tab 4: Ganti Banner Utama -->
             <div id="form-tab-banner" class="space-y-4 hidden">
                 <h4 class="font-bold text-slate-800 text-sm">Ganti Foto Latar Belakang (Banner Utama)</h4>
                 <div class="bg-sky-50 border border-sky-200 text-sky-800 p-3 rounded-xl text-xs space-y-1">
@@ -385,30 +411,18 @@
         function logoutAdmin() { closeAdminDashboard(); alert('Anda berhasil keluar dari sesi admin.'); }
 
         function switchTab(tab) {
-            const tabDok = document.getElementById('form-tab-dok');
-            const tabBerita = document.getElementById('form-tab-berita');
-            const tabBanner = document.getElementById('form-tab-banner');
-            const btnDok = document.getElementById('tab-btn-dok');
-            const btnBerita = document.getElementById('tab-btn-berita');
-            const btnBanner = document.getElementById('tab-btn-banner');
+            const tabs = ['dok', 'berita', 'stat', 'banner'];
+            tabs.forEach(t => {
+                const el = document.getElementById('form-tab-' + t);
+                const btn = document.getElementById('tab-btn-' + t);
+                if(el) el.classList.add('hidden');
+                if(btn) btn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition";
+            });
 
-            tabDok.classList.add('hidden');
-            tabBerita.classList.add('hidden');
-            tabBanner.classList.add('hidden');
-            btnDok.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition";
-            btnBerita.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition";
-            btnBanner.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition";
-
-            if(tab === 'dok') {
-                tabDok.classList.remove('hidden');
-                btnDok.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-white transition";
-            } else if(tab === 'berita') {
-                tabBerita.classList.remove('hidden');
-                btnBerita.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-white transition";
-            } else if(tab === 'banner') {
-                tabBanner.classList.remove('hidden');
-                btnBanner.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-white transition";
-            }
+            const activeEl = document.getElementById('form-tab-' + tab);
+            const activeBtn = document.getElementById('tab-btn-' + tab);
+            if(activeEl) activeEl.classList.remove('hidden');
+            if(activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-white transition";
         }
 
         function handleLogin(e) {
@@ -483,6 +497,7 @@
                         renderDokumentasi(data.dokumentasi);
                         globalNewsData = data.berita || [];
                         renderBeritaLayout(globalNewsData);
+                        renderStatistikTicker(data.statistik);
                         
                         if(data.bannerUrl) {
                             const heroSection = document.getElementById('beranda');
@@ -515,6 +530,20 @@
             container.innerHTML = htmlCards + htmlCards;
         }
 
+        // Render Teks Berjalan Statistik / Jumlah Siswa di Atas Berita
+        function renderStatistikTicker(items) {
+            const container = document.getElementById('statistik-ticker');
+            if(!items || items.length === 0) {
+                container.innerHTML = '<span class="text-slate-500">Jumlah Siswa MA: 150 Orang • Jumlah Siswa MTs: 200 Orang • Total Seluruh Santri: 350 Orang (Silakan update lewat panel admin)</span>';
+                return;
+            }
+            // Gabungkan teks dari database
+            const tickerText = items.map(i => i.Teks_Berjalan).join('   •   ');
+            const tickerHtml = `<span class="text-slate-800 font-bold whitespace-nowrap">${tickerText}</span>`;
+            // Duplikat agar animasi mulus tanpa putus
+            container.innerHTML = tickerHtml + tickerHtml + tickerHtml;
+        }
+
         function renderBeritaLayout(items) {
             const terkiniContainer = document.getElementById('berita-terkini-container');
             const terpopulerContainer = document.getElementById('berita-terpopuler-container');
@@ -525,7 +554,6 @@
                 return;
             }
 
-            // 2 Berita Terkini (Kiri)
             const terkiniList = items.slice(0, 2);
             terkiniContainer.innerHTML = terkiniList.map(item => `
                 <div onclick='openNewsDetail(${JSON.stringify(item)})' class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 cursor-pointer group">
@@ -541,7 +569,6 @@
                 </div>
             `).join('');
 
-            // 4 Berita Terpopuler Berjejer ke Bawah (Kanan)
             const terpopulerList = items.slice(2, 6);
             if(terpopulerList.length === 0) {
                 terpopulerContainer.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Belum ada berita terpopuler tambahan.</div>';
@@ -560,7 +587,6 @@
             `).join('');
         }
 
-        // Buka Modal Detail Berita
         function openNewsDetail(item) {
             document.getElementById('modal-news-title').innerText = item.Judul;
             document.getElementById('modal-news-date').innerText = item.Tanggal;
@@ -569,7 +595,6 @@
             document.getElementById('news-modal').classList.remove('hidden');
         }
 
-        // Tutup Modal Detail Berita & Kembali ke Halaman Web
         function closeNewsModal() {
             document.getElementById('news-modal').classList.add('hidden');
         }
@@ -651,6 +676,36 @@
                 .catch(err => { alert('Terjadi kesalahan: ' + err); btn.disabled = false; });
             };
             reader.readAsDataURL(file);
+        }
+
+        // Kirim Data Statistik / Teks Berjalan ke Database
+        function submitStatistik(e) {
+            e.preventDefault();
+            const teks = document.getElementById('stat-teks').value;
+            const btn = document.getElementById('btn-submit-stat');
+
+            btn.innerText = "Menyimpan...";
+            btn.disabled = true;
+
+            const payload = {
+                action: 'addStatistik',
+                token: ADMIN_TOKEN,
+                teks: teks
+            };
+
+            fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(res => {
+                alert(res.message);
+                if(res.status === 'success') {
+                    document.getElementById('stat-teks').value = '';
+                    closeAdminDashboard();
+                    fetchData();
+                }
+                btn.innerText = "Simpan ke Database & Tampilkan di Web";
+                btn.disabled = false;
+            })
+            .catch(err => { alert('Terjadi kesalahan: ' + err); btn.disabled = false; });
         }
 
         function submitBanner(e) {
