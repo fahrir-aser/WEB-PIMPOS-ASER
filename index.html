@@ -29,12 +29,6 @@
         }
     </script>
     <style>
-        .hero-bg {
-            background-image: url('https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
         /* Style Navbar Background Header Custom */
         .header-custom-bg {
             background-color: #004d40;
@@ -43,6 +37,14 @@
             background-repeat: no-repeat;
             width: 100%;
             height: 90px;
+        }
+        /* Penyesuaian posisi background header khusus layar HP agar logo kiri tidak terpotong */
+        @media (max-width: 767px) {
+            .header-custom-bg {
+                height: 75px;
+                background-size: auto 100%;
+                background-position: left center;
+            }
         }
         @keyframes scrollDok {
             0% { transform: translateX(0); }
@@ -96,34 +98,36 @@
                         <span>Login Admin</span>
                     </button>
                 </div>
-                <!-- Mobile Hamburger Button -->
-                <div class="flex md:hidden items-center">
-                    <button onclick="toggleMobileMenu()" class="text-white hover:text-sky-300 focus:outline-none p-2 rounded-lg">
-                        <i id="hamburger-icon" class="fa-solid fa-bars text-2xl"></i>
+                <!-- Mobile Hamburger Button (Diberi kotak hijau tegas agar tidak menyatu/tertutup tulisan header) -->
+                <div class="flex md:hidden items-center ml-auto">
+                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900/95 hover:bg-emerald-800 text-white border border-emerald-400/40 shadow-lg focus:outline-none w-11 h-11 rounded-xl flex items-center justify-center transition">
+                        <i id="hamburger-icon" class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 border-t border-slate-700 shadow-xl px-4 pt-3 pb-5 space-y-3">
-            <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2 text-white font-semibold">Beranda</a>
-            <a href="#profil" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-white">Profil</a>
-            <a href="#wakamad" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-white">Wakamad</a>
-            <a href="#prestasi" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-white">Prestasi</a>
-            <a href="#spmb" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-white">SPMB</a>
-            <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-white">Kontak</a>
-            <div class="pt-2 border-t border-slate-700">
-                <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-sky-600 text-white py-2.5 rounded-xl font-medium text-sm flex items-center justify-center space-x-2">
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-md border-t border-slate-700 shadow-2xl px-4 pt-3 pb-5 space-y-2">
+            <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-white/10 text-white font-semibold">Beranda</a>
+            <a href="#profil" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Profil</a>
+            <a href="#wakamad" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Wakamad</a>
+            <a href="#prestasi" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Prestasi</a>
+            <a href="#spmb" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">SPMB</a>
+            <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Kontak</a>
+            <div class="pt-3 border-t border-slate-700">
+                <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-3 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 shadow-md">
                     <i class="fa-solid fa-lock text-xs"></i>
                     <span>Login Admin</span>
                 </button>
             </div>
         </div>
     </nav>
-    <!-- HERO SECTION (TANPA OVERLAY GELAP & TANPA TEKS SAMBUTAN BAWAAN) -->
-    <section id="beranda" class="hero-bg relative min-h-[520px] lg:min-h-[650px] flex flex-col justify-end pb-14 lg:pb-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 w-full">
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
+    <!-- HERO SECTION (UTUH DI HP TANPA TERPOTONG & LAYAR PENUH DI LAPTOP) -->
+    <section id="beranda" class="relative bg-white">
+        <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-auto md:h-[620px] lg:h-[680px] object-contain md:object-cover block">
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-6 md:py-0 md:absolute md:inset-x-0 md:bottom-14 z-10">
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
                 <a href="#spmb" class="w-full sm:w-auto bg-tourmBlue hover:bg-secondary text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition">
                     Pendaftaran Santri Baru (SPMB)
                 </a>
@@ -410,7 +414,15 @@
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('hamburger-icon');
             menu.classList.toggle('hidden');
+            if (menu.classList.contains('hidden')) {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            } else {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            }
         }
         function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
@@ -513,16 +525,12 @@
             if(data.headerBgUrl) {
                 const headerNav = document.getElementById('main-header-nav');
                 headerNav.style.backgroundImage = `url('${data.headerBgUrl}')`;
-                headerNav.style.backgroundSize = 'cover';
-                headerNav.style.backgroundPosition = 'left center';
-                headerNav.style.backgroundRepeat = 'no-repeat';
             }
             if(data.bannerUrl) {
-                const heroSection = document.getElementById('beranda');
-                heroSection.style.backgroundImage = `url('${data.bannerUrl}')`;
-                heroSection.style.backgroundSize = 'cover';
-                heroSection.style.backgroundPosition = 'center';
-                heroSection.style.backgroundRepeat = 'no-repeat';
+                const heroImg = document.getElementById('hero-banner-img');
+                if(heroImg) {
+                    heroImg.src = data.bannerUrl;
+                }
             }
             if(data.logoUrl) {
                 const footerLogo = document.getElementById('footer-logo-img');
