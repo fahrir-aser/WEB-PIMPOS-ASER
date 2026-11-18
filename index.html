@@ -41,6 +41,20 @@
             position: relative;
             z-index: 100;
         }
+        @media (min-width: 1024px) {
+            .header-custom-bg {
+                height: 95px;
+                background-size: cover;
+                background-position: left center;
+            }
+        }
+        @media (max-width: 1024px) {
+            .header-custom-bg {
+                height: 80px;
+                background-size: cover;
+                background-position: left center;
+            }
+        }
         @media (max-width: 767px) {
             .header-custom-bg {
                 height: 75px;
@@ -103,6 +117,15 @@
             z-index: 9999 !important;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
         }
+
+        /* EFEK GESER LEMBUT DARI KIRI (DRAWER MENU) UNTUK MOBILE */
+        #mobile-menu-drawer {
+            transform: translateX(-100%);
+            transition: transform 0.35s ease-in-out;
+        }
+        #mobile-menu-drawer.translate-x-0 {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -121,7 +144,7 @@
 
     <!-- NAVBAR UTAMA FULL-WIDTH -->
     <nav id="main-header-nav" class="header-custom-bg shadow-md sticky top-0 z-50 w-full">
-        <div class="w-full px-3 sm:px-4 lg:px-6 h-full">
+        <div class="w-full px-3 sm:px-4 lg:px-6 h-full relative">
             <div class="flex items-center justify-between h-full">
                 <!-- Ruang Kosong Kiri (Aman dari batas kuning header) -->
                 <div class="hidden md:block md:w-[32%] lg:w-[34%] flex-shrink-0"></div>
@@ -197,7 +220,7 @@
                     <a href="#kontak" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Kontak</a>
                 </div>
 
-                <!-- Admin Login Button -->
+                <!-- Admin Login Button Desktop -->
                 <div class="hidden md:flex items-center justify-end flex-shrink-0 ml-2">
                     <button onclick="openLoginModal()" class="glowing-menu-item bg-slate-900 px-3.5 py-2 font-semibold text-xs shadow-lg flex items-center space-x-1.5 border border-slate-700 text-white">
                         <i class="fa-solid fa-lock text-sky-400 text-[10px]"></i>
@@ -205,95 +228,133 @@
                     </button>
                 </div>
 
-                <!-- Mobile Hamburger Button -->
-                <div class="flex md:hidden items-center ml-auto">
-                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900 hover:bg-emerald-800 text-white border border-emerald-400/40 shadow-lg focus:outline-none w-11 h-11 rounded-xl flex items-center justify-center transition">
-                        <i id="hamburger-icon" class="fa-solid fa-bars text-xl"></i>
+                <!-- Mobile Hamburger Button (Diposisikan aman di sisi kanan luar area sempit header HP) -->
+                <div class="flex md:hidden items-center absolute right-3 top-1/2 -translate-y-1/2 z-10">
+                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900 hover:bg-emerald-800 text-white border border-emerald-400/50 shadow-lg focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition">
+                        <i id="hamburger-icon" class="fa-solid fa-bars text-base"></i>
                     </button>
                 </div>
             </div>
         </div>
+    </nav>
 
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#00382e] border-t border-emerald-700 shadow-2xl px-4 pt-3 pb-5 space-y-2 max-h-[80vh] overflow-y-auto">
-            <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-emerald-800 text-white font-semibold">Beranda</a>
-            
-            <div>
-                <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
-                    <span>Profil</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-                <div id="mobile-sub-profil" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
-                    <a href="#profil-kamad-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Profil Kamad MA</a>
-                    <a href="#profil-kamad-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Profil Kamad MTs</a>
-                    <a href="#visi-misi-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Visi Misi MA</a>
-                    <a href="#visi-misi-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Visi Misi MTs</a>
+    <!-- MOBILE MENU DRAWER (MUNCUL LEMBUT DARI SISI KIRI) -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[99] hidden transition-opacity opacity-0" onclick="toggleMobileMenu()"></div>
+    <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-xs bg-slate-900 text-white z-[100] shadow-2xl flex flex-col justify-between overflow-y-auto">
+        <div>
+            <!-- Header Drawer Profil -->
+            <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+                <div class="flex items-center space-x-3">
+                    <img id="drawer-logo-img" src="logoaser.png" alt="Logo" class="w-10 h-10 object-contain rounded-full bg-brandGreen p-0.5">
+                    <div>
+                        <h3 class="font-bold text-xs uppercase tracking-wider text-white">Ponpes As'adiyah</h3>
+                        <p class="text-[10px] text-slate-400">Ereng-Ereng, Bantaeng</p>
+                    </div>
                 </div>
+                <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
             </div>
 
-            <div>
-                <button onclick="toggleMobileSub('mobile-sub-unggulan')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
-                    <span>Program Unggulan</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-                <div id="mobile-sub-unggulan" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
-                    <a href="#prog-unggulan-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Program Unggulan MA</a>
-                    <a href="#prog-unggulan-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Program Unggulan MTs</a>
+            <!-- List Menu Navigasi Samping -->
+            <div class="p-4 space-y-2 text-xs">
+                <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-emerald-900/50 text-white font-semibold flex items-center space-x-2">
+                    <i class="fa-solid fa-house text-emerald-400 w-5"></i><span>Beranda</span>
+                </a>
+                
+                <!-- Profil Dropdown Mobile -->
+                <div>
+                    <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-school text-emerald-400 w-5"></i><span>Profil</span></span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="mobile-sub-profil" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
+                        <a href="#profil-kamad-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil Kamad MA</a>
+                        <a href="#profil-kamad-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil Kamad MTs</a>
+                        <a href="#visi-misi-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Visi Misi MA</a>
+                        <a href="#visi-misi-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Visi Misi MTs</a>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <button onclick="toggleMobileSub('mobile-sub-wakamad')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
-                    <span>Wakamad</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-                <div id="mobile-sub-wakamad" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
-                    <a href="#sarpras" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Sarpras</a>
-                    <a href="#kurikulum" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Kurikulum</a>
-                    <a href="#kesiswaan" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Kesiswaan</a>
-                    <a href="#perpustakaan" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Perpustakaan</a>
+                <!-- Program Unggulan Dropdown Mobile -->
+                <div>
+                    <button onclick="toggleMobileSub('mobile-sub-unggulan')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-star text-emerald-400 w-5"></i><span>Prog. Unggulan</span></span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="mobile-sub-unggulan" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
+                        <a href="#prog-unggulan-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Program Unggulan MA</a>
+                        <a href="#prog-unggulan-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Program Unggulan MTs</a>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <button onclick="toggleMobileSub('mobile-sub-prestasi')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
-                    <span>Prestasi</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-                <div id="mobile-sub-prestasi" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
-                    <a href="#prestasi-akademik" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Akademik</a>
-                    <a href="#prestasi-non-akademik" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Non-Akademik</a>
+                <!-- Wakamad Dropdown Mobile -->
+                <div>
+                    <button onclick="toggleMobileSub('mobile-sub-wakamad')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-user-tie text-emerald-400 w-5"></i><span>Wakamad</span></span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="mobile-sub-wakamad" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
+                        <a href="#sarpras" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Sarpras</a>
+                        <a href="#kurikulum" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kurikulum</a>
+                        <a href="#kesiswaan" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kesiswaan</a>
+                        <a href="#perpustakaan" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Perpustakaan</a>
+                    </div>
                 </div>
-            </div>
 
-            <div>
-                <button onclick="toggleMobileSub('mobile-sub-spmb')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
-                    <span>SPMB</span>
-                    <i class="fa-solid fa-chevron-down text-xs"></i>
-                </button>
-                <div id="mobile-sub-spmb" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
-                    <button onclick="openSpmbModal(); toggleMobileMenu();" class="w-full text-left block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Daftar Murid</button>
+                <!-- Prestasi Dropdown Mobile -->
+                <div>
+                    <button onclick="toggleMobileSub('mobile-sub-prestasi')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-trophy text-emerald-400 w-5"></i><span>Prestasi</span></span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="mobile-sub-prestasi" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
+                        <a href="#prestasi-akademik" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Akademik</a>
+                        <a href="#prestasi-non-akademik" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Non-Akademik</a>
+                    </div>
                 </div>
-            </div>
 
-            <a href="#berita" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">Berita</a>
-            <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">Kontak</a>
-            
-            <div class="pt-3 border-t border-emerald-700">
-                <button onclick="openLoginModal(); toggleMobileMenu();" class="glowing-menu-item w-full bg-slate-900 py-3 font-semibold text-sm flex items-center justify-center space-x-2 shadow-md border border-slate-700 text-white">
-                    <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
-                    <span>Login Admin</span>
-                </button>
+                <!-- SPMB -->
+                <div>
+                    <button onclick="toggleMobileSub('mobile-sub-spmb')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                        <span class="flex items-center space-x-2"><i class="fa-solid fa-bullhorn text-emerald-400 w-5"></i><span>SPMB</span></span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div id="mobile-sub-spmb" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
+                        <button onclick="openSpmbModal(); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Daftar Murid</button>
+                    </div>
+                </div>
+
+                <a href="#berita" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-newspaper text-emerald-400 w-5"></i><span>Berita</span>
+                </a>
+                <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-address-book text-emerald-400 w-5"></i><span>Kontak</span>
+                </a>
             </div>
         </div>
-    </nav>
+
+        <!-- Footer Drawer & Tombol Admin -->
+        <div class="p-4 border-t border-slate-800 bg-slate-950/40 space-y-3">
+            <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center space-x-2 border border-slate-700 text-white transition">
+                <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
+                <span>Login Admin</span>
+            </button>
+            <div class="flex justify-center space-x-4 text-slate-400 pt-1">
+                <a href="https://facebook.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                <a href="https://instagram.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-instagram text-sm"></i></a>
+                <a href="https://whatsapp.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-sm"></i></a>
+                <a href="https://youtube.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-youtube text-sm"></i></a>
+            </div>
+        </div>
+    </div>
 
     <!-- HERO SECTION (BANNER UTAMA) -->
     <section id="beranda" class="relative bg-white">
         <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-auto md:h-[550px] lg:h-[600px] object-contain md:object-cover block">
     </section>
 
-    <!-- DOKUMENTASI KEGIATAN MADRASAH (JARAK DIPADATKAN AGAR FOTO LANGSUNG TERLIHAT SEBAGIAN) -->
+    <!-- DOKUMENTASI KEGIATAN MADRASAH -->
     <section class="py-10 bg-white overflow-hidden border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
             <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
@@ -353,7 +414,7 @@
         </div>
     </div>
 
-    <!-- MODAL SPMB (BELUM DIBUKA) -->
+    <!-- MODAL SPMB -->
     <div id="spmb-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
             <button onclick="closeSpmbModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm focus:outline-none">
@@ -591,18 +652,28 @@
     <!-- JAVASCRIPT KONEKSI -->
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
-        const ADMIN_TOKEN = "admin123";
         const CACHE_KEY = "ponpes_aser_web_cache_v1";
         let globalNewsData = [];
+        let activeAdminToken = "";
 
+        // Fungsi Drawer Menu Samping Kiri yang Lembut
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
+            const drawer = document.getElementById('mobile-menu-drawer');
+            const overlay = document.getElementById('mobile-menu-overlay');
             const icon = document.getElementById('hamburger-icon');
-            menu.classList.toggle('hidden');
-            if (menu.classList.contains('hidden')) {
+            
+            const isOpen = drawer.classList.contains('translate-x-0');
+            
+            if (isOpen) {
+                drawer.classList.remove('translate-x-0');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
             } else {
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                drawer.classList.add('translate-x-0');
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
             }
@@ -617,7 +688,11 @@
         function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
         function openAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.remove('hidden'); }
         function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
-        function logoutAdmin() { closeAdminDashboard(); alert('Anda berhasil keluar dari sesi admin.'); }
+        function logoutAdmin() { 
+            activeAdminToken = ""; 
+            closeAdminDashboard(); 
+            alert('Anda berhasil keluar dari sesi admin.'); 
+        }
 
         function openSpmbModal() { document.getElementById('spmb-modal').classList.remove('hidden'); }
         function closeSpmbModal() { document.getElementById('spmb-modal').classList.add('hidden'); }
@@ -639,13 +714,38 @@
         function handleLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-password').value;
-            if(pass === ADMIN_TOKEN) {
-                closeLoginModal();
-                document.getElementById('admin-password').value = '';
-                openAdminDashboard();
-            } else {
-                alert('Password salah! Silakan coba lagi.');
-            }
+            const submitBtn = document.querySelector('#login-form button[type="submit"]');
+            
+            submitBtn.innerText = "Memeriksa...";
+            submitBtn.disabled = true;
+
+            const payload = {
+                action: 'login',
+                token: pass
+            };
+
+            fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                if(res.status === 'success') {
+                    activeAdminToken = pass;
+                    closeLoginModal();
+                    document.getElementById('admin-password').value = '';
+                    openAdminDashboard();
+                } else {
+                    alert('Password salah! Silakan coba lagi.');
+                }
+                submitBtn.innerText = "Masuk ke Dashboard";
+                submitBtn.disabled = false;
+            })
+            .catch(err => {
+                alert('Terjadi kesalahan koneksi.');
+                submitBtn.innerText = "Masuk ke Dashboard";
+                submitBtn.disabled = false;
+            });
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -658,7 +758,7 @@
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
-            const cityId = '1303'; // Kab. Bantaeng
+            const cityId = '1303';
             const url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${year}/${month}/${day}`;
             fetch(url)
                 .then(res => res.json())
@@ -722,7 +822,9 @@
             }
             if(data.logoUrl) {
                 const footerLogo = document.getElementById('footer-logo-img');
-                if(footerLogo) { footerLogo.src = data.logoUrl; }
+                const drawerLogo = document.getElementById('drawer-logo-img');
+                if(footerLogo) footerLogo.src = data.logoUrl;
+                if(drawerLogo) drawerLogo.src = data.logoUrl;
             }
         }
 
@@ -837,7 +939,7 @@
             reader.onload = function(uploadEvent) {
                 const payload = {
                     action: 'addDokumentasi',
-                    token: ADMIN_TOKEN,
+                    token: activeAdminToken,
                     judul: judul,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
@@ -874,7 +976,7 @@
             reader.onload = function(uploadEvent) {
                 const payload = {
                     action: 'addBerita',
-                    token: ADMIN_TOKEN,
+                    token: activeAdminToken,
                     judul: judul,
                     isi: isi,
                     mimeType: file.type,
@@ -911,7 +1013,7 @@
             reader.onload = function(uploadEvent) {
                 const payload = {
                     action: 'updateHeaderBg',
-                    token: ADMIN_TOKEN,
+                    token: activeAdminToken,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
                 };
@@ -944,7 +1046,7 @@
             reader.onload = function(uploadEvent) {
                 const payload = {
                     action: 'updateBanner',
-                    token: ADMIN_TOKEN,
+                    token: activeAdminToken,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
                 };
