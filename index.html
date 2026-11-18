@@ -24,20 +24,14 @@
                         dark: '#0f172a',
                         accent: '#38bdf8',
                         brandGreen: '#15803d',
-                        tourmBlue: '#0084a5'
+                        tourmBlue: '#0084a5',
+                        instansiDark: '#0B2240'
                     }
                 }
             }
         }
     </script>
     <style>
-        .header-custom-bg {
-            background-color: #004d40;
-            width: 100%;
-            height: 85px;
-            position: relative;
-            z-index: 100;
-        }
         @keyframes scrollDok {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -52,35 +46,6 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* EFEK GARIS MENYALA (GLOWING BORDER) UNTUK MENU & TOMBOL */
-        @keyframes glowingAnim {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .glowing-menu-item {
-            position: relative;
-            border-radius: 0.5rem;
-            transition: all 0.3s ease;
-            z-index: 1;
-        }
-        .glowing-menu-item::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(60deg, #ff007f, #00ffcc, #ffcc00, #3b82f6, #ff007f);
-            background-size: 400% 400%;
-            border-radius: inherit;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            filter: blur(1px);
-        }
-        .glowing-menu-item:hover::before {
-            opacity: 1;
-            animation: glowingAnim 3s linear infinite;
-        }
 
         /* PERBAIKAN STABILITAS HOVER SUB-MENU */
         .relative.group {
@@ -104,124 +69,140 @@
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
-    <!-- HEADER TOP BAR -->
-    <div class="bg-slate-900 text-slate-300 text-xs py-2.5 px-6 lg:px-10 hidden lg:block border-b border-slate-800">
-        <div class="w-full flex justify-between items-center">
-            <div class="flex items-center space-x-6">
-                <span><i class="fa-solid fa-location-dot text-primary mr-1"></i> Ereng-Ereng, Kab. Bantaeng, Sulawesi Selatan</span>
-                <span><i class="fa-solid fa-clock text-primary mr-1"></i> Sen - JUM: 08:00 am - 17:00 pm</span>
-            </div>
-            <div class="flex items-center space-x-6 text-slate-300">
-                <span><i class="fa-solid fa-envelope text-primary mr-1"></i> info@asediyahaereng.sch.id</span>
-            </div>
-        </div>
-    </div>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased">
 
-    <!-- NAVBAR UTAMA FULL-WIDTH -->
-    <nav id="main-header-nav" class="header-custom-bg shadow-md sticky top-0 z-50 w-full flex items-center">
-        <!-- Menggunakan w-full dan padding sisi yang pas agar menempel ke kiri dan kanan layar -->
-        <div class="w-full px-4 sm:px-6 lg:px-8 h-full">
-            <div class="flex items-center justify-between h-full">
-                <!-- Logo & Judul Website di Samping Kiri Sempurna -->
-                <a href="#beranda" class="flex items-center space-x-3 py-2 flex-shrink-0">
-                    <img src="logoaser.png" alt="Logo As'adiyah" class="w-10 h-10 object-contain rounded-full bg-white p-0.5 shadow">
-                    <div>
-                        <span class="font-extrabold text-white tracking-wider text-xs sm:text-sm uppercase block leading-tight">PONPES AS'ADIYAH</span>
-                        <span class="text-[10px] sm:text-xs text-emerald-200 font-medium tracking-wide block">Ereng-Ereng, Bantaeng</span>
-                    </div>
+    <!-- HEADER UTAMA (GAYA INSTANSI RESMI) -->
+    <header class="w-full bg-instansiDark text-white shadow-md sticky top-0 z-50">
+        
+        <!-- BARIS ATAS: Logo, Identitas, 5 Medsos, & Login Admin -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-700/60">
+            <!-- Logo & Nama Instansi -->
+            <a href="#beranda" class="flex items-center space-x-3 group">
+                <img src="logoaser.png" alt="Logo As'adiyah" class="w-12 h-12 object-contain rounded-full bg-white p-0.5 shadow-md">
+                <div>
+                    <h1 class="font-extrabold tracking-wider text-sm sm:text-base uppercase block leading-tight text-white group-hover:text-emerald-400 transition">PONPES AS'ADIYAH ERENG-ERENG</h1>
+                    <span class="text-xs text-slate-300 font-medium tracking-wide block">Kabupaten Bantaeng, Sulawesi Selatan</span>
+                </div>
+            </a>
+
+            <!-- 5 Ikon Medsos & Tombol Admin di Kanan -->
+            <div class="flex items-center space-x-2.5">
+                <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://twitter.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Twitter / X">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="https://facebook.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="https://whatsapp.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm mr-2" title="YouTube">
+                    <i class="fa-brands fa-youtube"></i>
                 </a>
                 
-                <!-- Desktop Menu (Tertata rapi di tengah/kanan dengan jarak yang ideal) -->
-                <div class="hidden md:flex items-center space-x-2 lg:space-x-4 font-semibold text-xs lg:text-sm tracking-normal">
-                    <a href="#beranda" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Beranda</a>
-                    
-                    <!-- Dropdown Profil -->
-                    <div class="relative group py-2">
-                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
-                            <span>Profil</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                        </button>
-                        <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                            <a href="#profil-kamad-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Profil Kamad MA</a>
-                            <a href="#profil-kamad-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Profil Kamad MTs</a>
-                            <a href="#visi-misi-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Visi Misi MA</a>
-                            <a href="#visi-misi-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Visi Misi MTs</a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown Program Unggulan -->
-                    <div class="relative group py-2">
-                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
-                            <span>Prog. Unggulan</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                        </button>
-                        <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                            <a href="#prog-unggulan-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Program Unggulan MA</a>
-                            <a href="#prog-unggulan-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Program Unggulan MTs</a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown Wakamad -->
-                    <div class="relative group py-2">
-                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
-                            <span>Wakamad</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                        </button>
-                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                            <a href="#sarpras" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Sarpras</a>
-                            <a href="#kurikulum" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Kurikulum</a>
-                            <a href="#kesiswaan" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Kesiswaan</a>
-                            <a href="#perpustakaan" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Perpustakaan</a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown Prestasi -->
-                    <div class="relative group py-2">
-                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
-                            <span>Prestasi</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                        </button>
-                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                            <a href="#prestasi-akademik" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Akademik</a>
-                            <a href="#prestasi-non-akademik" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Non-Akademik</a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown SPMB -->
-                    <div class="relative group py-2">
-                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
-                            <span>SPMB</span>
-                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                        </button>
-                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                            <button onclick="openSpmbModal()" class="glowing-menu-item w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Daftar Murid</button>
-                        </div>
-                    </div>
-                    
-                    <a href="#berita" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Berita</a>
-                    <a href="#kontak" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Kontak</a>
-                </div>
-
-                <!-- Admin Login Button Desktop (Di pojok kanan luar dengan rapi) -->
-                <div class="hidden md:flex items-center justify-end flex-shrink-0">
-                    <button onclick="openLoginModal()" class="glowing-menu-item bg-slate-900 px-3.5 py-2 font-semibold text-xs shadow-lg flex items-center space-x-1.5 border border-slate-700 text-white">
-                        <i class="fa-solid fa-lock text-sky-400 text-[10px]"></i>
-                        <span>Admin</span>
-                    </button>
-                </div>
-
-                <!-- Mobile Hamburger Button -->
-                <div class="flex md:hidden items-center">
-                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900 hover:bg-emerald-800 text-white border border-emerald-400/50 shadow-lg focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition">
-                        <i id="hamburger-icon" class="fa-solid fa-bars text-base"></i>
-                    </button>
-                </div>
+                <button onclick="openLoginModal()" class="bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow flex items-center space-x-1.5 transition text-white border border-emerald-500/40">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                    <span>Admin</span>
+                </button>
             </div>
         </div>
-    </nav>
 
-    <!-- MOBILE MENU DRAWER (MUNCUL LEMBUT DARI SISI KIRI) -->
+        <!-- BARIS BAWAH: Menu Navigasi (Ukuran Teks Proporsional) & Kolom Pencarian -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
+            
+            <!-- Desktop Menu Navigasi (text-sm) -->
+            <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm tracking-normal">
+                <a href="#beranda" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Beranda</a>
+                
+                <!-- Dropdown Profil -->
+                <div class="relative group py-1">
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                        <span>Profil</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <a href="#profil-kamad-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil Kamad MA</a>
+                        <a href="#profil-kamad-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil Kamad MTs</a>
+                        <a href="#visi-misi-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Visi Misi MA</a>
+                        <a href="#visi-misi-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Visi Misi MTs</a>
+                    </div>
+                </div>
+
+                <!-- Dropdown Program Unggulan -->
+                <div class="relative group py-1">
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                        <span>Prog. Unggulan</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <a href="#prog-unggulan-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MA</a>
+                        <a href="#prog-unggulan-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MTs</a>
+                    </div>
+                </div>
+
+                <!-- Dropdown Wakamad -->
+                <div class="relative group py-1">
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                        <span>Wakamad</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <a href="#sarpras" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Sarpras</a>
+                        <a href="#kurikulum" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kurikulum</a>
+                        <a href="#kesiswaan" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kesiswaan</a>
+                        <a href="#perpustakaan" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Perpustakaan</a>
+                    </div>
+                </div>
+
+                <!-- Dropdown Prestasi -->
+                <div class="relative group py-1">
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                        <span>Prestasi</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <a href="#prestasi-akademik" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Akademik</a>
+                        <a href="#prestasi-non-akademik" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Non-Akademik</a>
+                    </div>
+                </div>
+
+                <!-- Dropdown SPMB -->
+                <div class="relative group py-1">
+                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                        <span>SPMB</span>
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                    </button>
+                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <button onclick="openSpmbModal()" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Daftar Murid</button>
+                    </div>
+                </div>
+                
+                <a href="#berita" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Berita</a>
+                <a href="#kontak" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Kontak</a>
+            </nav>
+
+            <!-- Kolom Pencarian (Search Bar) di Kanan -->
+            <div class="hidden lg:flex items-center relative w-72">
+                <input type="text" id="global-search-input" placeholder="Cari informasi..." class="w-full bg-slate-800/90 text-sm text-white placeholder-slate-400 px-4 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 transition">
+                <button type="button" class="absolute right-3.5 text-slate-400 hover:text-white text-sm">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="flex lg:hidden items-center justify-between w-full">
+                <span class="text-sm font-medium text-slate-300">Menu Utama</span>
+                <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition">
+                    <i id="hamburger-icon" class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU DRAWER -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[99] hidden transition-opacity opacity-0" onclick="toggleMobileMenu()"></div>
     <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-xs bg-slate-900 text-white z-[100] shadow-2xl flex flex-col justify-between overflow-y-auto">
         <div>
@@ -323,22 +304,25 @@
                 <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
                 <span>Login Admin</span>
             </button>
-            <div class="flex justify-center space-x-4 text-slate-400 pt-1">
-                <a href="https://facebook.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-facebook-f text-sm"></i></a>
-                <a href="https://instagram.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-instagram text-sm"></i></a>
-                <a href="https://whatsapp.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-whatsapp text-sm"></i></a>
-                <a href="https://youtube.com" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-youtube text-sm"></i></a>
-            </div>
         </div>
     </div>
 
-    <!-- HERO SECTION (BANNER UTAMA UTUH & RESPONSIF) -->
-    <section id="beranda" class="relative w-full bg-white">
-        <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-auto block">
+    <!-- HERO SECTION (BANNER UTAMA PROPOSIONAL & ELEGAN) -->
+    <section id="beranda" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-xl relative aspect-[21/9] sm:aspect-[24/9] max-h-[480px] w-full flex items-center justify-center">
+            <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-full object-cover">
+            <!-- Tombol Navigasi Slider Kiri/Kanan Estetik -->
+            <button class="absolute left-4 bg-black/40 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm">
+                <i class="fa-solid fa-chevron-left text-xs"></i>
+            </button>
+            <button class="absolute right-4 bg-black/40 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm">
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+        </div>
     </section>
 
     <!-- DOKUMENTASI KEGIATAN MADRASAH -->
-    <section class="py-10 bg-white overflow-hidden border-t border-slate-100">
+    <section class="py-10 bg-white overflow-hidden border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
             <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
             <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
