@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Resmi - Ponpes As'adiyah Ereng-Ereng</title>
+    
+    <!-- Favicon Logo Madrasah -->
+    <link rel="icon" type="image/png" href="logoaser.png">
+
     <!-- Preconnect untuk mempercepat koneksi ke server Google & CDN -->
     <link rel="preconnect" href="https://script.google.com">
     <link rel="preconnect" href="https://lh3.googleusercontent.com">
@@ -81,7 +85,6 @@
             <div class="flex items-center justify-between h-full">
                 <!-- Ruang Kosong Kiri untuk Logo pada Gambar Header Canva -->
                 <div class="hidden md:block md:w-[32%] lg:w-[36%] flex-shrink-0"></div>
-
                 <!-- Desktop Menu (Ukuran Teks Lebih Besar & Jarak Lebih Lega di Area Hijau) -->
                 <div class="hidden md:flex flex-1 justify-center items-center space-x-8 lg:space-x-12 font-semibold text-base lg:text-[17px] tracking-wide">
                     <a href="#beranda" class="text-white hover:text-yellow-300 transition drop-shadow-md">Beranda</a>
@@ -91,7 +94,6 @@
                     <a href="#spmb" class="text-white hover:text-yellow-300 transition drop-shadow-md">SPMB</a>
                     <a href="#kontak" class="text-white hover:text-yellow-300 transition drop-shadow-md">Kontak</a>
                 </div>
-
                 <!-- Admin Login Button (Posisi Sudut Kanan Layar) -->
                 <div class="hidden md:flex items-center justify-end flex-shrink-0 ml-4">
                     <button onclick="openLoginModal()" class="bg-sky-600 hover:bg-sky-500 text-white px-6 py-3 rounded-xl font-semibold text-sm lg:text-base shadow-lg transition flex items-center space-x-2 border border-sky-300/40">
@@ -99,7 +101,6 @@
                         <span>Login Admin</span>
                     </button>
                 </div>
-
                 <!-- Mobile Hamburger Button -->
                 <div class="flex md:hidden items-center ml-auto">
                     <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900/95 hover:bg-emerald-800 text-white border border-emerald-400/40 shadow-lg focus:outline-none w-11 h-11 rounded-xl flex items-center justify-center transition">
@@ -413,7 +414,6 @@
         const ADMIN_TOKEN = "admin123";
         const CACHE_KEY = "ponpes_aser_web_cache_v1";
         let globalNewsData = [];
-
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('hamburger-icon');
@@ -431,7 +431,6 @@
         function openAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.remove('hidden'); }
         function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
         function logoutAdmin() { closeAdminDashboard(); alert('Anda berhasil keluar dari sesi admin.'); }
-
         function switchTab(tab) {
             const tabs = ['dok', 'berita', 'header', 'banner'];
             tabs.forEach(t => {
@@ -445,7 +444,6 @@
             if(activeEl) activeEl.classList.remove('hidden');
             if(activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition";
         }
-
         function handleLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-password').value;
@@ -457,12 +455,10 @@
                 alert('Password salah! Silakan coba lagi.');
             }
         }
-
         window.addEventListener('DOMContentLoaded', () => {
             fetchData();
             fetchJadwalSholat();
         });
-
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
@@ -486,7 +482,6 @@
                 })
                 .catch(err => { useFallbackSchedule(); });
         }
-
         function useFallbackSchedule() {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('sholat-tanggal').innerText = new Date().toLocaleDateString('id-ID', options);
@@ -497,7 +492,6 @@
                 {title: 'Maghrib', time: '18:05'}, {title: 'Isya', time: '19:18'}
             ]);
         }
-
         function renderMarquee(list) {
             const container = document.getElementById('marquee-container');
             const htmlCards = list.map(item => `
@@ -508,7 +502,6 @@
             `).join('');
             container.innerHTML = htmlCards + htmlCards;
         }
-
         // Optimasi URL gambar Drive agar ringan & cepat dimuat
         function optimizeDriveImage(url, size) {
             if (!url) return '';
@@ -517,7 +510,6 @@
             }
             return url;
         }
-
         // Menerapkan data ke elemen halaman
         function applyWebsiteData(data) {
             if (!data || data.status !== 'success') return;
@@ -541,7 +533,6 @@
                 }
             }
         }
-
         function fetchData(forceRefresh = false) {
             // 1. Tampilkan data dari memori lokal secara instan (0 detik)
             if (!forceRefresh) {
@@ -570,7 +561,6 @@
                 })
                 .catch(err => console.error('Gagal memuat data:', err));
         }
-
         function renderDokumentasi(items) {
             const container = document.getElementById('dokumentasi-container');
             if(!items || items.length === 0) {
@@ -590,7 +580,6 @@
             `).join('');
             container.innerHTML = htmlCards + htmlCards;
         }
-
         function renderBeritaLayout(items) {
             const terkiniContainer = document.getElementById('berita-terkini-container');
             const terpopulerContainer = document.getElementById('berita-terpopuler-container');
@@ -629,7 +618,6 @@
                 </div>
             `).join('');
         }
-
         function openNewsDetail(index) {
             const item = globalNewsData[index];
             if (!item) return;
@@ -639,11 +627,9 @@
             document.getElementById('modal-news-content').innerText = item.Isi_Berita;
             document.getElementById('news-modal').classList.remove('hidden');
         }
-
         function closeNewsModal() {
             document.getElementById('news-modal').classList.add('hidden');
         }
-
         function submitDokumentasi(e) {
             e.preventDefault();
             const judul = document.getElementById('dok-judul').value;
@@ -679,7 +665,6 @@
             };
             reader.readAsDataURL(file);
         }
-
         function submitBerita(e) {
             e.preventDefault();
             const judul = document.getElementById('berita-judul').value;
@@ -718,7 +703,6 @@
             };
             reader.readAsDataURL(file);
         }
-
         function submitHeaderBg(e) {
             e.preventDefault();
             const fileInput = document.getElementById('header-file');
@@ -751,7 +735,6 @@
             };
             reader.readAsDataURL(file);
         }
-
         function submitBanner(e) {
             e.preventDefault();
             const fileInput = document.getElementById('banner-file');
