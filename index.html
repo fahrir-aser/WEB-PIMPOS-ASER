@@ -7,14 +7,12 @@
     
     <!-- Favicon Logo Madrasah -->
     <link rel="icon" type="image/png" href="logoaser.png">
-
-    <!-- Preconnect untuk mempercepat koneksi ke server Google & CDN -->
     <link rel="preconnect" href="https://script.google.com">
     <link rel="preconnect" href="https://lh3.googleusercontent.com">
     <link rel="preconnect" href="https://api.myquran.com">
-    <!-- Tailwind CSS untuk Styling Modern -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome untuk Ikon -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
@@ -33,7 +31,6 @@
         }
     </script>
     <style>
-        /* Style Navbar Background Header Custom */
         .header-custom-bg {
             background-color: #004d40;
             background-size: cover;
@@ -41,8 +38,9 @@
             background-repeat: no-repeat;
             width: 100%;
             height: 95px;
+            position: relative;
+            z-index: 100;
         }
-        /* Penyesuaian posisi background header khusus layar HP agar logo kiri tidak terpotong */
         @media (max-width: 767px) {
             .header-custom-bg {
                 height: 75px;
@@ -64,6 +62,47 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* EFEK GARIS MENYALA (GLOWING BORDER) UNTUK MENU & TOMBOL */
+        @keyframes glowingAnim {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .glowing-menu-item {
+            position: relative;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        .glowing-menu-item::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(60deg, #ff007f, #00ffcc, #ffcc00, #3b82f6, #ff007f);
+            background-size: 400% 400%;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            filter: blur(1px);
+        }
+        .glowing-menu-item:hover::before {
+            opacity: 1;
+            animation: glowingAnim 3s linear infinite;
+        }
+
+        /* PERBAIKAN STABILITAS HOVER SUB-MENU */
+        .relative.group {
+            padding-bottom: 20px;
+            margin-bottom: -20px;
+        }
+        .relative.group .absolute {
+            top: 100%;
+            margin-top: 0px;
+            z-index: 9999 !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased">
@@ -79,83 +118,198 @@
             </div>
         </div>
     </div>
+
     <!-- NAVBAR UTAMA FULL-WIDTH -->
     <nav id="main-header-nav" class="header-custom-bg shadow-md sticky top-0 z-50 w-full">
-        <div class="w-full px-4 sm:px-6 lg:px-10 h-full">
+        <div class="w-full px-3 sm:px-4 lg:px-6 h-full">
             <div class="flex items-center justify-between h-full">
-                <!-- Ruang Kosong Kiri untuk Logo pada Gambar Header Canva -->
-                <div class="hidden md:block md:w-[32%] lg:w-[36%] flex-shrink-0"></div>
-                <!-- Desktop Menu (Ukuran Teks Lebih Besar & Jarak Lebih Lega di Area Hijau) -->
-                <div class="hidden md:flex flex-1 justify-center items-center space-x-8 lg:space-x-12 font-semibold text-base lg:text-[17px] tracking-wide">
-                    <a href="#beranda" class="text-white hover:text-yellow-300 transition drop-shadow-md">Beranda</a>
-                    <a href="#profil" class="text-white hover:text-yellow-300 transition drop-shadow-md">Profil</a>
-                    <a href="#wakamad" class="text-white hover:text-yellow-300 transition drop-shadow-md">Wakamad</a>
-                    <a href="#prestasi" class="text-white hover:text-yellow-300 transition drop-shadow-md">Prestasi</a>
-                    <a href="#spmb" class="text-white hover:text-yellow-300 transition drop-shadow-md">SPMB</a>
-                    <a href="#kontak" class="text-white hover:text-yellow-300 transition drop-shadow-md">Kontak</a>
+                <!-- Ruang Kosong Kiri (Aman dari batas kuning header) -->
+                <div class="hidden md:block md:w-[32%] lg:w-[34%] flex-shrink-0"></div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex flex-1 justify-center items-center space-x-2 lg:space-x-3 font-semibold text-xs lg:text-sm tracking-wide">
+                    <a href="#beranda" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Beranda</a>
+                    
+                    <!-- Dropdown Profil -->
+                    <div class="relative group py-2">
+                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
+                            <span>Profil</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                            <a href="#profil-kamad-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Profil Kamad MA</a>
+                            <a href="#profil-kamad-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Profil Kamad MTs</a>
+                            <a href="#visi-misi-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Visi Misi MA</a>
+                            <a href="#visi-misi-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Visi Misi MTs</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Program Unggulan -->
+                    <div class="relative group py-2">
+                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
+                            <span>Prog. Unggulan</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                            <a href="#prog-unggulan-ma" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Program Unggulan MA</a>
+                            <a href="#prog-unggulan-mts" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Program Unggulan MTs</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Wakamad -->
+                    <div class="relative group py-2">
+                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
+                            <span>Wakamad</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                            <a href="#sarpras" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Sarpras</a>
+                            <a href="#kurikulum" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Kurikulum</a>
+                            <a href="#kesiswaan" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Kesiswaan</a>
+                            <a href="#perpustakaan" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Perpustakaan</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Prestasi -->
+                    <div class="relative group py-2">
+                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
+                            <span>Prestasi</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                            <a href="#prestasi-akademik" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Akademik</a>
+                            <a href="#prestasi-non-akademik" class="glowing-menu-item block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Non-Akademik</a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown SPMB -->
+                    <div class="relative group py-2">
+                        <button class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md flex items-center space-x-1 focus:outline-none">
+                            <span>SPMB</span>
+                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
+                        </button>
+                        <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                            <button onclick="openSpmbModal()" class="glowing-menu-item w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1">Daftar Murid</button>
+                        </div>
+                    </div>
+                    
+                    <a href="#berita" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Berita</a>
+                    <a href="#kontak" class="glowing-menu-item px-2.5 py-1.5 text-white hover:text-yellow-300 transition drop-shadow-md">Kontak</a>
                 </div>
-                <!-- Admin Login Button (Posisi Sudut Kanan Layar) -->
-                <div class="hidden md:flex items-center justify-end flex-shrink-0 ml-4">
-                    <button onclick="openLoginModal()" class="bg-sky-600 hover:bg-sky-500 text-white px-6 py-3 rounded-xl font-semibold text-sm lg:text-base shadow-lg transition flex items-center space-x-2 border border-sky-300/40">
-                        <i class="fa-solid fa-lock text-xs lg:text-sm"></i>
-                        <span>Login Admin</span>
+
+                <!-- Admin Login Button -->
+                <div class="hidden md:flex items-center justify-end flex-shrink-0 ml-2">
+                    <button onclick="openLoginModal()" class="glowing-menu-item bg-slate-900 px-3.5 py-2 font-semibold text-xs shadow-lg flex items-center space-x-1.5 border border-slate-700 text-white">
+                        <i class="fa-solid fa-lock text-sky-400 text-[10px]"></i>
+                        <span>Admin</span>
                     </button>
                 </div>
+
                 <!-- Mobile Hamburger Button -->
                 <div class="flex md:hidden items-center ml-auto">
-                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900/95 hover:bg-emerald-800 text-white border border-emerald-400/40 shadow-lg focus:outline-none w-11 h-11 rounded-xl flex items-center justify-center transition">
+                    <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-emerald-900 hover:bg-emerald-800 text-white border border-emerald-400/40 shadow-lg focus:outline-none w-11 h-11 rounded-xl flex items-center justify-center transition">
                         <i id="hamburger-icon" class="fa-solid fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
+
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900/95 backdrop-blur-md border-t border-slate-700 shadow-2xl px-4 pt-3 pb-5 space-y-2">
-            <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-white/10 text-white font-semibold">Beranda</a>
-            <a href="#profil" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Profil</a>
-            <a href="#wakamad" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Wakamad</a>
-            <a href="#prestasi" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Prestasi</a>
-            <a href="#spmb" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">SPMB</a>
-            <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 hover:bg-white/5 hover:text-white">Kontak</a>
-            <div class="pt-3 border-t border-slate-700">
-                <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-sky-600 hover:bg-sky-500 text-white py-3 rounded-xl font-semibold text-sm flex items-center justify-center space-x-2 shadow-md">
-                    <i class="fa-solid fa-lock text-xs"></i>
+        <div id="mobile-menu" class="hidden md:hidden bg-[#00382e] border-t border-emerald-700 shadow-2xl px-4 pt-3 pb-5 space-y-2 max-h-[80vh] overflow-y-auto">
+            <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-emerald-800 text-white font-semibold">Beranda</a>
+            
+            <div>
+                <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
+                    <span>Profil</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-sub-profil" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
+                    <a href="#profil-kamad-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Profil Kamad MA</a>
+                    <a href="#profil-kamad-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Profil Kamad MTs</a>
+                    <a href="#visi-misi-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Visi Misi MA</a>
+                    <a href="#visi-misi-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Visi Misi MTs</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSub('mobile-sub-unggulan')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
+                    <span>Program Unggulan</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-sub-unggulan" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
+                    <a href="#prog-unggulan-ma" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Program Unggulan MA</a>
+                    <a href="#prog-unggulan-mts" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Program Unggulan MTs</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSub('mobile-sub-wakamad')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
+                    <span>Wakamad</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-sub-wakamad" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
+                    <a href="#sarpras" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Sarpras</a>
+                    <a href="#kurikulum" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Kurikulum</a>
+                    <a href="#kesiswaan" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Kesiswaan</a>
+                    <a href="#perpustakaan" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Perpustakaan</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSub('mobile-sub-prestasi')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
+                    <span>Prestasi</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-sub-prestasi" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
+                    <a href="#prestasi-akademik" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Akademik</a>
+                    <a href="#prestasi-non-akademik" onclick="toggleMobileMenu()" class="block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Non-Akademik</a>
+                </div>
+            </div>
+
+            <div>
+                <button onclick="toggleMobileSub('mobile-sub-spmb')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">
+                    <span>SPMB</span>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
+                <div id="mobile-sub-spmb" class="hidden pl-4 space-y-1 mt-1 border-l border-emerald-600 ml-3">
+                    <button onclick="openSpmbModal(); toggleMobileMenu();" class="w-full text-left block py-2 px-3 text-xs text-emerald-100 hover:text-yellow-300">Daftar Murid</button>
+                </div>
+            </div>
+
+            <a href="#berita" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">Berita</a>
+            <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-white font-medium hover:bg-emerald-800/65">Kontak</a>
+            
+            <div class="pt-3 border-t border-emerald-700">
+                <button onclick="openLoginModal(); toggleMobileMenu();" class="glowing-menu-item w-full bg-slate-900 py-3 font-semibold text-sm flex items-center justify-center space-x-2 shadow-md border border-slate-700 text-white">
+                    <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
                     <span>Login Admin</span>
                 </button>
             </div>
         </div>
     </nav>
-    <!-- HERO SECTION (UTUH DI HP TANPA TERPOTONG & LAYAR PENUH DI LAPTOP) -->
+
+    <!-- HERO SECTION (BANNER UTAMA) -->
     <section id="beranda" class="relative bg-white">
-        <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-auto md:h-[620px] lg:h-[680px] object-contain md:object-cover block">
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-6 md:py-0 md:absolute md:inset-x-0 md:bottom-14 z-10">
-            <div class="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                <a href="#spmb" class="w-full sm:w-auto bg-tourmBlue hover:bg-secondary text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition">
-                    Pendaftaran Santri Baru (SPMB)
-                </a>
-                <a href="#profil" class="w-full sm:w-auto bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 font-bold px-8 py-3.5 rounded-xl shadow-md transition">
-                    Profil Pondok
-                </a>
-            </div>
-        </div>
+        <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-auto md:h-[550px] lg:h-[600px] object-contain md:object-cover block">
     </section>
-    <!-- DOKUMENTASI KEGIATAN MADRASAH -->
-    <section class="py-20 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 mb-2">Dokumentasi Kegiatan Madrasah</h2>
-            <p class="text-slate-600 max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
+
+    <!-- DOKUMENTASI KEGIATAN MADRASAH (JARAK DIPADATKAN AGAR FOTO LANGSUNG TERLIHAT SEBAGIAN) -->
+    <section class="py-10 bg-white overflow-hidden border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
+            <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
         </div>
-        <div class="w-full overflow-hidden relative py-4">
+        <div class="w-full overflow-hidden relative py-2">
             <div id="dokumentasi-container" class="animate-dok-scroll flex gap-6 px-3">
-                <div class="text-center py-10 text-slate-400 w-full">
-                    <i class="fa-solid fa-spinner fa-spin text-2xl mr-2"></i> Memuat dokumentasi kegiatan...
+                <div class="text-center py-6 text-slate-400 w-full text-sm">
+                    <i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Memuat dokumentasi kegiatan...
                 </div>
             </div>
         </div>
     </section>
+
     <!-- SECTION BERITA TERKINI & TERPOPULER -->
-    <section class="py-20 bg-slate-50 border-t border-slate-200">
+    <section id="berita" class="py-16 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div class="lg:col-span-8">
@@ -179,6 +333,7 @@
             </div>
         </div>
     </section>
+
     <!-- MODAL DETAIL BACA BERITA -->
     <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] p-6 sm:p-8 shadow-2xl relative flex flex-col">
@@ -197,6 +352,26 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL SPMB (BELUM DIBUKA) -->
+    <div id="spmb-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
+            <button onclick="closeSpmbModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm focus:outline-none">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Informasi SPMB</h3>
+            <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                Mohon maaf, pendaftaran calon murid baru (SPMB) Ponpes As'adiyah Ereng-Ereng saat ini **belum dibuka**. Silakan pantau website resmi kami secara berkala untuk informasi pembukaan pendaftaran selanjutnya.
+            </p>
+            <button onclick="closeSpmbModal()" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition shadow">
+                Tutup
+            </button>
+        </div>
+    </div>
+
     <!-- WIDGET JADWAL SHOLAT BERJALAN LEMBUT -->
     <section class="w-full bg-[#dceee0] py-10 border-y border-emerald-200 overflow-hidden shadow-inner relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -215,6 +390,7 @@
             <div id="marquee-container" class="animate-dok-scroll flex gap-4 px-4"></div>
         </div>
     </section>
+
     <!-- PROFIL SECTION -->
     <section id="profil" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -234,6 +410,7 @@
             </div>
         </div>
     </section>
+
     <!-- FOOTER RESMI -->
     <footer id="kontak" class="bg-white text-slate-600 py-16 border-t border-slate-200 text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -260,14 +437,14 @@
                         <li><a href="#profil" class="hover:text-brandGreen transition">Tentang Pesantren</a></li>
                         <li><a href="#wakamad" class="hover:text-brandGreen transition">Struktur & Pimpinan</a></li>
                         <li><a href="#prestasi" class="hover:text-brandGreen transition">Prestasi Santri</a></li>
-                        <li><a href="#spmb" class="hover:text-brandGreen transition">Pendaftaran SPMB</a></li>
+                        <li><button onclick="openSpmbModal()" class="hover:text-brandGreen transition text-left">Pendaftaran SPMB</button></li>
                     </ul>
                 </div>
                 <!-- Kolom 3: Informasi -->
                 <div class="md:col-span-2 space-y-3">
                     <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">INFORMASI</h4>
                     <ul class="space-y-2 text-xs">
-                        <li><a href="#" class="hover:text-brandGreen transition">Berita Terbaru</a></li>
+                        <li><a href="#berita" class="hover:text-brandGreen transition">Berita Terbaru</a></li>
                         <li><a href="#" class="hover:text-brandGreen transition">Dokumentasi</a></li>
                         <li><a href="#" class="hover:text-brandGreen transition">Jadwal Sholat</a></li>
                         <li><a href="#kontak" class="hover:text-brandGreen transition">Kontak Resmi</a></li>
@@ -301,6 +478,7 @@
             </div>
         </div>
     </footer>
+
     <!-- MODAL LOGIN ADMIN -->
     <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
@@ -320,6 +498,7 @@
             </form>
         </div>
     </div>
+
     <!-- MODAL DASHBOARD ADMIN -->
     <div id="admin-dashboard-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
@@ -408,12 +587,14 @@
             </div>
         </div>
     </div>
+
     <!-- JAVASCRIPT KONEKSI -->
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
         const ADMIN_TOKEN = "admin123";
         const CACHE_KEY = "ponpes_aser_web_cache_v1";
         let globalNewsData = [];
+
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('hamburger-icon');
@@ -426,11 +607,21 @@
                 icon.classList.add('fa-xmark');
             }
         }
+
+        function toggleMobileSub(id) {
+            const sub = document.getElementById(id);
+            if(sub) sub.classList.toggle('hidden');
+        }
+
         function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
         function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
         function openAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.remove('hidden'); }
         function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
         function logoutAdmin() { closeAdminDashboard(); alert('Anda berhasil keluar dari sesi admin.'); }
+
+        function openSpmbModal() { document.getElementById('spmb-modal').classList.remove('hidden'); }
+        function closeSpmbModal() { document.getElementById('spmb-modal').classList.add('hidden'); }
+
         function switchTab(tab) {
             const tabs = ['dok', 'berita', 'header', 'banner'];
             tabs.forEach(t => {
@@ -444,6 +635,7 @@
             if(activeEl) activeEl.classList.remove('hidden');
             if(activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition";
         }
+
         function handleLogin(e) {
             e.preventDefault();
             const pass = document.getElementById('admin-password').value;
@@ -455,10 +647,12 @@
                 alert('Password salah! Silakan coba lagi.');
             }
         }
+
         window.addEventListener('DOMContentLoaded', () => {
             fetchData();
             fetchJadwalSholat();
         });
+
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
@@ -482,6 +676,7 @@
                 })
                 .catch(err => { useFallbackSchedule(); });
         }
+
         function useFallbackSchedule() {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('sholat-tanggal').innerText = new Date().toLocaleDateString('id-ID', options);
@@ -492,6 +687,7 @@
                 {title: 'Maghrib', time: '18:05'}, {title: 'Isya', time: '19:18'}
             ]);
         }
+
         function renderMarquee(list) {
             const container = document.getElementById('marquee-container');
             const htmlCards = list.map(item => `
@@ -502,7 +698,7 @@
             `).join('');
             container.innerHTML = htmlCards + htmlCards;
         }
-        // Optimasi URL gambar Drive agar ringan & cepat dimuat
+
         function optimizeDriveImage(url, size) {
             if (!url) return '';
             if (url.includes('lh3.googleusercontent.com/d/') && !url.includes('=s')) {
@@ -510,7 +706,7 @@
             }
             return url;
         }
-        // Menerapkan data ke elemen halaman
+
         function applyWebsiteData(data) {
             if (!data || data.status !== 'success') return;
             renderDokumentasi(data.dokumentasi);
@@ -522,19 +718,15 @@
             }
             if(data.bannerUrl) {
                 const heroImg = document.getElementById('hero-banner-img');
-                if(heroImg) {
-                    heroImg.src = data.bannerUrl;
-                }
+                if(heroImg) { heroImg.src = data.bannerUrl; }
             }
             if(data.logoUrl) {
                 const footerLogo = document.getElementById('footer-logo-img');
-                if(footerLogo) {
-                    footerLogo.src = data.logoUrl;
-                }
+                if(footerLogo) { footerLogo.src = data.logoUrl; }
             }
         }
+
         function fetchData(forceRefresh = false) {
-            // 1. Tampilkan data dari memori lokal secara instan (0 detik)
             if (!forceRefresh) {
                 const cachedStr = localStorage.getItem(CACHE_KEY);
                 if (cachedStr) {
@@ -546,7 +738,6 @@
                     }
                 }
             }
-            // 2. Ambil pembaruan terbaru dari server di latar belakang
             fetch(WEB_APP_URL + '?action=getAll')
                 .then(res => res.json())
                 .then(data => {
@@ -561,6 +752,7 @@
                 })
                 .catch(err => console.error('Gagal memuat data:', err));
         }
+
         function renderDokumentasi(items) {
             const container = document.getElementById('dokumentasi-container');
             if(!items || items.length === 0) {
@@ -580,6 +772,7 @@
             `).join('');
             container.innerHTML = htmlCards + htmlCards;
         }
+
         function renderBeritaLayout(items) {
             const terkiniContainer = document.getElementById('berita-terkini-container');
             const terpopulerContainer = document.getElementById('berita-terpopuler-container');
@@ -618,6 +811,7 @@
                 </div>
             `).join('');
         }
+
         function openNewsDetail(index) {
             const item = globalNewsData[index];
             if (!item) return;
@@ -630,6 +824,7 @@
         function closeNewsModal() {
             document.getElementById('news-modal').classList.add('hidden');
         }
+
         function submitDokumentasi(e) {
             e.preventDefault();
             const judul = document.getElementById('dok-judul').value;
@@ -665,6 +860,7 @@
             };
             reader.readAsDataURL(file);
         }
+
         function submitBerita(e) {
             e.preventDefault();
             const judul = document.getElementById('berita-judul').value;
@@ -703,6 +899,7 @@
             };
             reader.readAsDataURL(file);
         }
+
         function submitHeaderBg(e) {
             e.preventDefault();
             const fileInput = document.getElementById('header-file');
@@ -735,6 +932,7 @@
             };
             reader.readAsDataURL(file);
         }
+
         function submitBanner(e) {
             e.preventDefault();
             const fileInput = document.getElementById('banner-file');
