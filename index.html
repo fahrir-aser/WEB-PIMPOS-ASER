@@ -117,15 +117,15 @@
             <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm tracking-normal">
                 <a href="#beranda" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Beranda</a>
                 
-                <!-- Dropdown Profil (Hanya Profil MA dan Profil MTs) -->
+                <!-- Dropdown Profil (Buka PDF Profil MA dan Profil MTs) -->
                 <div class="relative group py-1">
                     <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
                         <span>Profil</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#profil-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MA</a>
-                        <a href="#profil-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MTs</a>
+                        <button type="button" onclick="openPdfModal('ma')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MA</button>
+                        <button type="button" onclick="openPdfModal('mts')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MTs</button>
                     </div>
                 </div>
 
@@ -224,15 +224,15 @@
                     <i class="fa-solid fa-house text-emerald-400 w-5"></i><span>Beranda</span>
                 </a>
                 
-                <!-- Profil Dropdown Mobile (Hanya Profil MA dan Profil MTs) -->
+                <!-- Profil Dropdown Mobile (Buka PDF Profil MA dan Profil MTs) -->
                 <div>
                     <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-school text-emerald-400 w-5"></i><span>Profil</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-profil" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <a href="#profil-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MA</a>
-                        <a href="#profil-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MTs</a>
+                        <button type="button" onclick="openPdfModal('ma'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MA</button>
+                        <button type="button" onclick="openPdfModal('mts'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MTs</button>
                     </div>
                 </div>
 
@@ -357,6 +357,30 @@
             </div>
         </div>
     </section>
+
+    <!-- MODAL VIEWER DOKUMEN PDF PROFIL MA / MTs -->
+    <div id="pdf-viewer-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-5xl w-full h-[88vh] shadow-2xl relative flex flex-col overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50 gap-4">
+                <div>
+                    <h3 id="pdf-modal-title" class="text-lg font-bold text-slate-900">Dokumen Profil</h3>
+                    <p class="text-xs text-slate-500">Ponpes As'adiyah Ereng-Ereng</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <a id="pdf-external-link" href="#" target="_blank" rel="noopener noreferrer" class="bg-emerald-700 hover:bg-emerald-600 text-white px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        <span>Buka Tab Baru</span>
+                    </a>
+                    <button type="button" onclick="closePdfModal()" aria-label="Tutup Dokumen PDF" class="bg-slate-200 hover:bg-red-100 text-slate-700 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition focus:outline-none">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 bg-slate-200 relative">
+                <iframe id="pdf-viewer-frame" src="" class="w-full h-full border-0" title="Pratinjau Dokumen PDF"></iframe>
+            </div>
+        </div>
+    </div>
 
     <!-- MODAL DETAIL BACA BERITA -->
     <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -602,8 +626,44 @@
     <script>
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
         const CACHE_KEY = "ponpes_aser_web_cache_v1";
+
+        const PROFIL_PDF_URLS = {
+            ma: {
+                title: "Dokumen Profil MA - As'adiyah Ereng-Ereng",
+                previewUrl: "https://drive.google.com/file/d/1VgxS-E82GizxJFXIC52bcKDnyw8FyC2k/preview",
+                viewUrl: "https://drive.google.com/file/d/1VgxS-E82GizxJFXIC52bcKDnyw8FyC2k/view?usp=drive_link"
+            },
+            mts: {
+                title: "Dokumen Profil MTs - As'adiyah Ereng-Ereng",
+                previewUrl: "https://drive.google.com/file/d/16C2Ak67cqcPK8ul_o2IA8UGxB5XI4auA/preview",
+                viewUrl: "https://drive.google.com/file/d/16C2Ak67cqcPK8ul_o2IA8UGxB5XI4auA/view?usp=drive_link"
+            }
+        };
+
         let globalNewsData = [];
         let activeAdminToken = "";
+
+        function openPdfModal(jenjang) {
+            const docInfo = PROFIL_PDF_URLS[jenjang];
+            if (!docInfo) return;
+
+            const modal = document.getElementById('pdf-viewer-modal');
+            const titleEl = document.getElementById('pdf-modal-title');
+            const frameEl = document.getElementById('pdf-viewer-frame');
+            const extLinkEl = document.getElementById('pdf-external-link');
+
+            titleEl.innerText = docInfo.title;
+            frameEl.src = docInfo.previewUrl;
+            extLinkEl.href = docInfo.viewUrl;
+            modal.classList.remove('hidden');
+        }
+
+        function closePdfModal() {
+            const modal = document.getElementById('pdf-viewer-modal');
+            const frameEl = document.getElementById('pdf-viewer-frame');
+            frameEl.src = "";
+            modal.classList.add('hidden');
+        }
 
         // Fungsi Drawer Menu Samping Kiri yang Lembut
         function toggleMobileMenu() {
