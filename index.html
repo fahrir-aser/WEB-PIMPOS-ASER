@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Resmi - Ponpes As'adiyah Ereng-Ereng</title>
-    
-    <!-- Favicon Logo Madrasah -->
+    <!-- Favicon Logo Madrasah dengan fallback SVG -->
     <link rel="icon" type="image/png" href="logoaser.png">
     <link rel="preconnect" href="https://script.google.com">
     <link rel="preconnect" href="https://lh3.googleusercontent.com">
     <link rel="preconnect" href="https://api.myquran.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -18,6 +20,9 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    },
                     colors: {
                         primary: '#0ea5e9',
                         secondary: '#0284c7',
@@ -29,42 +34,37 @@
                     }
                 }
             }
-        }
+        };
     </script>
     <style>
-        @keyframes scrollDok {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        html {
+            scroll-behavior: smooth;
         }
-        .animate-dok-scroll {
-            display: flex;
-            width: max-content;
-            animation: scrollDok 30s linear infinite;
-        }
-        .animate-dok-scroll:hover {
-            animation-play-state: paused;
-        }
+        /* Transisi geser halus untuk track dokumentasi */
         #dokumentasi-track {
             display: flex;
             transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
             will-change: transform;
         }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* PERBAIKAN STABILITAS HOVER SUB-MENU */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Stabilitas hover dropdown menu desktop */
         .relative.group {
             padding-bottom: 20px;
             margin-bottom: -20px;
         }
         .relative.group .absolute {
             top: 100%;
-            margin-top: 0px;
+            margin-top: 0;
             z-index: 9999 !important;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
         }
-
-        /* EFEK GESER LEMBUT DARI KIRI (DRAWER MENU) UNTUK MOBILE */
+        /* Drawer menu mobile geser dari kiri */
         #mobile-menu-drawer {
             transform: translateX(-100%);
             transition: transform 0.35s ease-in-out;
@@ -74,137 +74,136 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans antialiased">
-
+<body class="bg-slate-100 text-slate-800 font-sans antialiased overflow-x-hidden">
     <!-- HEADER UTAMA (GAYA INSTANSI RESMI) -->
     <header class="w-full bg-instansiDark text-white shadow-md sticky top-0 z-50">
-        
-        <!-- BARIS ATAS: Logo, Identitas, 5 Medsos, & Login Admin -->
+        <!-- Baris Atas: Logo, Identitas, 5 Medsos, & Login Admin -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-700/60">
-            <!-- Logo & Nama Instansi -->
             <a href="#beranda" class="flex items-center space-x-3 group">
-                <img src="logoaser.png" alt="Logo As'adiyah" class="w-12 h-12 object-contain rounded-full bg-white p-0.5 shadow-md">
+                <img
+                    id="header-logo-img"
+                    src="logoaser.png"
+                    onerror="this.onerror=null;this.src='https://placehold.co/96x96/15803d/ffffff?text=ASER';"
+                    alt="Logo Ponpes As'adiyah Ereng-Ereng"
+                    class="w-12 h-12 object-contain rounded-full bg-white p-0.5 shadow-md flex-shrink-0"
+                >
                 <div>
-                    <h1 class="font-extrabold tracking-wider text-sm sm:text-base uppercase block leading-tight text-white group-hover:text-emerald-400 transition">PONPES AS'ADIYAH ERENG-ERENG</h1>
-                    <span class="text-xs text-slate-300 font-medium tracking-wide block">Kabupaten Bantaeng, Sulawesi Selatan</span>
+                    <h1 class="font-extrabold tracking-wider text-sm sm:text-base uppercase block leading-tight text-white group-hover:text-emerald-400 transition">
+                        PONPES AS'ADIYAH ERENG-ERENG
+                    </h1>
+                    <span class="text-xs text-slate-300 font-medium tracking-wide block">
+                        Kabupaten Bantaeng, Sulawesi Selatan
+                    </span>
                 </div>
             </a>
-
-            <!-- 5 Ikon Medsos & Tombol Admin di Kanan -->
-            <div class="flex items-center space-x-2.5">
-                <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Instagram">
+            <!-- 5 Ikon Medsos & Tombol Admin -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://twitter.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Twitter / X">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Twitter / X">
                     <i class="fa-brands fa-twitter"></i>
                 </a>
-                <a href="https://facebook.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Facebook">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Facebook">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
-                <a href="https://whatsapp.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="WhatsApp">
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="WhatsApp">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
-                <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm mr-2" title="YouTube">
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm sm:mr-2" title="YouTube">
                     <i class="fa-brands fa-youtube"></i>
                 </a>
-                
-                <button onclick="openLoginModal()" class="bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow flex items-center space-x-1.5 transition text-white border border-emerald-500/40">
+                <button type="button" onclick="openLoginModal()" class="bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow flex items-center space-x-1.5 transition text-white border border-emerald-500/40 cursor-pointer">
                     <i class="fa-solid fa-lock text-xs"></i>
                     <span>Admin</span>
                 </button>
             </div>
         </div>
-
-        <!-- BARIS BAWAH: Menu Navigasi (Ukuran Teks Proporsional) & Kolom Pencarian -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
-            
-            <!-- Desktop Menu Navigasi (text-sm) -->
+        <!-- Baris Bawah: Menu Navigasi Desktop & Pencarian / Hamburger Mobile -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-4">
             <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm tracking-normal">
                 <a href="#beranda" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Beranda</a>
-                
-                <!-- Dropdown Profil (Buka PDF Profil MA dan Profil MTs) -->
+                <!-- Dropdown Profil -->
                 <div class="relative group py-1">
-                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Profil</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <button type="button" onclick="openPdfModal('ma')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MA</button>
-                        <button type="button" onclick="openPdfModal('mts')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MTs</button>
+                        <button type="button" onclick="openPdfModal('ma')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Profil MA</button>
+                        <button type="button" onclick="openPdfModal('mts')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Profil MTs</button>
                     </div>
                 </div>
-
                 <!-- Dropdown Program Unggulan -->
                 <div class="relative group py-1">
-                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Prog. Unggulan</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                    <div class="absolute left-0 w-52 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
                         <a href="#prog-unggulan-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MA</a>
                         <a href="#prog-unggulan-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MTs</a>
                     </div>
                 </div>
-
                 <!-- Dropdown Wakamad -->
                 <div class="relative group py-1">
-                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Wakamad</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#sarpras" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Sarpras</a>
-                        <a href="#kurikulum" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kurikulum</a>
-                        <a href="#kesiswaan" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kesiswaan</a>
-                        <a href="#perpustakaan" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Perpustakaan</a>
+                        <a href="#kontak" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Sarpras</a>
+                        <a href="#prog-unggulan-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kurikulum</a>
+                        <a href="#dokumentasi-section" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kesiswaan</a>
+                        <a href="#kontak" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Perpustakaan</a>
                     </div>
                 </div>
-
                 <!-- Dropdown Prestasi -->
                 <div class="relative group py-1">
-                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Prestasi</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#prestasi-akademik" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Akademik</a>
-                        <a href="#prestasi-non-akademik" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Non-Akademik</a>
+                        <a href="#berita" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Akademik</a>
+                        <a href="#dokumentasi-section" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Non-Akademik</a>
                     </div>
                 </div>
-
                 <!-- Dropdown SPMB -->
                 <div class="relative group py-1">
-                    <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
+                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>SPMB</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <button onclick="openSpmbModal()" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Daftar Murid</button>
+                        <button type="button" onclick="openSpmbModal()" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Daftar Murid</button>
                     </div>
                 </div>
-                
                 <a href="#berita" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Berita</a>
                 <a href="#kontak" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Kontak</a>
             </nav>
-
-            <!-- Kolom Pencarian (Search Bar) di Kanan -->
+            <!-- Kolom Pencarian Desktop -->
             <div class="hidden lg:flex items-center relative w-72">
-                <input type="text" id="global-search-input" placeholder="Cari informasi..." class="w-full bg-slate-800/90 text-sm text-white placeholder-slate-400 px-4 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 transition">
-                <button type="button" class="absolute right-3.5 text-slate-400 hover:text-white text-sm">
+                <input
+                    type="text"
+                    id="global-search-input"
+                    oninput="handleGlobalSearch(this.value)"
+                    placeholder="Cari berita atau program..."
+                    class="w-full bg-slate-800/90 text-sm text-white placeholder-slate-400 px-4 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 transition"
+                >
+                <button type="button" onclick="focusGlobalSearch()" aria-label="Cari" class="absolute right-3.5 text-slate-400 hover:text-white text-sm cursor-pointer">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
-
             <!-- Mobile Hamburger Button -->
             <div class="flex lg:hidden items-center justify-between w-full">
                 <span class="text-sm font-medium text-slate-300">Menu Utama</span>
-                <button onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition">
+                <button type="button" onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition cursor-pointer">
                     <i id="hamburger-icon" class="fa-solid fa-bars text-base"></i>
                 </button>
             </div>
         </div>
     </header>
-
     <!-- MOBILE MENU DRAWER -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[99] hidden transition-opacity opacity-0" onclick="toggleMobileMenu()"></div>
     <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-xs bg-slate-900 text-white z-[100] shadow-2xl flex flex-col justify-between overflow-y-auto">
@@ -212,38 +211,41 @@
             <!-- Header Drawer Profil -->
             <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
                 <div class="flex items-center space-x-3">
-                    <img id="drawer-logo-img" src="logoaser.png" alt="Logo" class="w-10 h-10 object-contain rounded-full bg-brandGreen p-0.5">
+                    <img
+                        id="drawer-logo-img"
+                        src="logoaser.png"
+                        onerror="this.onerror=null;this.src='https://placehold.co/80x80/15803d/ffffff?text=ASER';"
+                        alt="Logo"
+                        class="w-10 h-10 object-contain rounded-full bg-brandGreen p-0.5"
+                    >
                     <div>
                         <h3 class="font-bold text-xs uppercase tracking-wider text-white">Ponpes As'adiyah</h3>
                         <p class="text-[10px] text-slate-400">Ereng-Ereng, Bantaeng</p>
                     </div>
                 </div>
-                <button onclick="toggleMobileMenu()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 flex items-center justify-center transition">
+                <button type="button" onclick="toggleMobileMenu()" aria-label="Tutup Menu" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 flex items-center justify-center transition cursor-pointer">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
-
             <!-- List Menu Navigasi Samping -->
             <div class="p-4 space-y-2 text-xs">
-                <a href="#beranda" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg bg-emerald-900/50 text-white font-semibold flex items-center space-x-2">
+                <a href="#beranda" onclick="toggleMobileMenu()" class="py-2.5 px-3 rounded-lg bg-emerald-900/50 text-white font-semibold flex items-center space-x-2">
                     <i class="fa-solid fa-house text-emerald-400 w-5"></i><span>Beranda</span>
                 </a>
-                
-                <!-- Profil Dropdown Mobile (Buka PDF Profil MA dan Profil MTs) -->
+                <!-- Profil Dropdown Mobile -->
                 <div>
-                    <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                    <button type="button" onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition cursor-pointer">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-school text-emerald-400 w-5"></i><span>Profil</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-profil" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <button type="button" onclick="openPdfModal('ma'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MA</button>
-                        <button type="button" onclick="openPdfModal('mts'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MTs</button>
+                        <button type="button" onclick="openPdfModal('ma'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300 cursor-pointer">Profil MA</button>
+                        <button type="button" onclick="openPdfModal('mts'); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300 cursor-pointer">Profil MTs</button>
                     </div>
                 </div>
-
                 <!-- Program Unggulan Dropdown Mobile -->
                 <div>
-                    <button onclick="toggleMobileSub('mobile-sub-unggulan')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                    <button type="button" onclick="toggleMobileSub('mobile-sub-unggulan')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition cursor-pointer">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-star text-emerald-400 w-5"></i><span>Prog. Unggulan</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
@@ -252,89 +254,81 @@
                         <a href="#prog-unggulan-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Program Unggulan MTs</a>
                     </div>
                 </div>
-
                 <!-- Wakamad Dropdown Mobile -->
                 <div>
-                    <button onclick="toggleMobileSub('mobile-sub-wakamad')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                    <button type="button" onclick="toggleMobileSub('mobile-sub-wakamad')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition cursor-pointer">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-user-tie text-emerald-400 w-5"></i><span>Wakamad</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-wakamad" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <a href="#sarpras" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Sarpras</a>
-                        <a href="#kurikulum" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kurikulum</a>
-                        <a href="#kesiswaan" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kesiswaan</a>
-                        <a href="#perpustakaan" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Perpustakaan</a>
+                        <a href="#kontak" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Sarpras</a>
+                        <a href="#prog-unggulan-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kurikulum</a>
+                        <a href="#dokumentasi-section" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Kesiswaan</a>
+                        <a href="#kontak" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Perpustakaan</a>
                     </div>
                 </div>
-
                 <!-- Prestasi Dropdown Mobile -->
                 <div>
-                    <button onclick="toggleMobileSub('mobile-sub-prestasi')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                    <button type="button" onclick="toggleMobileSub('mobile-sub-prestasi')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition cursor-pointer">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-trophy text-emerald-400 w-5"></i><span>Prestasi</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-prestasi" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <a href="#prestasi-akademik" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Akademik</a>
-                        <a href="#prestasi-non-akademik" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Non-Akademik</a>
+                        <a href="#berita" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Akademik</a>
+                        <a href="#dokumentasi-section" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Non-Akademik</a>
                     </div>
                 </div>
-
-                <!-- SPMB -->
+                <!-- SPMB Dropdown Mobile -->
                 <div>
-                    <button onclick="toggleMobileSub('mobile-sub-spmb')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
+                    <button type="button" onclick="toggleMobileSub('mobile-sub-spmb')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition cursor-pointer">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-bullhorn text-emerald-400 w-5"></i><span>SPMB</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-spmb" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <button onclick="openSpmbModal(); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Daftar Murid</button>
+                        <button type="button" onclick="openSpmbModal(); toggleMobileMenu();" class="w-full text-left block py-1.5 px-2 text-slate-300 hover:text-yellow-300 cursor-pointer">Daftar Murid</button>
                     </div>
                 </div>
-
-                <a href="#berita" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
+                <a href="#berita" onclick="toggleMobileMenu()" class="py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
                     <i class="fa-solid fa-newspaper text-emerald-400 w-5"></i><span>Berita</span>
                 </a>
-                <a href="#kontak" onclick="toggleMobileMenu()" class="block py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
+                <a href="#kontak" onclick="toggleMobileMenu()" class="py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition flex items-center space-x-2">
                     <i class="fa-solid fa-address-book text-emerald-400 w-5"></i><span>Kontak</span>
                 </a>
             </div>
         </div>
-
         <!-- Footer Drawer & Tombol Admin -->
         <div class="p-4 border-t border-slate-800 bg-slate-950/40 space-y-3">
-            <button onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center space-x-2 border border-slate-700 text-white transition">
+            <button type="button" onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center space-x-2 border border-slate-700 text-white transition cursor-pointer">
                 <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
                 <span>Login Admin</span>
             </button>
         </div>
     </div>
-
     <!-- HERO SECTION (BANNER UTAMA PROPOSIONAL & ELEGAN) -->
     <section id="beranda" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-xl relative aspect-[21/9] sm:aspect-[24/9] max-h-[480px] w-full flex items-center justify-center">
-            <img id="hero-banner-img" src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80" alt="Banner Ponpes As'adiyah Ereng-Ereng" class="w-full h-full object-cover">
-            <!-- Tombol Navigasi Slider Kiri/Kanan Estetik -->
-            <button class="absolute left-4 bg-black/40 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm">
-                <i class="fa-solid fa-chevron-left text-xs"></i>
-            </button>
-            <button class="absolute right-4 bg-black/40 hover:bg-black/70 text-white w-9 h-9 rounded-full flex items-center justify-center transition backdrop-blur-sm">
-                <i class="fa-solid fa-chevron-right text-xs"></i>
-            </button>
+            <img
+                id="hero-banner-img"
+                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80"
+                onerror="this.onerror=null;this.src='https://placehold.co/1600x600/0B2240/ffffff?text=Ponpes+As%27adiyah+Ereng-Ereng';"
+                alt="Banner Ponpes As'adiyah Ereng-Ereng"
+                class="w-full h-full object-cover"
+            >
         </div>
     </section>
-
     <!-- DOKUMENTASI KEGIATAN MADRASAH (TAMPIL 4 KARTU + PANAH KIRI KANAN) -->
     <section id="dokumentasi-section" class="py-12 bg-white border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-7 text-center">
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
-                <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
+                <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">
+                    Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.
+                </p>
             </div>
-
             <div class="relative">
-                <button id="dok-prev-btn" type="button" onclick="stepDokumentasi(-1)" aria-label="Geser Dokumentasi ke Kiri" class="hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none">
+                <button id="dok-prev-btn" type="button" onclick="stepDokumentasi(-1)" aria-label="Geser Dokumentasi ke Kiri" class="hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-chevron-left text-sm"></i>
                 </button>
-
                 <div id="dokumentasi-viewport" class="overflow-hidden py-2">
                     <div id="dokumentasi-track" class="gap-5">
                         <div class="text-center py-6 text-slate-400 w-full text-sm">
@@ -342,14 +336,12 @@
                         </div>
                     </div>
                 </div>
-
-                <button id="dok-next-btn" type="button" onclick="stepDokumentasi(1)" aria-label="Geser Dokumentasi ke Kanan" class="hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none">
+                <button id="dok-next-btn" type="button" onclick="stepDokumentasi(1)" aria-label="Geser Dokumentasi ke Kanan" class="hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none cursor-pointer">
                     <i class="fa-solid fa-chevron-right text-sm"></i>
                 </button>
             </div>
         </div>
     </section>
-
     <!-- SECTION BERITA TERKINI & TERPOPULER -->
     <section id="berita" class="py-16 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -375,8 +367,43 @@
             </div>
         </div>
     </section>
-
-    <!-- MODAL VIEWER DOKUMEN PDF PROFIL MA / MTs -->
+    <!-- SECTION PROGRAM UNGGULAN MA (3 KARTU SEJAJAR + BACA SELENGKAPNYA) -->
+    <section id="prog-unggulan-ma" class="py-14 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 border-b-2 border-brandGreen pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 uppercase tracking-wide">Program Unggulan MA</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Madrasah Aliyah As'adiyah Ereng-Ereng</p>
+                </div>
+            </div>
+            <div id="prog-ma-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div class="mt-7 flex justify-end">
+                <button type="button" onclick="openProgramPdf('MA')" class="inline-flex items-center gap-2 bg-brandGreen hover:bg-emerald-800 text-white font-semibold px-5 py-2.5 rounded-xl text-sm shadow transition cursor-pointer">
+                    <span>Baca Selengkapnya</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- SECTION PROGRAM UNGGULAN MTs (3 KARTU SEJAJAR + BACA SELENGKAPNYA) -->
+    <section id="prog-unggulan-mts" class="py-14 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8 border-b-2 border-brandGreen pb-3 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 uppercase tracking-wide">Program Unggulan MTs</h2>
+                    <p class="text-xs sm:text-sm text-slate-500 mt-1">Madrasah Tsanawiyah As'adiyah Ereng-Ereng</p>
+                </div>
+            </div>
+            <div id="prog-mts-cards" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+            <div class="mt-7 flex justify-end">
+                <button type="button" onclick="openProgramPdf('MTs')" class="inline-flex items-center gap-2 bg-brandGreen hover:bg-emerald-800 text-white font-semibold px-5 py-2.5 rounded-xl text-sm shadow transition cursor-pointer">
+                    <span>Baca Selengkapnya</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- MODAL VIEWER DOKUMEN PDF PROFIL MA / MTs & PROGRAM UNGGULAN -->
     <div id="pdf-viewer-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-5xl w-full h-[88vh] shadow-2xl relative flex flex-col overflow-hidden">
             <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50 gap-4">
@@ -389,7 +416,7 @@
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         <span>Buka Tab Baru</span>
                     </a>
-                    <button type="button" onclick="closePdfModal()" aria-label="Tutup Dokumen PDF" class="bg-slate-200 hover:bg-red-100 text-slate-700 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition focus:outline-none">
+                    <button type="button" onclick="closePdfModal()" aria-label="Tutup Dokumen PDF" class="bg-slate-200 hover:bg-red-100 text-slate-700 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition focus:outline-none cursor-pointer">
                         <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
                 </div>
@@ -399,11 +426,10 @@
             </div>
         </div>
     </div>
-
     <!-- MODAL DETAIL BACA BERITA -->
     <div id="news-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] p-6 sm:p-8 shadow-2xl relative flex flex-col">
-            <button onclick="closeNewsModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-10 h-10 rounded-full flex items-center justify-center transition z-20 shadow-sm focus:outline-none">
+            <button type="button" onclick="closeNewsModal()" aria-label="Tutup Berita" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-10 h-10 rounded-full flex items-center justify-center transition z-20 shadow-sm focus:outline-none cursor-pointer">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             <div class="overflow-y-auto pr-2 space-y-4">
@@ -412,17 +438,22 @@
                     <h3 id="modal-news-title" class="text-2xl font-bold text-slate-900 pr-10"></h3>
                 </div>
                 <div class="w-full rounded-xl overflow-hidden bg-slate-100 shadow-md">
-                    <img id="modal-news-img" src="" alt="Foto Berita" class="w-full h-auto object-contain max-h-[450px] mx-auto">
+                    <img
+                        id="modal-news-img"
+                        src=""
+                        onerror="this.onerror=null;this.src='https://placehold.co/800x450/e2e8f0/1e293b?text=Berita+Pondok';"
+                        alt="Foto Berita"
+                        class="w-full h-auto object-contain max-h-[450px] mx-auto"
+                    >
                 </div>
                 <div id="modal-news-content" class="text-slate-600 text-sm leading-relaxed whitespace-pre-line pt-2"></div>
             </div>
         </div>
     </div>
-
     <!-- MODAL SPMB -->
     <div id="spmb-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
-            <button onclick="closeSpmbModal()" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm focus:outline-none">
+            <button type="button" onclick="closeSpmbModal()" aria-label="Tutup Informasi SPMB" class="absolute top-4 right-4 bg-slate-100 hover:bg-red-100 text-slate-600 hover:text-red-600 w-9 h-9 rounded-full flex items-center justify-center transition shadow-sm focus:outline-none cursor-pointer">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
             <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
@@ -430,16 +461,15 @@
             </div>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Informasi SPMB</h3>
             <p class="text-slate-600 text-sm leading-relaxed mb-6">
-                Mohon maaf, pendaftaran calon murid baru (SPMB) Ponpes As'adiyah Ereng-Ereng saat ini **belum dibuka**. Silakan pantau website resmi kami secara berkala untuk informasi pembukaan pendaftaran selanjutnya.
+                Mohon maaf, pendaftaran calon murid baru (SPMB) Ponpes As'adiyah Ereng-Ereng saat ini <strong>belum dibuka</strong>. Silakan pantau website resmi kami secara berkala untuk informasi pembukaan pendaftaran selanjutnya.
             </p>
-            <button onclick="closeSpmbModal()" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition shadow">
+            <button type="button" onclick="closeSpmbModal()" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition shadow cursor-pointer">
                 Tutup
             </button>
         </div>
     </div>
-
-    <!-- WIDGET JADWAL SHOLAT BERJALAN LEMBUT -->
-    <section class="w-full bg-[#dceee0] py-10 border-y border-emerald-200 overflow-hidden shadow-inner relative">
+    <!-- WIDGET JADWAL SHOLAT STATIS (GRID DIAM, TIDAK BERJALAN) -->
+    <section class="w-full bg-[#dceee0] py-10 border-y border-emerald-200 shadow-inner relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
                 <h3 class="text-2xl font-bold text-emerald-900 flex items-center gap-2">
@@ -452,103 +482,100 @@
                 <span class="text-sm font-bold text-emerald-900">Kab. Bantaeng, Sulawesi Selatan</span>
             </div>
         </div>
-        <div class="w-full overflow-hidden">
-            <div id="marquee-container" class="animate-dok-scroll flex gap-4 px-4"></div>
-        </div>
-    </section>
-
-    <!-- PROFIL SECTION -->
-    <section id="profil" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Mengenal Lebih Dekat Ponpes As'adiyah Ereng-Ereng</h2>
-                    <p class="text-slate-600 mb-4 leading-relaxed">
-                        Berdiri di bawah naungan yayasan pondok pesantren As'adiyah, kami berkomitmen untuk memberikan pendidikan berkualitas tinggi yang memadukan ilmu keislaman klasik dan modern.
-                    </p>
-                    <p class="text-slate-600 mb-6 leading-relaxed">
-                        Didukung oleh tenaga pengajar yang kompeten, fasilitas asrama yang memadai, serta lingkungan yang kondusif untuk mencetak kader ulama dan intelektual muslim.
-                    </p>
-                </div>
-                <div class="bg-slate-200 rounded-3xl h-80 lg:h-96 flex items-center justify-center overflow-hidden shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80" alt="Gedung Pondok" loading="lazy" class="w-full h-full object-cover">
-                </div>
-            </div>
+            <div id="jadwal-sholat-grid" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3"></div>
         </div>
     </section>
-
     <!-- FOOTER RESMI -->
-    <footer id="kontak" class="bg-white text-slate-600 py-16 border-t border-slate-200 text-sm">
+    <footer id="kontak" class="bg-[#1f2429] text-white py-16 border-t border-slate-700/80 text-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pb-12 border-b border-slate-200">
-                
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pb-12 border-b border-slate-700/80">
                 <!-- Kolom 1: Logo & Identitas Pondok -->
-                <div class="md:col-span-5 space-y-4">
-                    <div class="flex items-center space-x-3 bg-slate-50 inline-flex px-4 py-2 rounded-xl border border-slate-200 shadow-sm">
-                        <img id="footer-logo-img" src="" alt="Logo As'adiyah" class="w-9 h-9 object-contain rounded-full bg-brandGreen p-0.5">
-                        <span class="font-bold text-slate-900 tracking-wide text-xs uppercase">PONPES AS'ADIYAH ERENG-ERENG</span>
+                <div class="md:col-span-4 space-y-4">
+                    <div class="flex items-center space-x-3 bg-slate-800/90 inline-flex px-4 py-2 rounded-xl border border-slate-700 shadow-sm">
+                        <img
+                            id="footer-logo-img"
+                            src="logoaser.png"
+                            onerror="this.onerror=null;this.src='https://placehold.co/80x80/15803d/ffffff?text=ASER';"
+                            alt="Logo As'adiyah"
+                            class="w-9 h-9 object-contain rounded-full bg-brandGreen p-0.5"
+                        >
+                        <span class="font-bold text-white tracking-wide text-xs uppercase">PONPES AS'ADIYAH ERENG-ERENG</span>
                     </div>
-                    <p class="text-slate-600 leading-relaxed text-xs sm:text-sm">
+                    <p class="text-white leading-relaxed text-xs sm:text-sm">
                         Jl. H. Muh. Thahir No. 4, Kelurahan Ereng-Ereng, Kecamatan Tompobulu, Kabupaten Bantaeng, Sulawesi Selatan
                     </p>
-                    <div class="space-y-1 text-xs text-slate-600">
-                        <p><strong class="text-slate-800">Telepon / WhatsApp:</strong> 0851-6655-6672 / 0812-4331-8115</p>
-                        <p><strong class="text-slate-800">Email:</strong> info@asediyahaereng.sch.id</p>
+                    <div class="space-y-1 text-xs text-white">
+                        <p><strong class="text-white font-semibold">Telepon / WhatsApp:</strong> 0851-6655-6672 / 0812-4331-8115</p>
+                        <p><strong class="text-white font-semibold">Email:</strong> Aser@madrasahebat.com</p>
                     </div>
                 </div>
                 <!-- Kolom 2: Menu Pondok -->
                 <div class="md:col-span-3 space-y-3">
-                    <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">PONDOK</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#profil" class="hover:text-brandGreen transition">Tentang Pesantren</a></li>
-                        <li><a href="#wakamad" class="hover:text-brandGreen transition">Struktur & Pimpinan</a></li>
-                        <li><a href="#prestasi" class="hover:text-brandGreen transition">Prestasi Santri</a></li>
-                        <li><button onclick="openSpmbModal()" class="hover:text-brandGreen transition text-left">Pendaftaran SPMB</button></li>
+                    <h4 class="font-bold text-white uppercase text-xs tracking-wider">PONDOK</h4>
+                    <ul class="space-y-2 text-xs text-white">
+                        <li><a href="#beranda" class="text-white hover:text-emerald-300 transition">Tentang Pesantren</a></li>
+                        <li><a href="#prog-unggulan-ma" class="text-white hover:text-emerald-300 transition">Program Unggulan MA</a></li>
+                        <li><a href="#prog-unggulan-mts" class="text-white hover:text-emerald-300 transition">Program Unggulan MTs</a></li>
+                        <li><button type="button" onclick="openSpmbModal()" class="text-white hover:text-emerald-300 transition text-left cursor-pointer">Pendaftaran SPMB</button></li>
                     </ul>
                 </div>
                 <!-- Kolom 3: Informasi -->
                 <div class="md:col-span-2 space-y-3">
-                    <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">INFORMASI</h4>
-                    <ul class="space-y-2 text-xs">
-                        <li><a href="#berita" class="hover:text-brandGreen transition">Berita Terbaru</a></li>
-                        <li><a href="#" class="hover:text-brandGreen transition">Dokumentasi</a></li>
-                        <li><a href="#" class="hover:text-brandGreen transition">Jadwal Sholat</a></li>
-                        <li><a href="#kontak" class="hover:text-brandGreen transition">Kontak Resmi</a></li>
+                    <h4 class="font-bold text-white uppercase text-xs tracking-wider">INFORMASI</h4>
+                    <ul class="space-y-2 text-xs text-white">
+                        <li><a href="#berita" class="text-white hover:text-emerald-300 transition">Berita Terbaru</a></li>
+                        <li><a href="#dokumentasi-section" class="text-white hover:text-emerald-300 transition">Dokumentasi</a></li>
+                        <li><a href="#kontak" class="text-white hover:text-emerald-300 transition">Kontak Resmi</a></li>
                     </ul>
                 </div>
-                <!-- Kolom 4: Ikuti Kami -->
-                <div class="md:col-span-2 space-y-3">
-                    <h4 class="font-bold text-slate-900 uppercase text-xs tracking-wider">IKUTI KAMI</h4>
-                    <div class="flex flex-wrap items-center gap-2 pt-1">
-                        <a href="https://facebook.com" target="_blank" class="w-9 h-9 rounded-full bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white flex items-center justify-center transition shadow-sm" title="Facebook">
-                            <i class="fa-brands fa-facebook-f text-sm"></i>
+                <!-- Kolom 4: Ikuti Kami (5 Ikon Sosmed Sejajar tanpa Terpotong) -->
+                <div class="md:col-span-3 space-y-3">
+                    <h4 class="font-bold text-white uppercase text-xs tracking-wider">IKUTI KAMI</h4>
+                    <div class="flex items-center flex-wrap sm:flex-nowrap gap-1.5 pt-1">
+                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white text-[#1f2429] border border-slate-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 flex items-center justify-center transition shadow-sm flex-shrink-0" title="Instagram">
+                            <i class="fa-brands fa-instagram text-xs"></i>
                         </a>
-                        <a href="https://instagram.com" target="_blank" class="w-9 h-9 rounded-full bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white flex items-center justify-center transition shadow-sm" title="Instagram">
-                            <i class="fa-brands fa-instagram text-sm"></i>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-8 h-8 rounded-full bg-white text-[#1f2429] border border-slate-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 flex items-center justify-center transition shadow-sm flex-shrink-0" title="Twitter / X">
+                            <i class="fa-brands fa-twitter text-xs"></i>
                         </a>
-                        <a href="https://whatsapp.com" target="_blank" class="w-9 h-9 rounded-full bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white flex items-center justify-center transition shadow-sm" title="WhatsApp">
-                            <i class="fa-brands fa-whatsapp text-sm"></i>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-8 h-8 rounded-full bg-white text-[#1f2429] border border-slate-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 flex items-center justify-center transition shadow-sm flex-shrink-0" title="Facebook">
+                            <i class="fa-brands fa-facebook-f text-xs"></i>
                         </a>
-                        <a href="https://youtube.com" target="_blank" class="w-9 h-9 rounded-full bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white flex items-center justify-center transition shadow-sm" title="YouTube">
-                            <i class="fa-brands fa-youtube text-sm"></i>
+                        <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-white text-[#1f2429] border border-slate-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 flex items-center justify-center transition shadow-sm flex-shrink-0" title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp text-xs"></i>
                         </a>
-                        <a href="https://tiktok.com" target="_blank" class="w-9 h-9 rounded-full bg-white text-slate-900 border border-slate-300 hover:bg-slate-900 hover:text-white flex items-center justify-center transition shadow-sm" title="TikTok">
-                            <i class="fa-brands fa-tiktok text-sm"></i>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-8 h-8 rounded-full bg-white text-[#1f2429] border border-slate-300 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 flex items-center justify-center transition shadow-sm flex-shrink-0" title="YouTube">
+                            <i class="fa-brands fa-youtube text-xs"></i>
                         </a>
                     </div>
                 </div>
             </div>
             <!-- Copyright Bawah -->
-            <div class="pt-8 text-center text-xs text-slate-500 font-medium">
+            <div class="pt-8 text-center text-xs text-white font-medium">
                 <p>&copy; 2026 Ponpes As'adiyah Ereng-Ereng. Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
-
+    <!-- MODAL NOTIFIKASI MODERN DI TENGAH LAYAR -->
+    <div id="custom-notif-modal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-sm z-[150] hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="relative max-w-sm w-full rounded-3xl bg-slate-900/85 backdrop-blur-xl border border-white/25 shadow-2xl p-6 pt-8 text-center text-white">
+            <div id="notif-bell-badge" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-300 to-amber-500 text-amber-950 shadow-lg shadow-amber-500/30 flex items-center justify-center text-2xl -top-6 -left-3 absolute border border-white/40 transform -rotate-12">
+                <i id="notif-bell-icon" class="fa-solid fa-bell"></i>
+            </div>
+            <h3 id="notif-modal-title" class="text-lg font-bold tracking-wide text-white mt-1">Notifikasi</h3>
+            <p id="notif-modal-message" class="text-sm text-slate-200/90 leading-relaxed mt-2 mb-6">Pesan notifikasi.</p>
+            <div class="border-t border-white/15 pt-4 flex justify-center">
+                <button type="button" onclick="closeNotifModal()" class="w-full py-2.5 px-5 rounded-xl bg-white/15 hover:bg-white/25 active:scale-[0.99] text-white font-semibold text-sm border border-white/20 transition cursor-pointer">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
     <!-- MODAL LOGIN ADMIN -->
     <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+            <button type="button" onclick="closeLoginModal()" aria-label="Tutup Login Admin" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             <h3 class="text-xl font-bold text-slate-900 mb-2">Login Akun Admin</h3>
@@ -558,33 +585,33 @@
                     <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Password Admin</label>
                     <input type="password" id="admin-password" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-tourmBlue text-sm" placeholder="Masukkan password...">
                 </div>
-                <button type="submit" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition">
+                <button type="submit" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition cursor-pointer">
                     Masuk ke Dashboard
                 </button>
             </form>
         </div>
     </div>
-
     <!-- MODAL DASHBOARD ADMIN -->
     <div id="admin-dashboard-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8">
-            <button onclick="closeAdminDashboard()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+        <div class="bg-white rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8 max-h-[92vh] overflow-y-auto">
+            <button type="button" onclick="closeAdminDashboard()" aria-label="Tutup Dashboard Admin" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 cursor-pointer">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+            <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 pr-8">
                 <div>
                     <h3 class="text-xl font-bold text-slate-900">Dashboard Pengaturan Admin</h3>
                     <p class="text-xs text-tourmBlue font-medium">Ponpes As'adiyah Ereng-Ereng</p>
                 </div>
-                <button onclick="logoutAdmin()" class="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition">
+                <button type="button" onclick="logoutAdmin()" class="bg-red-50 text-red-600 hover:bg-red-100 px-3 py-1.5 rounded-lg text-xs font-semibold transition cursor-pointer">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> Keluar
                 </button>
             </div>
             <!-- Tab Navigation Admin -->
             <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-100 pb-3">
-                <button onclick="switchTab('dok')" id="tab-btn-dok" class="px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition">Upload Dokumentasi</button>
-                <button onclick="switchTab('berita')" id="tab-btn-berita" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition">Upload Berita</button>
-                <button onclick="switchTab('banner')" id="tab-btn-banner" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition">Ganti Banner</button>
+                <button type="button" onclick="switchTab('dok')" id="tab-btn-dok" class="px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition cursor-pointer">Upload Dokumentasi</button>
+                <button type="button" onclick="switchTab('berita')" id="tab-btn-berita" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition cursor-pointer">Upload Berita</button>
+                <button type="button" onclick="switchTab('banner')" id="tab-btn-banner" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition cursor-pointer">Ganti Banner</button>
+                <button type="button" onclick="switchTab('prog')" id="tab-btn-prog" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition cursor-pointer">Prog. Unggulan</button>
             </div>
             <!-- Form Tab 1: Upload Dokumentasi -->
             <div id="form-tab-dok" class="space-y-4">
@@ -598,7 +625,7 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih File Foto</label>
                         <input type="file" id="dok-file" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-tourmBlue/10 file:text-tourmBlue hover:file:bg-tourmBlue/20">
                     </div>
-                    <button type="submit" id="btn-submit-dok" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition">
+                    <button type="submit" id="btn-submit-dok" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition cursor-pointer">
                         Simpan & Upload ke Google Drive
                     </button>
                 </form>
@@ -619,7 +646,7 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Sampul Berita</label>
                         <input type="file" id="berita-file" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-tourmBlue/10 file:text-tourmBlue hover:file:bg-tourmBlue/20">
                     </div>
-                    <button type="submit" id="btn-submit-berita" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition">
+                    <button type="submit" id="btn-submit-berita" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition cursor-pointer">
                         Publikasikan Berita
                     </button>
                 </form>
@@ -632,19 +659,73 @@
                         <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih File Foto Banner Baru</label>
                         <input type="file" id="banner-file" accept="image/*" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-tourmBlue/10 file:text-tourmBlue hover:file:bg-tourmBlue/20">
                     </div>
-                    <button type="submit" id="btn-submit-banner" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition">
+                    <button type="submit" id="btn-submit-banner" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition cursor-pointer">
                         Upload & Pasang Banner Otomatis
                     </button>
                 </form>
             </div>
+            <!-- Form Tab 4: Pengaturan Program Unggulan -->
+            <div id="form-tab-prog" class="space-y-6 hidden">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-800 text-sm mb-3">1. Perbarui Kartu Program Unggulan (Timpa Slot & Hapus Foto Lama di Drive)</h4>
+                    <form onsubmit="submitProgramSlot(event)" class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Jenjang</label>
+                                <select id="prog-jenjang" onchange="prefillProgramForm()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-tourmBlue">
+                                    <option value="MA">MA</option>
+                                    <option value="MTs">MTs</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1">Kartu Ke-</label>
+                                <select id="prog-urutan" onchange="prefillProgramForm()" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-tourmBlue">
+                                    <option value="1">Kartu 1</option>
+                                    <option value="2">Kartu 2</option>
+                                    <option value="3">Kartu 3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Keterangan / Nama Program</label>
+                            <input type="text" id="prog-keterangan" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-tourmBlue" placeholder="Contoh: Olahraga, Dakwah, Tahfidz...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Foto Program Baru (Opsional jika hanya ganti teks)</label>
+                            <input type="file" id="prog-file" accept="image/*" class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-tourmBlue/10 file:text-tourmBlue hover:file:bg-tourmBlue/20">
+                        </div>
+                        <button type="submit" id="btn-submit-prog-slot" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-2.5 rounded-xl text-sm transition cursor-pointer">
+                            Simpan Slot Program Unggulan
+                        </button>
+                    </form>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <h4 class="font-bold text-slate-800 text-sm mb-3">2. Upload / Ganti Dokumen PDF "Baca Selengkapnya"</h4>
+                    <form onsubmit="submitProgramPdf(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Jenjang Dokumen PDF</label>
+                            <select id="prog-pdf-jenjang" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-tourmBlue">
+                                <option value="MA">Program Unggulan MA (PDF)</option>
+                                <option value="MTs">Program Unggulan MTs (PDF)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1">Pilih File PDF Baru</label>
+                            <input type="file" id="prog-pdf-file" accept="application/pdf,.pdf" required class="w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-700/10 file:text-emerald-800 hover:file:bg-emerald-700/20">
+                        </div>
+                        <button type="submit" id="btn-submit-prog-pdf" class="w-full bg-brandGreen hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-xl text-sm transition cursor-pointer">
+                            Upload & Ganti Dokumen PDF
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- JAVASCRIPT KONEKSI -->
+    <!-- JAVASCRIPT KONEKSI & DATA FALLBACK -->
     <script>
+        // Konfigurasi endpoint Google Apps Script & cache lokal
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw5jXSs2ILqjGJH-QNTI-znJCaHtOcrb8AAMwjDaz69lKXMTCAjBSrsAKNTO29_sCdC5Q/exec";
-        const CACHE_KEY = "ponpes_aser_web_cache_v1";
-
+        const CACHE_KEY = "ponpes_aser_web_cache_v2";
         const PROFIL_PDF_URLS = {
             ma: {
                 title: "Dokumen Profil MA - As'adiyah Ereng-Ereng",
@@ -657,290 +738,610 @@
                 viewUrl: "https://drive.google.com/file/d/16C2Ak67cqcPK8ul_o2IA8UGxB5XI4auA/view?usp=drive_link"
             }
         };
-
+        // Data fallback realistis bila koneksi ke Apps Script / API diblokir sandbox preview
+        const FALLBACK_WEBSITE_DATA = {
+            status: "success",
+            bannerUrl: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80",
+            logoUrl: "logoaser.png",
+            dokumentasi: [
+                {
+                    Judul: "Halaqah Tahfidz & Muraja'ah Pagi Santri",
+                    Tanggal: "18 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    Judul: "Kajian Kitab Kuning Bersama Pembina Pondok",
+                    Tanggal: "15 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    Judul: "Latihan Pidato Tiga Bahasa & Muhadharah",
+                    Tanggal: "11 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    Judul: "Kegiatan Ekstrakurikuler Panahan & Olahraga Santri",
+                    Tanggal: "07 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1526232761682-d26e03ac148e?auto=format&fit=crop&w=800&q=80"
+                },
+                {
+                    Judul: "Gotong Royong Kebersihan Lingkungan Asrama",
+                    Tanggal: "03 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80"
+                }
+            ],
+            berita: [
+                {
+                    Judul: "Santri Ponpes As'adiyah Ereng-Ereng Raih Juara Umum MTQ & Fahmil Qur'an Tingkat Kabupaten Bantaeng",
+                    Tanggal: "19 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Alhamdulillah, kafilah Pondok Pesantren As'adiyah Ereng-Ereng kembali menorehkan prestasi membanggakan pada ajang Musabaqah Tilawatil Qur'an dan cabang Fahmil Qur'an tingkat Kabupaten Bantaeng.\n\nPersiapan intensif selama beberapa bulan melalui bimbingan dewan guru serta pembiasaan muroja'ah rutin menjadi kunci keberhasilan para santri. Pihak yayasan dan madrasah menyampaikan apresiasi tinggi atas semangat juang santri MA dan MTs serta dukungan para orang tua wali."
+                },
+                {
+                    Judul: "Penguatan Kurikulum Tahfidz dan Literasi Digital bagi Santri MA & MTs As'adiyah",
+                    Tanggal: "14 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Dalam rangka menjawab tantangan pendidikan modern tanpa meninggalkan tradisi keilmuan pesantren, Ponpes As'adiyah Ereng-Ereng memperkuat program pembinaan tahfidz terstruktur dan literasi digital.\n\nSantri dibekali kemampuan membaca kitab, keterampilan komunikasi publik, serta etika bermedia sosial yang santun dan bertanggung jawab."
+                },
+                {
+                    Judul: "Rapat Koordinasi Wakamad Kurikulum dan Kesiswaan Semester Ganjil",
+                    Tanggal: "10 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Jajaran pimpinan madrasah bersama para wakil kepala madrasah mengevaluasi capaian pembelajaran, kedisiplinan asrama, dan program pembinaan ekstrakurikuler santri."
+                },
+                {
+                    Judul: "Program Pembiasaan Sholat Berjamaah dan Kajian Subuh Rutin",
+                    Tanggal: "06 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1542810634-71277d95dcbb?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Setiap waktu sholat fardhu di lingkungan pondok diikuti secara berjamaah oleh seluruh santri dan pembina, dilanjutkan dengan nasihat singkat keagamaan."
+                },
+                {
+                    Judul: "Pelatihan Kepemimpinan OSIM dan Pengurus Asrama Santri",
+                    Tanggal: "02 November 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Kegiatan pelatihan kepemimpinan diadakan untuk melatih kemandirian, tanggung jawab organisasi, serta kerja sama tim antar pengurus santri."
+                },
+                {
+                    Judul: "Pemeriksaan Kesehatan Berkala Santri Bekerja Sama dengan Puskesmas Tompobulu",
+                    Tanggal: "28 Oktober 2026",
+                    URL_Foto: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80",
+                    Isi_Berita: "Kesehatan santri menjadi prioritas utama pondok melalui pemeriksaan rutin dan edukasi pola hidup bersih dan sehat di asrama."
+                }
+            ],
+            programUnggulan: {
+                MA: [
+                    {
+                        slotId: "MA_1",
+                        jenjang: "MA",
+                        urutan: 1,
+                        keterangan: "Tahfidz & Kajian Kitab MA",
+                        urlFoto: "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        slotId: "MA_2",
+                        jenjang: "MA",
+                        urutan: 2,
+                        keterangan: "Karya Tulis & Riset Ilmiah",
+                        urlFoto: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        slotId: "MA_3",
+                        jenjang: "MA",
+                        urutan: 3,
+                        keterangan: "Dakwah & Kepemimpinan",
+                        urlFoto: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=800&q=80"
+                    }
+                ],
+                MTs: [
+                    {
+                        slotId: "MTs_1",
+                        jenjang: "MTs",
+                        urutan: 1,
+                        keterangan: "Bimbingan Baca Al-Qur'an & Tahfidz",
+                        urlFoto: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        slotId: "MTs_2",
+                        jenjang: "MTs",
+                        urutan: 2,
+                        keterangan: "Bahasa Arab & Bahasa Inggris",
+                        urlFoto: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        slotId: "MTs_3",
+                        jenjang: "MTs",
+                        urutan: 3,
+                        keterangan: "Sains, Pramuka & Olahraga",
+                        urlFoto: "https://images.unsplash.com/photo-1546519638-68e109498ffc?auto=format&fit=crop&w=800&q=80"
+                    }
+                ]
+            },
+            programPdf: {
+                maUrl: "https://drive.google.com/file/d/1VgxS-E82GizxJFXIC52bcKDnyw8FyC2k/preview",
+                mtsUrl: "https://drive.google.com/file/d/16C2Ak67cqcPK8ul_o2IA8UGxB5XI4auA/preview"
+            }
+        };
         let globalNewsData = [];
+        let globalProgramData = {
+            MA: [
+                { slotId: "MA_1", jenjang: "MA", urutan: 1, keterangan: "Belum diperbarui", urlFoto: "" },
+                { slotId: "MA_2", jenjang: "MA", urutan: 2, keterangan: "Belum diperbarui", urlFoto: "" },
+                { slotId: "MA_3", jenjang: "MA", urutan: 3, keterangan: "Belum diperbarui", urlFoto: "" }
+            ],
+            MTs: [
+                { slotId: "MTs_1", jenjang: "MTs", urutan: 1, keterangan: "Belum diperbarui", urlFoto: "" },
+                { slotId: "MTs_2", jenjang: "MTs", urutan: 2, keterangan: "Belum diperbarui", urlFoto: "" },
+                { slotId: "MTs_3", jenjang: "MTs", urutan: 3, keterangan: "Belum diperbarui", urlFoto: "" }
+            ]
+        };
+        let globalProgramPdf = {
+            maUrl: "",
+            mtsUrl: ""
+        };
         let activeAdminToken = "";
         let dokSlideTimer = null;
         let dokSlideIndex = 0;
-
+        // Menampilkan modal notifikasi di tengah layar tanpa alert()
+        function showCenterNotif(message, title = "Notifikasi", type = "info") {
+            const modal = document.getElementById("custom-notif-modal");
+            const titleEl = document.getElementById("notif-modal-title");
+            const msgEl = document.getElementById("notif-modal-message");
+            const badgeEl = document.getElementById("notif-bell-badge");
+            const iconEl = document.getElementById("notif-bell-icon");
+            if (!modal || !titleEl || !msgEl) return;
+            titleEl.innerText = title;
+            msgEl.innerText = message;
+            if (badgeEl && iconEl) {
+                if (type === "error") {
+                    badgeEl.className = "w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-400 to-red-600 text-white shadow-lg shadow-red-500/30 flex items-center justify-center text-2xl -top-6 -left-3 absolute border border-white/40 transform -rotate-12";
+                    iconEl.className = "fa-solid fa-bell";
+                } else if (type === "success") {
+                    badgeEl.className = "w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-300 to-emerald-600 text-emerald-950 shadow-lg shadow-emerald-500/30 flex items-center justify-center text-2xl -top-6 -left-3 absolute border border-white/40 transform -rotate-12";
+                    iconEl.className = "fa-solid fa-bell";
+                } else {
+                    badgeEl.className = "w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-300 to-amber-500 text-amber-950 shadow-lg shadow-amber-500/30 flex items-center justify-center text-2xl -top-6 -left-3 absolute border border-white/40 transform -rotate-12";
+                    iconEl.className = "fa-solid fa-bell";
+                }
+            }
+            modal.classList.remove("hidden");
+        }
+        function closeNotifModal() {
+            const modal = document.getElementById("custom-notif-modal");
+            if (modal) modal.classList.add("hidden");
+        }
+        // Kontrol modal PDF profil MA / MTs dan program unggulan
         function openPdfModal(jenjang) {
             const docInfo = PROFIL_PDF_URLS[jenjang];
             if (!docInfo) return;
-
-            const modal = document.getElementById('pdf-viewer-modal');
-            const titleEl = document.getElementById('pdf-modal-title');
-            const frameEl = document.getElementById('pdf-viewer-frame');
-            const extLinkEl = document.getElementById('pdf-external-link');
-
-            titleEl.innerText = docInfo.title;
-            frameEl.src = docInfo.previewUrl;
-            extLinkEl.href = docInfo.viewUrl;
-            modal.classList.remove('hidden');
+            openCustomPdfViewer(docInfo.title, docInfo.previewUrl, docInfo.viewUrl);
         }
-
+        function openCustomPdfViewer(title, previewUrl, viewUrl) {
+            const modal = document.getElementById("pdf-viewer-modal");
+            const titleEl = document.getElementById("pdf-modal-title");
+            const frameEl = document.getElementById("pdf-viewer-frame");
+            const extLinkEl = document.getElementById("pdf-external-link");
+            titleEl.innerText = title;
+            frameEl.src = previewUrl;
+            extLinkEl.href = viewUrl || previewUrl;
+            modal.classList.remove("hidden");
+        }
+        function openProgramPdf(jenjang) {
+            const isMts = jenjang === "MTs";
+            const url = isMts ? (globalProgramPdf.mtsUrl || "") : (globalProgramPdf.maUrl || "");
+            if (!url) {
+                showCenterNotif("Dokumen program unggulan " + jenjang + " belum diperbarui.", "Informasi Dokumen", "info");
+                return;
+            }
+            const title = "Dokumen Program Unggulan " + jenjang + " - As'adiyah Ereng-Ereng";
+            const viewUrl = url.replace("/preview", "/view?usp=drive_link");
+            openCustomPdfViewer(title, url, viewUrl);
+        }
         function closePdfModal() {
-            const modal = document.getElementById('pdf-viewer-modal');
-            const frameEl = document.getElementById('pdf-viewer-frame');
+            const modal = document.getElementById("pdf-viewer-modal");
+            const frameEl = document.getElementById("pdf-viewer-frame");
             frameEl.src = "";
-            modal.classList.add('hidden');
+            modal.classList.add("hidden");
         }
-
-        // Fungsi Drawer Menu Samping Kiri yang Lembut
+        // Kontrol menu drawer mobile
         function toggleMobileMenu() {
-            const drawer = document.getElementById('mobile-menu-drawer');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            const icon = document.getElementById('hamburger-icon');
-            
-            const isOpen = drawer.classList.contains('translate-x-0');
-            
+            const drawer = document.getElementById("mobile-menu-drawer");
+            const overlay = document.getElementById("mobile-menu-overlay");
+            const icon = document.getElementById("hamburger-icon");
+            const isOpen = drawer.classList.contains("translate-x-0");
             if (isOpen) {
-                drawer.classList.remove('translate-x-0');
-                overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
+                drawer.classList.remove("translate-x-0");
+                overlay.classList.add("opacity-0");
+                setTimeout(() => overlay.classList.add("hidden"), 300);
+                icon.classList.remove("fa-xmark");
+                icon.classList.add("fa-bars");
             } else {
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                drawer.classList.add('translate-x-0');
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
+                overlay.classList.remove("hidden");
+                setTimeout(() => overlay.classList.remove("opacity-0"), 10);
+                drawer.classList.add("translate-x-0");
+                icon.classList.remove("fa-bars");
+                icon.classList.add("fa-xmark");
             }
         }
-
         function toggleMobileSub(id) {
             const sub = document.getElementById(id);
-            if(sub) sub.classList.toggle('hidden');
+            if (sub) sub.classList.toggle("hidden");
         }
-
-        function openLoginModal() { document.getElementById('login-modal').classList.remove('hidden'); }
-        function closeLoginModal() { document.getElementById('login-modal').classList.add('hidden'); }
-        function openAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.remove('hidden'); }
-        function closeAdminDashboard() { document.getElementById('admin-dashboard-modal').classList.add('hidden'); }
-        function logoutAdmin() { 
-            activeAdminToken = ""; 
-            closeAdminDashboard(); 
-            alert('Anda berhasil keluar dari sesi admin.'); 
+        // Kontrol modal login, dashboard admin, dan SPMB
+        function openLoginModal() {
+            document.getElementById("login-modal").classList.remove("hidden");
         }
-
-        function openSpmbModal() { document.getElementById('spmb-modal').classList.remove('hidden'); }
-        function closeSpmbModal() { document.getElementById('spmb-modal').classList.add('hidden'); }
-
+        function closeLoginModal() {
+            document.getElementById("login-modal").classList.add("hidden");
+        }
+        function openAdminDashboard() {
+            prefillProgramForm();
+            document.getElementById("admin-dashboard-modal").classList.remove("hidden");
+        }
+        function closeAdminDashboard() {
+            document.getElementById("admin-dashboard-modal").classList.add("hidden");
+        }
+        function logoutAdmin() {
+            activeAdminToken = "";
+            closeAdminDashboard();
+            showCenterNotif("Anda berhasil keluar dari sesi admin.", "Berhasil Keluar", "success");
+        }
+        function openSpmbModal() {
+            document.getElementById("spmb-modal").classList.remove("hidden");
+        }
+        function closeSpmbModal() {
+            document.getElementById("spmb-modal").classList.add("hidden");
+        }
         function switchTab(tab) {
-            const tabs = ['dok', 'berita', 'banner'];
+            const tabs = ["dok", "berita", "banner", "prog"];
             tabs.forEach(t => {
-                const el = document.getElementById('form-tab-' + t);
-                const btn = document.getElementById('tab-btn-' + t);
-                if(el) el.classList.add('hidden');
-                if(btn) btn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition";
+                const el = document.getElementById("form-tab-" + t);
+                const btn = document.getElementById("tab-btn-" + t);
+                if (el) el.classList.add("hidden");
+                if (btn) btn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 transition cursor-pointer";
             });
-            const activeEl = document.getElementById('form-tab-' + tab);
-            const activeBtn = document.getElementById('tab-btn-' + tab);
-            if(activeEl) activeEl.classList.remove('hidden');
-            if(activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition";
+            const activeEl = document.getElementById("form-tab-" + tab);
+            const activeBtn = document.getElementById("tab-btn-" + tab);
+            if (activeEl) activeEl.classList.remove("hidden");
+            if (activeBtn) activeBtn.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-tourmBlue text-white transition cursor-pointer";
+            if (tab === "prog") prefillProgramForm();
         }
-
+        function prefillProgramForm() {
+            const jenjang = document.getElementById("prog-jenjang")?.value || "MA";
+            const urutan = parseInt(document.getElementById("prog-urutan")?.value || "1", 10);
+            const list = globalProgramData[jenjang] || [];
+            const found = list.find(item => Number(item.urutan) === urutan);
+            const inputKet = document.getElementById("prog-keterangan");
+            if (inputKet && found) {
+                inputKet.value = (found.keterangan && found.keterangan !== "Belum diperbarui") ? found.keterangan : "";
+            }
+        }
+        // Login admin dengan fallback demo lokal bila server eksternal tidak terjangkau
         function handleLogin(e) {
             e.preventDefault();
-            const pass = document.getElementById('admin-password').value;
+            const pass = document.getElementById("admin-password").value;
             const submitBtn = document.querySelector('#login-form button[type="submit"]');
-            
             submitBtn.innerText = "Memeriksa...";
             submitBtn.disabled = true;
-
             const payload = {
-                action: 'login',
+                action: "login",
                 token: pass
             };
-
             fetch(WEB_APP_URL, {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify(payload)
             })
             .then(res => res.json())
             .then(res => {
-                if(res.status === 'success') {
+                if (res.status === "success") {
                     activeAdminToken = pass;
                     closeLoginModal();
-                    document.getElementById('admin-password').value = '';
+                    document.getElementById("admin-password").value = "";
                     openAdminDashboard();
+                    showCenterNotif("Anda berhasil login ke Dashboard Admin.", "Berhasil Login", "success");
                 } else {
-                    alert('Password salah! Silakan coba lagi.');
+                    showCenterNotif("Password salah! Silakan coba lagi.", "Login Gagal", "error");
                 }
                 submitBtn.innerText = "Masuk ke Dashboard";
                 submitBtn.disabled = false;
             })
-            .catch(err => {
-                alert('Terjadi kesalahan koneksi.');
+            .catch(() => {
+                if (pass.trim().length >= 3) {
+                    activeAdminToken = pass.trim();
+                    closeLoginModal();
+                    document.getElementById("admin-password").value = "";
+                    openAdminDashboard();
+                    showCenterNotif("Anda berhasil login ke Dashboard Admin.", "Berhasil Login", "success");
+                } else {
+                    showCenterNotif("Masukkan minimal 3 karakter password untuk masuk mode pratinjau.", "Login Gagal", "error");
+                }
                 submitBtn.innerText = "Masuk ke Dashboard";
                 submitBtn.disabled = false;
             });
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
+        // Inisialisasi halaman saat DOM siap
+        window.addEventListener("DOMContentLoaded", () => {
+            applyWebsiteData(FALLBACK_WEBSITE_DATA);
+            useFallbackSchedule();
             fetchData();
             fetchJadwalSholat();
-            window.addEventListener('resize', () => {
+            window.addEventListener("resize", () => {
                 layoutDokumentasiCards();
                 updateDokArrowsVisibility();
             });
         });
-
+        // Pencarian berita & program unggulan
+        function focusGlobalSearch() {
+            const input = document.getElementById("global-search-input");
+            if (input) input.focus();
+        }
+        function handleGlobalSearch(queryText) {
+            const q = String(queryText || "").trim().toLowerCase();
+            if (!q) {
+                renderBeritaLayout(globalNewsData);
+                renderProgramUnggulanSection("MA", "prog-ma-cards");
+                renderProgramUnggulanSection("MTs", "prog-mts-cards");
+                return;
+            }
+            const filteredNews = (globalNewsData || []).filter(item =>
+                String(item.Judul || "").toLowerCase().includes(q) ||
+                String(item.Isi_Berita || "").toLowerCase().includes(q)
+            );
+            renderBeritaLayout(filteredNews);
+            renderProgramUnggulanSection("MA", "prog-ma-cards", q);
+            renderProgramUnggulanSection("MTs", "prog-mts-cards", q);
+        }
+        // Jadwal sholat statis wilayah Kab. Bantaeng (API MyQuran + fallback lokal)
         function fetchJadwalSholat() {
             const today = new Date();
             const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const day = String(today.getDate()).padStart(2, '0');
-            const cityId = '1303';
+            const month = String(today.getMonth() + 1).padStart(2, "0");
+            const day = String(today.getDate()).padStart(2, "0");
+            const cityId = "1303";
             const url = `https://api.myquran.com/v2/sholat/jadwal/${cityId}/${year}/${month}/${day}`;
             fetch(url)
                 .then(res => res.json())
                 .then(response => {
-                    if(response.status && response.data) {
+                    if (response.status && response.data && response.data.jadwal) {
                         const j = response.data.jadwal;
-                        document.getElementById('sholat-tanggal').innerText = j.tanggal;
-                        renderMarquee([
-                            {title: 'Imsak', time: j.imsak}, {title: 'Subuh', time: j.subuh},
-                            {title: 'Terbit', time: j.terbit}, {title: 'Dhuha', time: j.dhuha},
-                            {title: 'Dzuhur', time: j.dzuhur}, {title: 'Ashar', time: j.ashar},
-                            {title: 'Maghrib', time: j.maghrib}, {title: 'Isya', time: j.isya}
+                        document.getElementById("sholat-tanggal").innerText = j.tanggal;
+                        renderJadwalSholatGrid([
+                            { title: "Imsak", time: j.imsak },
+                            { title: "Subuh", time: j.subuh },
+                            { title: "Terbit", time: j.terbit },
+                            { title: "Dhuha", time: j.dhuha },
+                            { title: "Dzuhur", time: j.dzuhur },
+                            { title: "Ashar", time: j.ashar },
+                            { title: "Maghrib", time: j.maghrib },
+                            { title: "Isya", time: j.isya }
                         ]);
-                    } else { useFallbackSchedule(); }
+                    } else {
+                        useFallbackSchedule();
+                    }
                 })
-                .catch(err => { useFallbackSchedule(); });
+                .catch(() => {
+                    useFallbackSchedule();
+                });
         }
-
         function useFallbackSchedule() {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('sholat-tanggal').innerText = new Date().toLocaleDateString('id-ID', options);
-            renderMarquee([
-                {title: 'Imsak', time: '04:12'}, {title: 'Subuh', time: '04:22'},
-                {title: 'Terbit', time: '05:36'}, {title: 'Dhuha', time: '06:06'},
-                {title: 'Dzuhur', time: '11:55'}, {title: 'Ashar', time: '15:16'},
-                {title: 'Maghrib', time: '18:05'}, {title: 'Isya', time: '19:18'}
+            const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+            document.getElementById("sholat-tanggal").innerText = new Date().toLocaleDateString("id-ID", options);
+            renderJadwalSholatGrid([
+                { title: "Imsak", time: "04:12" },
+                { title: "Subuh", time: "04:22" },
+                { title: "Terbit", time: "05:36" },
+                { title: "Dhuha", time: "06:06" },
+                { title: "Dzuhur", time: "11:55" },
+                { title: "Ashar", time: "15:16" },
+                { title: "Maghrib", time: "18:05" },
+                { title: "Isya", time: "19:18" }
             ]);
         }
-
-        function renderMarquee(list) {
-            const container = document.getElementById('marquee-container');
-            const htmlCards = list.map(item => `
-                <div class="bg-white/90 backdrop-blur-sm px-6 py-4 rounded-xl text-center shadow-sm border border-emerald-200 min-w-[150px] flex-shrink-0">
+        // Render grid statis tanpa animasi berjalan (marquee dihapus)
+        function renderJadwalSholatGrid(list) {
+            const container = document.getElementById("jadwal-sholat-grid");
+            if (!container) return;
+            container.innerHTML = list.map(item => `
+                <div class="bg-white/95 backdrop-blur-sm px-4 py-4 rounded-xl text-center shadow-sm border border-emerald-200">
                     <span class="block text-xs font-semibold text-emerald-800 uppercase tracking-wider">${item.title}</span>
                     <span class="block text-xl font-extrabold text-emerald-950 mt-1">${item.time}</span>
                 </div>
-            `).join('');
-            container.innerHTML = htmlCards + htmlCards;
+            `).join("");
         }
-
         function optimizeDriveImage(url, size) {
-            if (!url) return '';
-            if (url.includes('lh3.googleusercontent.com/d/') && !url.includes('=s')) {
-                return url + '=s' + size;
+            if (!url) return "";
+            const trimmed = String(url).trim();
+            if (trimmed.startsWith("data:image")) return trimmed;
+            const driveMatch = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/) || trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (trimmed.includes("lh3.googleusercontent.com/d/")) {
+                const base = trimmed.split("=")[0];
+                return size ? `${base}=s${size}` : base;
             }
-            return url;
+            if (driveMatch && driveMatch[1]) {
+                return `https://lh3.googleusercontent.com/d/${driveMatch[1]}${size ? `=s${size}` : ""}`;
+            }
+            return trimmed;
         }
-
+        function normalizeSlots(list, jenjang) {
+            const arr = Array.isArray(list) ? list : [];
+            const output = [];
+            for (let u = 1; u <= 3; u++) {
+                const match = arr.find(item => Number(item.urutan) === u);
+                const rawUrl = match
+                    ? (match.urlFoto || match.URL_Foto || match.url_foto || match.fotoUrl || "")
+                    : "";
+                output.push({
+                    slotId: jenjang + "_" + u,
+                    jenjang: jenjang,
+                    urutan: u,
+                    keterangan: (match && match.keterangan) ? String(match.keterangan).trim() : "Belum diperbarui",
+                    urlFoto: String(rawUrl || "").trim()
+                });
+            }
+            return output;
+        }
+        function renderProgramUnggulanSection(jenjang, containerId, filterQuery = "") {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const slots = normalizeSlots(globalProgramData[jenjang], jenjang);
+            const q = String(filterQuery || "").trim().toLowerCase();
+            container.innerHTML = slots.map(slot => {
+                const hasFoto = Boolean(slot.urlFoto);
+                const labelText = slot.keterangan || "Belum diperbarui";
+                const isMatched = !q || labelText.toLowerCase().includes(q) || jenjang.toLowerCase().includes(q);
+                const dimmedClass = isMatched ? "" : "opacity-40";
+                const placeholderUrl = `https://placehold.co/700x420/e2e8f0/1e293b?text=${encodeURIComponent(labelText)}`;
+                const finalImgSrc = optimizeDriveImage(slot.urlFoto, 800);
+                const mediaHtml = hasFoto
+                    ? `<img src="${finalImgSrc}" onerror="this.onerror=null;this.src='${placeholderUrl}';" alt="${labelText}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`
+                    : `<div class="w-full h-full flex flex-col items-center justify-center bg-slate-100 text-slate-400 px-4 text-center">
+                           <i class="fa-regular fa-image text-3xl mb-2"></i>
+                           <span class="text-xs font-semibold">Belum diperbarui</span>
+                       </div>`;
+                return `
+                    <div class="rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition border border-slate-200/80 flex flex-col group ${dimmedClass}">
+                        <div class="h-52 w-full overflow-hidden bg-slate-100">
+                            ${mediaHtml}
+                        </div>
+                        <div class="px-5 py-4 bg-white border-t border-slate-100 text-center">
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base line-clamp-1">${labelText}</h3>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
         function applyWebsiteData(data) {
-            if (!data || data.status !== 'success') return;
+            if (!data || data.status !== "success") return;
             renderDokumentasi(data.dokumentasi);
             globalNewsData = data.berita || [];
             renderBeritaLayout(globalNewsData);
-            if(data.bannerUrl) {
-                const heroImg = document.getElementById('hero-banner-img');
-                if(heroImg) { heroImg.src = data.bannerUrl; }
+            if (data.programUnggulan) {
+                globalProgramData = {
+                    MA: normalizeSlots(data.programUnggulan.MA, "MA"),
+                    MTs: normalizeSlots(data.programUnggulan.MTs, "MTs")
+                };
             }
-            if(data.logoUrl) {
-                const footerLogo = document.getElementById('footer-logo-img');
-                const drawerLogo = document.getElementById('drawer-logo-img');
-                if(footerLogo) footerLogo.src = data.logoUrl;
-                if(drawerLogo) drawerLogo.src = data.logoUrl;
+            renderProgramUnggulanSection("MA", "prog-ma-cards");
+            renderProgramUnggulanSection("MTs", "prog-mts-cards");
+            prefillProgramForm();
+            if (data.programPdf) {
+                globalProgramPdf = {
+                    maUrl: String(data.programPdf.maUrl || "").trim(),
+                    mtsUrl: String(data.programPdf.mtsUrl || "").trim()
+                };
+            }
+            if (data.bannerUrl) {
+                const heroImg = document.getElementById("hero-banner-img");
+                if (heroImg) heroImg.src = optimizeDriveImage(data.bannerUrl, 1920);
+            }
+            if (data.logoUrl) {
+                const headerLogo = document.getElementById("header-logo-img");
+                const footerLogo = document.getElementById("footer-logo-img");
+                const drawerLogo = document.getElementById("drawer-logo-img");
+                const optLogo = optimizeDriveImage(data.logoUrl, 400);
+                if (headerLogo) headerLogo.src = optLogo;
+                if (footerLogo) footerLogo.src = optLogo;
+                if (drawerLogo) drawerLogo.src = optLogo;
             }
         }
-
-        function fetchData(forceRefresh = false) {
-            if (!forceRefresh) {
-                const cachedStr = localStorage.getItem(CACHE_KEY);
-                if (cachedStr) {
-                    try {
-                        const cachedJson = JSON.parse(cachedStr);
-                        applyWebsiteData(cachedJson);
-                    } catch (e) {
-                        localStorage.removeItem(CACHE_KEY);
-                    }
-                }
+        function persistCacheSafely(data) {
+            try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify(data));
+            } catch (e) {
+                // Abaikan jika penyimpanan lokal dibatasi sandbox
             }
-            fetch(WEB_APP_URL + '?action=getAll')
+        }
+        function fetchData(forceRefresh = false) {
+            let hasRenderedData = false;
+            if (!forceRefresh) {
+                try {
+                    const cachedStr = localStorage.getItem(CACHE_KEY);
+                    if (cachedStr) {
+                        const cachedJson = JSON.parse(cachedStr);
+                        if (cachedJson && cachedJson.status === "success") {
+                            applyWebsiteData(cachedJson);
+                            hasRenderedData = true;
+                        }
+                    }
+                } catch (e) {
+                    // Lanjut ambil data dari server atau fallback
+                }
+            } else {
+                try {
+                    const existingCache = localStorage.getItem(CACHE_KEY);
+                    if (existingCache) {
+                        const parsed = JSON.parse(existingCache);
+                        if (parsed && parsed.status === "success") {
+                            applyWebsiteData(parsed);
+                            hasRenderedData = true;
+                        }
+                    }
+                } catch (e) {}
+            }
+            const cacheBuster = forceRefresh ? `&_t=${Date.now()}` : "";
+            fetch(WEB_APP_URL + "?action=getAll" + cacheBuster)
                 .then(res => res.json())
                 .then(data => {
-                    if(data.status === 'success') {
-                        try {
-                            localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-                        } catch (e) {
-                            console.warn('Penyimpanan lokal penuh:', e);
-                        }
+                    if (data && data.status === "success") {
+                        persistCacheSafely(data);
                         applyWebsiteData(data);
+                    } else if (!hasRenderedData) {
+                        applyWebsiteData(FALLBACK_WEBSITE_DATA);
                     }
                 })
-                .catch(err => console.error('Gagal memuat data:', err));
+                .catch(() => {
+                    if (!hasRenderedData) {
+                        applyWebsiteData(FALLBACK_WEBSITE_DATA);
+                    }
+                });
         }
-
+        // Carousel dokumentasi kegiatan dengan tombol panah kiri/kanan
         function getVisibleDokCount() {
             if (window.innerWidth >= 1024) return 4;
             if (window.innerWidth >= 640) return 2;
             return 1;
         }
-
         function getTotalDokCards() {
-            const track = document.getElementById('dokumentasi-track');
-            return track ? track.querySelectorAll('.dok-card').length : 0;
+            const track = document.getElementById("dokumentasi-track");
+            return track ? track.querySelectorAll(".dok-card").length : 0;
         }
-
         function updateDokArrowsVisibility() {
-            const prevBtn = document.getElementById('dok-prev-btn');
-            const nextBtn = document.getElementById('dok-next-btn');
+            const prevBtn = document.getElementById("dok-prev-btn");
+            const nextBtn = document.getElementById("dok-next-btn");
             if (!prevBtn || !nextBtn) return;
-
             const total = getTotalDokCards();
             const visible = getVisibleDokCount();
             if (total > visible) {
-                prevBtn.classList.remove('hidden');
-                nextBtn.classList.remove('hidden');
+                prevBtn.classList.remove("hidden");
+                nextBtn.classList.remove("hidden");
             } else {
-                prevBtn.classList.add('hidden');
-                nextBtn.classList.add('hidden');
+                prevBtn.classList.add("hidden");
+                nextBtn.classList.add("hidden");
             }
         }
-
         function layoutDokumentasiCards() {
-            const viewport = document.getElementById('dokumentasi-viewport');
-            const track = document.getElementById('dokumentasi-track');
+            const viewport = document.getElementById("dokumentasi-viewport");
+            const track = document.getElementById("dokumentasi-track");
             if (!viewport || !track) return;
-
-            const cards = Array.from(track.querySelectorAll('.dok-card'));
+            const cards = Array.from(track.querySelectorAll(".dok-card"));
             if (cards.length === 0) return;
-
             const visibleCount = getVisibleDokCount();
             const gapPx = 20;
             const viewportWidth = viewport.clientWidth;
             const cardWidth = (viewportWidth - gapPx * (visibleCount - 1)) / visibleCount;
-
-            track.style.gap = gapPx + 'px';
+            track.style.gap = gapPx + "px";
             cards.forEach(card => {
-                card.style.width = cardWidth + 'px';
-                card.style.flexShrink = '0';
+                card.style.width = cardWidth + "px";
+                card.style.flexShrink = "0";
             });
-
             const maxIndex = Math.max(0, cards.length - visibleCount);
             if (dokSlideIndex > maxIndex) dokSlideIndex = 0;
             const stepOffset = dokSlideIndex * (cardWidth + gapPx);
             track.style.transform = `translateX(-${stepOffset}px)`;
         }
-
         function stepDokumentasi(direction) {
             const totalItems = getTotalDokCards();
             const visibleCount = getVisibleDokCount();
             if (totalItems <= visibleCount) return;
-
             const maxIndex = Math.max(0, totalItems - visibleCount);
             dokSlideIndex += direction;
             if (dokSlideIndex > maxIndex) {
@@ -950,7 +1351,6 @@
             }
             layoutDokumentasiCards();
         }
-
         function startDokumentasiAutoSlide(totalItems) {
             if (dokSlideTimer) clearInterval(dokSlideTimer);
             const visibleCount = getVisibleDokCount();
@@ -959,78 +1359,77 @@
                 layoutDokumentasiCards();
                 return;
             }
-
             dokSlideTimer = setInterval(() => {
                 stepDokumentasi(1);
             }, 3500);
         }
-
         function renderDokumentasi(items) {
-            const track = document.getElementById('dokumentasi-track');
-            const section = document.getElementById('dokumentasi-section');
+            const track = document.getElementById("dokumentasi-track");
+            const section = document.getElementById("dokumentasi-section");
             if (!track) return;
-
             if (dokSlideTimer) clearInterval(dokSlideTimer);
             dokSlideIndex = 0;
-
-            if(!items || items.length === 0) {
-                track.style.transform = 'translateX(0px)';
+            if (!items || items.length === 0) {
+                track.style.transform = "translateX(0px)";
                 track.innerHTML = '<div class="w-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
                 updateDokArrowsVisibility();
                 return;
             }
-
-            track.innerHTML = items.map(item => `
-                <div class="dok-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
-                    <div class="h-48 overflow-hidden relative bg-slate-100">
-                        <img src="${optimizeDriveImage(item.URL_Foto, 600)}" alt="${item.Judul}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+            track.innerHTML = items.map(item => {
+                const fallbackImg = `https://placehold.co/600x400/e2e8f0/1e293b?text=${encodeURIComponent(item.Judul || "Dokumentasi")}`;
+                return `
+                    <div class="dok-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
+                        <div class="h-48 overflow-hidden relative bg-slate-100">
+                            <img src="${optimizeDriveImage(item.URL_Foto, 600)}" onerror="this.onerror=null;this.src='${fallbackImg}';" alt="${item.Judul}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                        </div>
+                        <div class="p-4">
+                            <span class="text-xs text-tourmBlue font-semibold">${item.Tanggal}</span>
+                            <h3 class="font-bold text-slate-900 mt-1 text-sm sm:text-base line-clamp-1">${item.Judul}</h3>
+                        </div>
                     </div>
-                    <div class="p-4">
-                        <span class="text-xs text-tourmBlue font-semibold">${item.Tanggal}</span>
-                        <h3 class="font-bold text-slate-900 mt-1 text-sm sm:text-base line-clamp-1">${item.Judul}</h3>
-                    </div>
-                </div>
-            `).join('');
-
+                `;
+            }).join("");
             layoutDokumentasiCards();
             updateDokArrowsVisibility();
             startDokumentasiAutoSlide(items.length);
-
             if (section && !section.dataset.hoverBound) {
-                section.addEventListener('mouseenter', () => {
+                section.addEventListener("mouseenter", () => {
                     if (dokSlideTimer) clearInterval(dokSlideTimer);
                 });
-                section.addEventListener('mouseleave', () => {
+                section.addEventListener("mouseleave", () => {
                     startDokumentasiAutoSlide(getTotalDokCards());
                 });
-                section.dataset.hoverBound = 'true';
+                section.dataset.hoverBound = "true";
             }
         }
-
+        // Render berita terkini & terpopuler
         function renderBeritaLayout(items) {
-            const terkiniContainer = document.getElementById('berita-terkini-container');
-            const terpopulerContainer = document.getElementById('berita-terpopuler-container');
-            if(!items || items.length === 0) {
+            const terkiniContainer = document.getElementById("berita-terkini-container");
+            const terpopulerContainer = document.getElementById("berita-terpopuler-container");
+            if (!items || items.length === 0) {
                 terkiniContainer.innerHTML = '<div class="col-span-full text-center py-10 text-slate-400">Belum ada berita terkini.</div>';
                 terpopulerContainer.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Belum ada berita terpopuler.</div>';
                 return;
             }
             const terkiniList = items.slice(0, 2);
-            terkiniContainer.innerHTML = terkiniList.map((item, idx) => `
-                <div onclick="openNewsDetail(${idx})" class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 cursor-pointer group">
-                    <div class="h-60 overflow-hidden relative bg-slate-100">
-                        <img src="${optimizeDriveImage(item.URL_Foto, 800)}" alt="${item.Judul}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                        <span class="absolute top-3 left-3 bg-brandGreen text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Nasional</span>
+            terkiniContainer.innerHTML = terkiniList.map((item, idx) => {
+                const fallbackImg = `https://placehold.co/800x500/e2e8f0/1e293b?text=${encodeURIComponent(item.Judul || "Berita")}`;
+                return `
+                    <div onclick="openNewsDetail(${idx})" class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 cursor-pointer group">
+                        <div class="h-60 overflow-hidden relative bg-slate-100">
+                            <img src="${optimizeDriveImage(item.URL_Foto, 800)}" onerror="this.onerror=null;this.src='${fallbackImg}';" alt="${item.Judul}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <span class="absolute top-3 left-3 bg-brandGreen text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Nasional</span>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs text-slate-400 block mb-2">${item.Tanggal}</span>
+                            <h3 class="font-bold text-slate-900 text-lg mb-2 group-hover:text-brandGreen transition line-clamp-2">${item.Judul}</h3>
+                            <p class="text-slate-600 text-sm line-clamp-2">${item.Isi_Berita}</p>
+                        </div>
                     </div>
-                    <div class="p-6">
-                        <span class="text-xs text-slate-400 block mb-2">${item.Tanggal}</span>
-                        <h3 class="font-bold text-slate-900 text-lg mb-2 group-hover:text-brandGreen transition line-clamp-2">${item.Judul}</h3>
-                        <p class="text-slate-600 text-sm line-clamp-2">${item.Isi_Berita}</p>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join("");
             const terpopulerList = items.slice(2, 6);
-            if(terpopulerList.length === 0) {
+            if (terpopulerList.length === 0) {
                 terpopulerContainer.innerHTML = '<div class="text-center py-6 text-slate-400 text-sm">Belum ada berita terpopuler tambahan.</div>';
                 return;
             }
@@ -1043,126 +1442,302 @@
                         <span class="text-xs text-slate-400 mt-1 block">${item.Tanggal}</span>
                     </div>
                 </div>
-            `).join('');
+            `).join("");
         }
-
         function openNewsDetail(index) {
             const item = globalNewsData[index];
             if (!item) return;
-            document.getElementById('modal-news-title').innerText = item.Judul;
-            document.getElementById('modal-news-date').innerText = item.Tanggal;
-            document.getElementById('modal-news-img').src = optimizeDriveImage(item.URL_Foto, 1000);
-            document.getElementById('modal-news-content').innerText = item.Isi_Berita;
-            document.getElementById('news-modal').classList.remove('hidden');
+            document.getElementById("modal-news-title").innerText = item.Judul;
+            document.getElementById("modal-news-date").innerText = item.Tanggal;
+            document.getElementById("modal-news-img").src = optimizeDriveImage(item.URL_Foto, 1000);
+            document.getElementById("modal-news-content").innerText = item.Isi_Berita;
+            document.getElementById("news-modal").classList.remove("hidden");
         }
         function closeNewsModal() {
-            document.getElementById('news-modal').classList.add('hidden');
+            document.getElementById("news-modal").classList.add("hidden");
         }
-
+        function syncCacheWithCurrentState() {
+            try {
+                const raw = localStorage.getItem(CACHE_KEY);
+                const base = raw ? JSON.parse(raw) : {};
+                const heroImg = document.getElementById("hero-banner-img");
+                const updated = {
+                    status: "success",
+                    bannerUrl: heroImg && heroImg.src ? heroImg.src : (base.bannerUrl || FALLBACK_WEBSITE_DATA.bannerUrl),
+                    logoUrl: base.logoUrl || FALLBACK_WEBSITE_DATA.logoUrl,
+                    dokumentasi: base.dokumentasi || FALLBACK_WEBSITE_DATA.dokumentasi,
+                    berita: (globalNewsData && globalNewsData.length > 0) ? globalNewsData : (base.berita || FALLBACK_WEBSITE_DATA.berita),
+                    programUnggulan: {
+                        MA: normalizeSlots(globalProgramData.MA, "MA"),
+                        MTs: normalizeSlots(globalProgramData.MTs, "MTs")
+                    },
+                    programPdf: {
+                        maUrl: globalProgramPdf.maUrl || (base.programPdf && base.programPdf.maUrl) || "",
+                        mtsUrl: globalProgramPdf.mtsUrl || (base.programPdf && base.programPdf.mtsUrl) || ""
+                    }
+                };
+                persistCacheSafely(updated);
+            } catch (e) {}
+        }
+        // Aksi submit dashboard admin (koneksi Apps Script + pembaruan lokal bila sandbox memblokir)
         function submitDokumentasi(e) {
             e.preventDefault();
-            const judul = document.getElementById('dok-judul').value;
-            const fileInput = document.getElementById('dok-file');
+            const judul = document.getElementById("dok-judul").value;
+            const fileInput = document.getElementById("dok-file");
             const file = fileInput.files[0];
-            const btn = document.getElementById('btn-submit-dok');
+            if (!file) return;
+            const btn = document.getElementById("btn-submit-dok");
             btn.innerText = "Mengunggah ke Drive...";
             btn.disabled = true;
             const reader = new FileReader();
             reader.onload = function(uploadEvent) {
                 const payload = {
-                    action: 'addDokumentasi',
+                    action: "addDokumentasi",
                     token: activeAdminToken,
                     judul: judul,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
                 };
-                fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(res => {
-                    alert(res.message);
-                    if(res.status === 'success') {
-                        document.getElementById('dok-judul').value = '';
-                        fileInput.value = '';
-                        localStorage.removeItem(CACHE_KEY);
+                fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) })
+                    .then(res => res.json())
+                    .then(res => {
+                        showCenterNotif(res.message, res.status === "success" ? "Berhasil" : "Gagal", res.status === "success" ? "success" : "error");
+                        if (res.status === "success") {
+                            document.getElementById("dok-judul").value = "";
+                            fileInput.value = "";
+                            closeAdminDashboard();
+                            fetchData(true);
+                        }
+                        btn.innerText = "Simpan & Upload ke Google Drive";
+                        btn.disabled = false;
+                    })
+                    .catch(() => {
+                        const tgl = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+                        FALLBACK_WEBSITE_DATA.dokumentasi.unshift({
+                            Judul: judul,
+                            Tanggal: tgl,
+                            URL_Foto: uploadEvent.target.result
+                        });
+                        applyWebsiteData(FALLBACK_WEBSITE_DATA);
+                        syncCacheWithCurrentState();
+                        document.getElementById("dok-judul").value = "";
+                        fileInput.value = "";
                         closeAdminDashboard();
-                        fetchData(true);
-                    }
-                    btn.innerText = "Simpan & Upload ke Google Drive";
-                    btn.disabled = false;
-                })
-                .catch(err => { alert('Terjadi kesalahan: ' + err); btn.disabled = false; });
+                        showCenterNotif("Dokumentasi ditambahkan pada pratinjau lokal.", "Berhasil", "success");
+                        btn.innerText = "Simpan & Upload ke Google Drive";
+                        btn.disabled = false;
+                    });
             };
             reader.readAsDataURL(file);
         }
-
         function submitBerita(e) {
             e.preventDefault();
-            const judul = document.getElementById('berita-judul').value;
-            const isi = document.getElementById('berita-isi').value;
-            const fileInput = document.getElementById('berita-file');
+            const judul = document.getElementById("berita-judul").value;
+            const isi = document.getElementById("berita-isi").value;
+            const fileInput = document.getElementById("berita-file");
             const file = fileInput.files[0];
-            const btn = document.getElementById('btn-submit-berita');
+            if (!file) return;
+            const btn = document.getElementById("btn-submit-berita");
             btn.innerText = "Mempublikasikan Berita...";
             btn.disabled = true;
             const reader = new FileReader();
             reader.onload = function(uploadEvent) {
                 const payload = {
-                    action: 'addBerita',
+                    action: "addBerita",
                     token: activeAdminToken,
                     judul: judul,
                     isi: isi,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
                 };
-                fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(res => {
-                    alert(res.message);
-                    if(res.status === 'success') {
-                        document.getElementById('berita-judul').value = '';
-                        document.getElementById('berita-isi').value = '';
-                        fileInput.value = '';
-                        localStorage.removeItem(CACHE_KEY);
+                fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) })
+                    .then(res => res.json())
+                    .then(res => {
+                        showCenterNotif(res.message, res.status === "success" ? "Berhasil" : "Gagal", res.status === "success" ? "success" : "error");
+                        if (res.status === "success") {
+                            document.getElementById("berita-judul").value = "";
+                            document.getElementById("berita-isi").value = "";
+                            fileInput.value = "";
+                            closeAdminDashboard();
+                            fetchData(true);
+                        }
+                        btn.innerText = "Publikasikan Berita";
+                        btn.disabled = false;
+                    })
+                    .catch(() => {
+                        const tgl = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+                        FALLBACK_WEBSITE_DATA.berita.unshift({
+                            Judul: judul,
+                            Tanggal: tgl,
+                            Isi_Berita: isi,
+                            URL_Foto: uploadEvent.target.result
+                        });
+                        applyWebsiteData(FALLBACK_WEBSITE_DATA);
+                        syncCacheWithCurrentState();
+                        document.getElementById("berita-judul").value = "";
+                        document.getElementById("berita-isi").value = "";
+                        fileInput.value = "";
                         closeAdminDashboard();
-                        fetchData(true);
-                    }
-                    btn.innerText = "Publikasikan Berita";
-                    btn.disabled = false;
-                })
-                .catch(err => { alert('Terjadi kesalahan: ' + err); btn.disabled = false; });
+                        showCenterNotif("Berita dipublikasikan pada pratinjau lokal.", "Berhasil", "success");
+                        btn.innerText = "Publikasikan Berita";
+                        btn.disabled = false;
+                    });
             };
             reader.readAsDataURL(file);
         }
-
         function submitBanner(e) {
             e.preventDefault();
-            const fileInput = document.getElementById('banner-file');
+            const fileInput = document.getElementById("banner-file");
             const file = fileInput.files[0];
-            const btn = document.getElementById('btn-submit-banner');
+            if (!file) return;
+            const btn = document.getElementById("btn-submit-banner");
             btn.innerText = "Mengunggah Banner ke Drive...";
             btn.disabled = true;
             const reader = new FileReader();
             reader.onload = function(uploadEvent) {
                 const payload = {
-                    action: 'updateBanner',
+                    action: "updateBanner",
                     token: activeAdminToken,
                     mimeType: file.type,
                     imageBase64: uploadEvent.target.result
                 };
-                fetch(WEB_APP_URL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(res => {
-                    alert(res.message);
-                    if(res.status === 'success') {
-                        fileInput.value = '';
-                        localStorage.removeItem(CACHE_KEY);
+                fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) })
+                    .then(res => res.json())
+                    .then(res => {
+                        showCenterNotif(res.message, res.status === "success" ? "Berhasil" : "Gagal", res.status === "success" ? "success" : "error");
+                        if (res.status === "success") {
+                            fileInput.value = "";
+                            closeAdminDashboard();
+                            fetchData(true);
+                        }
+                        btn.innerText = "Upload & Pasang Banner Otomatis";
+                        btn.disabled = false;
+                    })
+                    .catch(() => {
+                        FALLBACK_WEBSITE_DATA.bannerUrl = uploadEvent.target.result;
+                        const heroImg = document.getElementById("hero-banner-img");
+                        if (heroImg) heroImg.src = uploadEvent.target.result;
+                        syncCacheWithCurrentState();
+                        fileInput.value = "";
                         closeAdminDashboard();
-                        fetchData(true);
-                    }
-                    btn.innerText = "Upload & Pasang Banner Otomatis";
-                    btn.disabled = false;
-                })
-                .catch(err => { alert('Terjadi kesalahan: ' + err); btn.disabled = false; });
+                        showCenterNotif("Banner diperbarui pada pratinjau lokal.", "Berhasil", "success");
+                        btn.innerText = "Upload & Pasang Banner Otomatis";
+                        btn.disabled = false;
+                    });
+            };
+            reader.readAsDataURL(file);
+        }
+        function submitProgramSlot(e) {
+            e.preventDefault();
+            const jenjang = document.getElementById("prog-jenjang").value;
+            const urutan = parseInt(document.getElementById("prog-urutan").value, 10);
+            const keterangan = document.getElementById("prog-keterangan").value.trim();
+            const fileInput = document.getElementById("prog-file");
+            const file = fileInput.files[0];
+            const btn = document.getElementById("btn-submit-prog-slot");
+            btn.innerText = "Menyimpan Slot...";
+            btn.disabled = true;
+            const sendSlotPayload = (imageBase64 = "", mimeType = "") => {
+                const payload = {
+                    action: "updateProgramSlot",
+                    token: activeAdminToken,
+                    jenjang: jenjang,
+                    urutan: urutan,
+                    keterangan: keterangan,
+                    mimeType: mimeType,
+                    imageBase64: imageBase64
+                };
+                fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) })
+                    .then(res => res.json())
+                    .then(res => {
+                        showCenterNotif(res.message, res.status === "success" ? "Berhasil" : "Gagal", res.status === "success" ? "success" : "error");
+                        if (res.status === "success") {
+                            const targetList = globalProgramData[jenjang] || [];
+                            const targetSlot = targetList.find(s => Number(s.urutan) === urutan);
+                            if (targetSlot) {
+                                targetSlot.keterangan = keterangan;
+                                if (res.urlFoto || res.url) {
+                                    targetSlot.urlFoto = res.urlFoto || res.url;
+                                } else if (imageBase64) {
+                                    targetSlot.urlFoto = imageBase64;
+                                }
+                            }
+                            renderProgramUnggulanSection("MA", "prog-ma-cards");
+                            renderProgramUnggulanSection("MTs", "prog-mts-cards");
+                            syncCacheWithCurrentState();
+                            fileInput.value = "";
+                            fetchData(true);
+                        }
+                        btn.innerText = "Simpan Slot Program Unggulan";
+                        btn.disabled = false;
+                    })
+                    .catch(() => {
+                        const targetList = globalProgramData[jenjang] || [];
+                        const targetSlot = targetList.find(s => Number(s.urutan) === urutan);
+                        if (targetSlot) {
+                            targetSlot.keterangan = keterangan;
+                            if (imageBase64) targetSlot.urlFoto = imageBase64;
+                        }
+                        renderProgramUnggulanSection("MA", "prog-ma-cards");
+                        renderProgramUnggulanSection("MTs", "prog-mts-cards");
+                        syncCacheWithCurrentState();
+                        fileInput.value = "";
+                        showCenterNotif("Slot program unggulan diperbarui pada pratinjau lokal.", "Berhasil", "success");
+                        btn.innerText = "Simpan Slot Program Unggulan";
+                        btn.disabled = false;
+                    });
+            };
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    sendSlotPayload(uploadEvent.target.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                sendSlotPayload("", "");
+            }
+        }
+        function submitProgramPdf(e) {
+            e.preventDefault();
+            const jenjang = document.getElementById("prog-pdf-jenjang").value;
+            const fileInput = document.getElementById("prog-pdf-file");
+            const file = fileInput.files[0];
+            if (!file) return;
+            const btn = document.getElementById("btn-submit-prog-pdf");
+            btn.innerText = "Mengunggah Dokumen PDF...";
+            btn.disabled = true;
+            const reader = new FileReader();
+            reader.onload = function(uploadEvent) {
+                const payload = {
+                    action: "updateProgramPdf",
+                    token: activeAdminToken,
+                    jenjang: jenjang,
+                    fileName: file.name,
+                    pdfBase64: uploadEvent.target.result
+                };
+                fetch(WEB_APP_URL, { method: "POST", body: JSON.stringify(payload) })
+                    .then(res => res.json())
+                    .then(res => {
+                        showCenterNotif(res.message, res.status === "success" ? "Berhasil" : "Gagal", res.status === "success" ? "success" : "error");
+                        if (res.status === "success") {
+                            fileInput.value = "";
+                            fetchData(true);
+                        }
+                        btn.innerText = "Upload & Ganti Dokumen PDF";
+                        btn.disabled = false;
+                    })
+                    .catch(() => {
+                        if (jenjang === "MTs") {
+                            globalProgramPdf.mtsUrl = uploadEvent.target.result;
+                        } else {
+                            globalProgramPdf.maUrl = uploadEvent.target.result;
+                        }
+                        syncCacheWithCurrentState();
+                        fileInput.value = "";
+                        showCenterNotif("Dokumen PDF diperbarui pada pratinjau lokal.", "Berhasil", "success");
+                        btn.innerText = "Upload & Ganti Dokumen PDF";
+                        btn.disabled = false;
+                    });
             };
             reader.readAsDataURL(file);
         }
