@@ -112,95 +112,174 @@
                 animation: none;
             }
         }
+/* Efek bingkai melengkung & sorotan cahaya lembut menu dan submenu */
+        .nav-pill-item {
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            transition: all 0.25s ease;
+        }
+        .nav-pill-item:hover,
+        .relative.group:hover > .nav-pill-item {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.75);
+            box-shadow:
+                0 0 16px rgba(255, 248, 220, 0.55),
+                0 0 28px rgba(255, 195, 120, 0.45),
+                inset 0 0 12px rgba(255, 255, 255, 0.35);
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.9),
+                0 0 20px rgba(255, 235, 180, 0.75);
+            transform: translateY(-1px);
+        }
+        .submenu-glow-box {
+            border-radius: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: linear-gradient(180deg, rgba(232, 122, 46, 0.97) 0%, rgba(200, 90, 23, 0.98) 100%);
+            box-shadow:
+                0 14px 30px rgba(124, 45, 18, 0.35),
+                0 0 22px rgba(255, 210, 150, 0.3);
+        }
+        .submenu-glow-link {
+            border-radius: 0.65rem;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            transition: all 0.22s ease;
+        }
+        .submenu-glow-link:hover {
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.75);
+            box-shadow:
+                0 0 14px rgba(255, 248, 220, 0.55),
+                0 0 24px rgba(255, 195, 120, 0.45),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.9),
+                0 0 18px rgba(255, 235, 180, 0.75);
+        }
 
-        /* Gaya Dark Neon Khusus Modal Login Admin (Presisi & Modern) */
+        /* Gaya Oranye Serasi Menu & Submenu Khusus Modal Login Admin */
         .neon-login-card {
             font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-            background: linear-gradient(180deg, #222528 0%, #191c1f 52%, #141618 100%);
-            border: 1px solid rgba(44, 246, 255, 0.18);
+            background: linear-gradient(180deg, #f08b43 0%, #e87a2e 55%, #c85a17 100%);
+            border: 1px solid rgba(255, 255, 255, 0.35);
             box-shadow:
-                0 28px 65px rgba(0, 0, 0, 0.88),
-                0 0 28px rgba(44, 246, 255, 0.12);
+                0 24px 60px rgba(124, 45, 18, 0.45),
+                0 0 28px rgba(255, 210, 150, 0.35);
+        }
+        .neon-login-card label {
+            color: #ffffff !important;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.35);
         }
         .neon-top-beam {
-            background: radial-gradient(ellipse 75% 85% at 50% 0%, rgba(165, 243, 252, 0.22) 0%, rgba(44, 246, 255, 0.07) 48%, rgba(0, 0, 0, 0) 76%);
+            background: radial-gradient(ellipse 75% 85% at 50% 0%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 220, 175, 0.14) 48%, rgba(200, 90, 23, 0) 78%);
         }
         .neon-title-glow {
-            color: #2cf6ff;
-            letter-spacing: -0.02em;
+            color: #ffffff;
+            letter-spacing: -0.01em;
             text-shadow:
-                0 0 10px rgba(44, 246, 255, 0.72),
-                0 0 24px rgba(44, 246, 255, 0.32);
+                0 0 12px rgba(255, 255, 255, 0.75),
+                0 0 24px rgba(255, 235, 180, 0.55);
         }
         .neon-underline-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1.5px solid #2cf6ff;
-            box-shadow: 0 3px 10px -3px rgba(44, 246, 255, 0.55);
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            padding: 8px 14px;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 4px 14px rgba(124, 45, 18, 0.18);
+            transition: all 0.22s ease;
         }
         .neon-underline-row:focus-within {
-            border-bottom-color: #72faff;
-            box-shadow: 0 4px 14px -2px rgba(44, 246, 255, 0.82);
+            background: rgba(255, 255, 255, 0.22);
+            border-color: rgba(255, 255, 255, 0.85);
+            box-shadow:
+                0 0 16px rgba(255, 248, 220, 0.65),
+                0 0 26px rgba(255, 205, 135, 0.45);
         }
         .neon-password-input {
             flex: 1 1 auto;
             min-width: 0;
-            background: transparent;
-            color: #ffffff;
-            font-size: 0.9rem;
-            line-height: 1.35;
+            background: transparent !important;
+            background-color: transparent !important;
+            color: #ffffff !important;
+            font-size: 0.92rem;
             font-weight: 500;
-            letter-spacing: 0.01em;
-            border: 0;
-            outline: none;
-            padding: 0;
-            margin: 0;
+            letter-spacing: 0.14em;
+            line-height: 1.4;
+            border: 0 !important;
+            outline: none !important;
+            box-shadow: none !important;
+            padding: 2px 0;
+        }
+        .neon-password-input:not([type="password"]) {
+            letter-spacing: 0.02em;
         }
         .neon-password-input::placeholder {
-            color: rgba(165, 243, 252, 0.62);
-            font-weight: 400;
-            letter-spacing: 0.01em;
+            color: rgba(255, 255, 255, 0.78);
+            letter-spacing: 0.02em;
         }
-        .neon-lock-end {
-            flex-shrink: 0;
+        .neon-password-input:-webkit-autofill,
+        .neon-password-input:-webkit-autofill:hover,
+        .neon-password-input:-webkit-autofill:focus {
+            -webkit-text-fill-color: #ffffff !important;
+            -webkit-box-shadow: 0 0 0px 1000px #dc7025 inset !important;
+            transition: background-color 9999s ease-in-out 0s;
+        }
+        .neon-eye-btn {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 30px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
-            color: #2cf6ff;
-            font-size: 0.9rem;
-            line-height: 1;
-            filter: drop-shadow(0 0 6px rgba(44, 246, 255, 0.68));
+            background: transparent;
+            border: 0;
+            padding: 0;
+            color: #ffffff;
+            cursor: pointer;
+            transition: transform 0.2s ease, text-shadow 0.2s ease;
+        }
+        .neon-eye-btn:hover {
+            color: #ffffff;
+            transform: scale(1.08);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.85);
         }
         .neon-submit-btn {
-            background: linear-gradient(90deg, #1ce8ff 0%, #2cf6ff 50%, #19e0ff 100%);
-            color: #052028;
-            box-shadow:
-                0 0 16px rgba(44, 246, 255, 0.5),
-                0 0 30px rgba(44, 246, 255, 0.22);
-            transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.45);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.45);
+            box-shadow: 0 8px 22px rgba(124, 45, 18, 0.28);
+            transition: all 0.25s ease;
         }
         .neon-submit-btn:hover {
-            filter: brightness(1.05);
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
             box-shadow:
-                0 0 22px rgba(44, 246, 255, 0.75),
-                0 0 38px rgba(44, 246, 255, 0.34);
+                0 0 18px rgba(255, 248, 220, 0.7),
+                0 0 32px rgba(255, 200, 125, 0.55),
+                inset 0 0 12px rgba(255, 255, 255, 0.35);
+            text-shadow:
+                0 0 10px rgba(255, 255, 255, 0.95),
+                0 0 22px rgba(255, 235, 180, 0.8);
         }
         .neon-submit-btn:active {
-            transform: scale(0.985);
+            transform: translateY(0);
         }
     </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased overflow-x-hidden">
-    <!-- HEADER UTAMA (GAYA INSTANSI RESMI) -->
-    <header class="w-full bg-instansiDark text-white shadow-md sticky top-0 z-50">
+      <!-- HEADER UTAMA (GAYA INSTANSI RESMI - SERASI DENGAN STATISTIK) -->
+    <header class="w-full bg-gradient-to-r from-[#e87a2e] via-[#f08b43] to-[#e87a2e] text-white shadow-md sticky top-0 z-50">
         <!-- Baris Atas: Logo, Identitas, 5 Medsos, & Login Admin -->
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-700/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col md:flex-row justify-between items-center gap-4 border-b border-white/25">
             <a href="#beranda" class="flex items-center space-x-3 group">
                 <img
                     id="header-logo-img"
@@ -210,32 +289,32 @@
                     class="w-12 h-12 object-contain rounded-full bg-white p-0.5 shadow-md flex-shrink-0"
                 >
                 <div>
-                    <h1 class="font-extrabold tracking-wider text-sm sm:text-base uppercase block leading-tight text-white group-hover:text-emerald-400 transition">
+                    <h1 class="font-extrabold tracking-wider text-sm sm:text-base uppercase block leading-tight text-white group-hover:text-amber-50 transition">
                         PONPES AS'ADIYAH ERENG-ERENG
                     </h1>
-                    <span class="text-xs text-slate-300 font-medium tracking-wide block">
+                    <span class="text-xs text-white/95 font-medium tracking-wide block">
                         Kabupaten Bantaeng, Sulawesi Selatan
                     </span>
                 </div>
             </a>
             <!-- 5 Ikon Medsos & Tombol Admin -->
             <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Instagram">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 flex items-center justify-center transition shadow-sm text-sm" title="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Twitter / X">
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 flex items-center justify-center transition shadow-sm text-sm" title="Twitter / X">
                     <i class="fa-brands fa-twitter"></i>
                 </a>
-                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="Facebook">
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 flex items-center justify-center transition shadow-sm text-sm" title="Facebook">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
-                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm" title="WhatsApp">
+                <a href="https://whatsapp.com" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 flex items-center justify-center transition shadow-sm text-sm" title="WhatsApp">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-emerald-600 text-slate-200 flex items-center justify-center transition shadow text-sm sm:mr-2" title="YouTube">
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/30 flex items-center justify-center transition shadow-sm text-sm sm:mr-2" title="YouTube">
                     <i class="fa-brands fa-youtube"></i>
                 </a>
-                <button type="button" onclick="openLoginModal()" class="bg-emerald-700 hover:bg-emerald-600 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow flex items-center space-x-1.5 transition text-white border border-emerald-500/40 cursor-pointer">
+                <button type="button" onclick="openLoginModal()" class="bg-brandGreen hover:bg-emerald-800 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold shadow flex items-center space-x-1.5 transition text-white border border-white/30 cursor-pointer">
                     <i class="fa-solid fa-lock text-xs"></i>
                     <span>Admin</span>
                 </button>
@@ -243,66 +322,66 @@
         </div>
         <!-- Baris Bawah: Menu Navigasi Desktop & Pencarian / Hamburger Mobile -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center gap-4">
-            <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm tracking-normal">
-                <a href="#beranda" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Beranda</a>
+            <nav class="hidden lg:flex items-center gap-2 font-medium text-sm tracking-normal">
+                <a href="#beranda" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center">Beranda</a>
                 <!-- Dropdown Profil -->
-                <div class="relative group py-1">
-                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
+                <div class="relative group">
+                    <button type="button" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Profil</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <button type="button" onclick="openPdfModal('ma')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Profil MA</button>
-                        <button type="button" onclick="openPdfModal('mts')" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Profil MTs</button>
+                    <div class="submenu-glow-box absolute left-0 w-48 p-2 space-y-1.5 hidden group-hover:block z-50">
+                        <button type="button" onclick="openPdfModal('ma')" class="submenu-glow-link w-full text-left block px-3.5 py-2 text-xs cursor-pointer">Profil MA</button>
+                        <button type="button" onclick="openPdfModal('mts')" class="submenu-glow-link w-full text-left block px-3.5 py-2 text-xs cursor-pointer">Profil MTs</button>
                     </div>
                 </div>
                 <!-- Dropdown Program Unggulan -->
-                <div class="relative group py-1">
-                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
+                <div class="relative group">
+                    <button type="button" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Prog. Unggulan</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-52 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#prog-unggulan-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MA</a>
-                        <a href="#prog-unggulan-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Program Unggulan MTs</a>
+                    <div class="submenu-glow-box absolute left-0 w-56 p-2 space-y-1.5 hidden group-hover:block z-50">
+                        <a href="#prog-unggulan-ma" class="submenu-glow-link block px-3.5 py-2 text-xs">Program Unggulan MA</a>
+                        <a href="#prog-unggulan-mts" class="submenu-glow-link block px-3.5 py-2 text-xs">Program Unggulan MTs</a>
                     </div>
                 </div>
                 <!-- Dropdown Wakamad -->
-                <div class="relative group py-1">
-                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
+                <div class="relative group">
+                    <button type="button" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Wakamad</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#kontak" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Sarpras</a>
-                        <a href="#prog-unggulan-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kurikulum</a>
-                        <a href="#dokumentasi-section" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Kesiswaan</a>
-                        <a href="#kontak" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Perpustakaan</a>
+                    <div class="submenu-glow-box absolute left-0 w-48 p-2 space-y-1.5 hidden group-hover:block z-50">
+                        <a href="#kontak" class="submenu-glow-link block px-3.5 py-2 text-xs">Sarpras</a>
+                        <a href="#prog-unggulan-ma" class="submenu-glow-link block px-3.5 py-2 text-xs">Kurikulum</a>
+                        <a href="#dokumentasi-section" class="submenu-glow-link block px-3.5 py-2 text-xs">Kesiswaan</a>
+                        <a href="#kontak" class="submenu-glow-link block px-3.5 py-2 text-xs">Perpustakaan</a>
                     </div>
                 </div>
                 <!-- Dropdown Prestasi -->
-                <div class="relative group py-1">
-                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
+                <div class="relative group">
+                    <button type="button" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>Prestasi</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#berita" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Akademik</a>
-                        <a href="#dokumentasi-section" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Non-Akademik</a>
+                    <div class="submenu-glow-box absolute left-0 w-48 p-2 space-y-1.5 hidden group-hover:block z-50">
+                        <a href="#berita" class="submenu-glow-link block px-3.5 py-2 text-xs">Akademik</a>
+                        <a href="#dokumentasi-section" class="submenu-glow-link block px-3.5 py-2 text-xs">Non-Akademik</a>
                     </div>
                 </div>
                 <!-- Dropdown SPMB -->
-                <div class="relative group py-1">
-                    <button type="button" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none cursor-pointer">
+                <div class="relative group">
+                    <button type="button" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center space-x-1 focus:outline-none cursor-pointer">
                         <span>SPMB</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <button type="button" onclick="openSpmbModal()" class="w-full text-left block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded cursor-pointer">Daftar Murid</button>
+                    <div class="submenu-glow-box absolute left-0 w-48 p-2 space-y-1.5 hidden group-hover:block z-50">
+                        <button type="button" onclick="openSpmbModal()" class="submenu-glow-link w-full text-left block px-3.5 py-2 text-xs cursor-pointer">Daftar Murid</button>
                     </div>
                 </div>
-                <a href="#berita" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Berita</a>
-                <a href="#kontak" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Kontak</a>
+                <a href="#berita" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center">Berita</a>
+                <a href="#kontak" class="nav-pill-item px-3.5 py-1.5 inline-flex items-center">Kontak</a>
             </nav>
             <!-- Kolom Pencarian Desktop -->
             <div class="hidden lg:flex items-center relative w-72">
@@ -311,16 +390,16 @@
                     id="global-search-input"
                     oninput="handleGlobalSearch(this.value)"
                     placeholder="Cari berita atau program..."
-                    class="w-full bg-slate-800/90 text-sm text-white placeholder-slate-400 px-4 py-2 rounded-xl border border-slate-700 focus:outline-none focus:border-emerald-500 transition"
+                    class="w-full bg-white/15 text-sm text-white placeholder-white/80 px-4 py-2 rounded-xl border border-white/30 focus:outline-none focus:border-white focus:bg-white/20 transition"
                 >
-                <button type="button" onclick="focusGlobalSearch()" aria-label="Cari" class="absolute right-3.5 text-slate-400 hover:text-white text-sm cursor-pointer">
+                <button type="button" onclick="focusGlobalSearch()" aria-label="Cari" class="absolute right-3.5 text-white/85 hover:text-white text-sm cursor-pointer">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
             <!-- Mobile Hamburger Button -->
             <div class="flex lg:hidden items-center justify-between w-full">
-                <span class="text-sm font-medium text-slate-300">Menu Utama</span>
-                <button type="button" onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 shadow focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition cursor-pointer">
+                <span class="text-sm font-medium text-white">Menu Utama</span>
+                <button type="button" onclick="toggleMobileMenu()" aria-label="Buka Menu" class="bg-white/15 hover:bg-white/25 text-white border border-white/30 shadow focus:outline-none w-10 h-10 rounded-xl flex items-center justify-center transition cursor-pointer">
                     <i id="hamburger-icon" class="fa-solid fa-bars text-base"></i>
                 </button>
             </div>
@@ -328,10 +407,10 @@
     </header>
     <!-- MOBILE MENU DRAWER -->
     <div id="mobile-menu-overlay" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[99] hidden transition-opacity opacity-0" onclick="toggleMobileMenu()"></div>
-    <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-xs bg-slate-900 text-white z-[100] shadow-2xl flex flex-col justify-between overflow-y-auto">
+    <div id="mobile-menu-drawer" class="fixed top-0 left-0 bottom-0 w-[80%] max-w-xs bg-gradient-to-b from-[#c96828] via-[#d97736] to-[#b85a1e] text-white z-[100] shadow-2xl border-r border-orange-200/35 flex flex-col justify-between transition-transform duration-300 -translate-x-full">
         <div>
             <!-- Header Drawer Profil -->
-            <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+            <div class="p-5 border-b border-white/20 flex items-center justify-between bg-black/15">
                 <div class="flex items-center space-x-3">
                     <img
                         id="drawer-logo-img"
@@ -342,16 +421,16 @@
                     >
                     <div>
                         <h3 class="font-bold text-xs uppercase tracking-wider text-white">Ponpes As'adiyah</h3>
-                        <p class="text-[10px] text-slate-400">Ereng-Ereng, Bantaeng</p>
+                        <p class="text-[10px] text-orange-100">Ereng-Ereng, Bantaeng</p>
                     </div>
                 </div>
-                <button type="button" onclick="toggleMobileMenu()" aria-label="Tutup Menu" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-red-500/20 text-slate-300 hover:text-red-400 flex items-center justify-center transition cursor-pointer">
+                <button type="button" onclick="toggleMobileMenu()" aria-label="Tutup Menu" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/25 flex items-center justify-center transition">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
             <!-- List Menu Navigasi Samping -->
             <div class="p-4 space-y-2 text-xs">
-                <a href="#beranda" onclick="toggleMobileMenu()" class="py-2.5 px-3 rounded-lg bg-emerald-900/50 text-white font-semibold flex items-center space-x-2">
+                <a href="#beranda" onclick="toggleMobileMenu()" class="py-2.5 px-3 rounded-xl bg-white/15 border border-white/20 text-white font-semibold flex items-center space-x-3">
                     <i class="fa-solid fa-house text-emerald-400 w-5"></i><span>Beranda</span>
                 </a>
                 <!-- Profil Dropdown Mobile -->
@@ -420,26 +499,26 @@
         </div>
         <!-- Footer Drawer & Tombol Admin -->
         <div class="p-4 border-t border-slate-800 bg-slate-950/40 space-y-3">
-            <button type="button" onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-slate-800 hover:bg-slate-700 py-2.5 rounded-xl font-semibold text-xs flex items-center justify-center space-x-2 border border-slate-700 text-white transition cursor-pointer">
+            <button type="button" onclick="openLoginModal(); toggleMobileMenu();" class="w-full bg-white/15 hover:bg-white/25 text-white border border-white/30 py-2.5 px-4 rounded-xl font-semibold flex items-center justify-center space-x-2 transition">
                 <i class="fa-solid fa-lock text-sky-400 text-xs"></i>
                 <span>Login Admin</span>
             </button>
         </div>
     </div>
     <!-- HERO SECTION (BANNER UTAMA PROPOSIONAL & ELEGAN) -->
-    <section id="beranda" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-xl relative aspect-[21/9] sm:aspect-[24/9] max-h-[480px] w-full flex items-center justify-center">
+    <section id="beranda" class="py-6 sm:py-8 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-orange-50 via-amber-50 to-orange-100 border-b border-orange-200/70" style="background: linear-gradient(180deg, #fffaf5 0%, #ffedd5 55%, #fed7aa 100%);">
+    <div class="max-w-7xl mx-auto bg-gradient-to-r from-[#d96b27] via-[#e87a2e] to-[#c85a17] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-orange-200/80 relative w-full sm:min-h-[400px] lg:min-h-[460px] flex items-center justify-center">
             <img
                 id="hero-banner-img"
                 src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80"
                 onerror="this.onerror=null;this.src='https://placehold.co/1600x600/0B2240/ffffff?text=Ponpes+As%27adiyah+Ereng-Ereng';"
                 alt="Banner Ponpes As'adiyah Ereng-Ereng"
-                class="w-full h-full object-cover"
+                class="w-full h-auto sm:h-full object-cover block"
             >
         </div>
     </section>
     <!-- DOKUMENTASI KEGIATAN MADRASAH (TAMPIL 4 KARTU + PANAH KIRI KANAN) -->
-    <section id="dokumentasi-section" class="py-12 bg-white border-t border-slate-200">
+   <section id="dokumentasi-section" class="py-12 bg-gradient-to-b from-[#fffaf5] via-[#fff3e6] to-[#ffedd5] border-t border-orange-200/70">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-7 text-center">
                 <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
