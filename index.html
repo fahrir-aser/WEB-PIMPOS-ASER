@@ -117,17 +117,15 @@
             <nav class="hidden lg:flex items-center space-x-1 font-medium text-sm tracking-normal">
                 <a href="#beranda" class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition">Beranda</a>
                 
-                <!-- Dropdown Profil -->
+                <!-- Dropdown Profil (Hanya Profil MA dan Profil MTs) -->
                 <div class="relative group py-1">
                     <button class="px-3.5 py-1.5 rounded-lg hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center space-x-1 focus:outline-none">
                         <span>Profil</span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
-                    <div class="absolute left-0 w-48 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
-                        <a href="#profil-kamad-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil Kamad MA</a>
-                        <a href="#profil-kamad-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil Kamad MTs</a>
-                        <a href="#visi-misi-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Visi Misi MA</a>
-                        <a href="#visi-misi-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Visi Misi MTs</a>
+                    <div class="absolute left-0 w-44 bg-slate-900 rounded-xl shadow-2xl py-2 hidden group-hover:block border border-slate-700 z-50">
+                        <a href="#profil-ma" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MA</a>
+                        <a href="#profil-mts" class="block px-4 py-2 text-xs text-white hover:bg-emerald-800 transition m-1 rounded">Profil MTs</a>
                     </div>
                 </div>
 
@@ -226,17 +224,15 @@
                     <i class="fa-solid fa-house text-emerald-400 w-5"></i><span>Beranda</span>
                 </a>
                 
-                <!-- Profil Dropdown Mobile -->
+                <!-- Profil Dropdown Mobile (Hanya Profil MA dan Profil MTs) -->
                 <div>
                     <button onclick="toggleMobileSub('mobile-sub-profil')" class="w-full flex justify-between items-center py-2.5 px-3 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition">
                         <span class="flex items-center space-x-2"><i class="fa-solid fa-school text-emerald-400 w-5"></i><span>Profil</span></span>
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </button>
                     <div id="mobile-sub-profil" class="hidden pl-7 space-y-1 mt-1 border-l border-slate-700 ml-3">
-                        <a href="#profil-kamad-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil Kamad MA</a>
-                        <a href="#profil-kamad-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil Kamad MTs</a>
-                        <a href="#visi-misi-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Visi Misi MA</a>
-                        <a href="#visi-misi-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Visi Misi MTs</a>
+                        <a href="#profil-ma" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MA</a>
+                        <a href="#profil-mts" onclick="toggleMobileMenu()" class="block py-1.5 px-2 text-slate-300 hover:text-yellow-300">Profil MTs</a>
                     </div>
                 </div>
 
