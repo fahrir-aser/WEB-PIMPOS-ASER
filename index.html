@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://api.myquran.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
@@ -21,7 +21,8 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                        modern: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
                     },
                     colors: {
                         primary: '#0ea5e9',
@@ -71,6 +72,88 @@
         }
         #mobile-menu-drawer.translate-x-0 {
             transform: translateX(0);
+        }
+
+        /* Gaya Dark Neon Khusus Modal Login Admin (Presisi & Modern) */
+        .neon-login-card {
+            font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+            background: linear-gradient(180deg, #222528 0%, #191c1f 52%, #141618 100%);
+            border: 1px solid rgba(44, 246, 255, 0.18);
+            box-shadow:
+                0 28px 65px rgba(0, 0, 0, 0.88),
+                0 0 28px rgba(44, 246, 255, 0.12);
+        }
+        .neon-top-beam {
+            background: radial-gradient(ellipse 75% 85% at 50% 0%, rgba(165, 243, 252, 0.22) 0%, rgba(44, 246, 255, 0.07) 48%, rgba(0, 0, 0, 0) 76%);
+        }
+        .neon-title-glow {
+            color: #2cf6ff;
+            letter-spacing: -0.02em;
+            text-shadow:
+                0 0 10px rgba(44, 246, 255, 0.72),
+                0 0 24px rgba(44, 246, 255, 0.32);
+        }
+        .neon-underline-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid #2cf6ff;
+            box-shadow: 0 3px 10px -3px rgba(44, 246, 255, 0.55);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .neon-underline-row:focus-within {
+            border-bottom-color: #72faff;
+            box-shadow: 0 4px 14px -2px rgba(44, 246, 255, 0.82);
+        }
+        .neon-password-input {
+            flex: 1 1 auto;
+            min-width: 0;
+            background: transparent;
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.35;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            border: 0;
+            outline: none;
+            padding: 0;
+            margin: 0;
+        }
+        .neon-password-input::placeholder {
+            color: rgba(165, 243, 252, 0.62);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        .neon-lock-end {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            color: #2cf6ff;
+            font-size: 0.9rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 6px rgba(44, 246, 255, 0.68));
+        }
+        .neon-submit-btn {
+            background: linear-gradient(90deg, #1ce8ff 0%, #2cf6ff 50%, #19e0ff 100%);
+            color: #052028;
+            box-shadow:
+                0 0 16px rgba(44, 246, 255, 0.5),
+                0 0 30px rgba(44, 246, 255, 0.22);
+            transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+        }
+        .neon-submit-btn:hover {
+            filter: brightness(1.05);
+            box-shadow:
+                0 0 22px rgba(44, 246, 255, 0.75),
+                0 0 38px rgba(44, 246, 255, 0.34);
+        }
+        .neon-submit-btn:active {
+            transform: scale(0.985);
         }
     </style>
 </head>
@@ -342,6 +425,42 @@
             </div>
         </div>
     </section>
+    <!-- BAR STATISTIK SISWA DI BAWAH DOKUMENTASI -->
+    <section id="statistik-siswa-bar" class="bg-slate-50 py-3.5 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-md shadow-sm border border-slate-200/80 overflow-hidden flex items-stretch">
+                <div class="bg-[#00682b] text-white font-bold text-xs sm:text-sm uppercase tracking-wider px-4 sm:px-6 py-3 flex items-center flex-shrink-0">
+                    STATISTIK SISWA
+                </div>
+                <div class="flex-1 flex items-center gap-x-5 sm:gap-x-7 px-4 sm:px-6 py-2.5 overflow-x-auto no-scrollbar whitespace-nowrap text-xs sm:text-sm">
+                    <div class="inline-flex items-baseline gap-2">
+                        <span class="text-[#15803d] font-medium">Total Siswa MA &amp; MTs</span>
+                        <span id="stat-total-siswa" class="text-slate-800 font-bold text-sm sm:text-[15px]">540</span>
+                    </div>
+                    <span class="text-slate-300 select-none" aria-hidden="true">&bull;</span>
+                    <div class="inline-flex items-baseline gap-2">
+                        <span class="text-[#15803d] font-medium">Siswa MA</span>
+                        <span id="stat-siswa-ma" class="text-slate-800 font-bold text-sm sm:text-[15px]">230</span>
+                    </div>
+                    <span class="text-slate-300 select-none" aria-hidden="true">&bull;</span>
+                    <div class="inline-flex items-baseline gap-2">
+                        <span class="text-[#15803d] font-medium">Siswa MTs</span>
+                        <span id="stat-siswa-mts" class="text-slate-800 font-bold text-sm sm:text-[15px]">310</span>
+                    </div>
+                    <span class="text-slate-300 select-none" aria-hidden="true">&bull;</span>
+                    <div class="inline-flex items-baseline gap-2">
+                        <span class="text-[#15803d] font-medium">Santri Putra</span>
+                        <span id="stat-santri-putra" class="text-slate-800 font-bold text-sm sm:text-[15px]">265</span>
+                    </div>
+                    <span class="text-slate-300 select-none" aria-hidden="true">&bull;</span>
+                    <div class="inline-flex items-baseline gap-2">
+                        <span class="text-[#15803d] font-medium">Santri Putri</span>
+                        <span id="stat-santri-putri" class="text-slate-800 font-bold text-sm sm:text-[15px]">275</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- SECTION BERITA TERKINI & TERPOPULER -->
     <section id="berita" class="py-16 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -572,20 +691,37 @@
             </div>
         </div>
     </div>
-    <!-- MODAL LOGIN ADMIN -->
-    <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
-            <button type="button" onclick="closeLoginModal()" aria-label="Tutup Login Admin" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 cursor-pointer">
-                <i class="fa-solid fa-xmark text-xl"></i>
+    <!-- MODAL LOGIN ADMIN (GAYA DARK NEON MODERN & PRESISI) -->
+    <div id="login-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="neon-login-card rounded-3xl max-w-sm w-full px-7 pt-9 pb-8 relative overflow-hidden">
+            <div class="neon-top-beam pointer-events-none absolute inset-x-0 top-0 h-44"></div>
+            <button type="button" onclick="closeLoginModal()" aria-label="Tutup Login Admin" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/5 hover:bg-cyan-400/15 text-cyan-200/80 hover:text-cyan-200 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark text-base"></i>
             </button>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">Login Akun Admin</h3>
-            <p class="text-xs text-slate-500 mb-6">Masukkan password admin untuk mengakses panel pengelolaan.</p>
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="mb-4">
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-2">Password Admin</label>
-                    <input type="password" id="admin-password" required class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-tourmBlue text-sm" placeholder="Masukkan password...">
+
+            <div class="relative z-10 text-center mb-7">
+                <h3 class="neon-title-glow text-[26px] font-extrabold leading-tight">Login Akun Admin</h3>
+                <p class="text-xs text-slate-300/85 mt-2 leading-relaxed font-normal">Masukkan password admin untuk mengakses panel pengelolaan.</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="relative z-10 space-y-6">
+                <div>
+                    <label for="admin-password" class="block text-[11px] font-bold text-[#2cf6ff] uppercase tracking-wider mb-2.5">Password Admin</label>
+                    <div class="neon-underline-row">
+                        <input
+                            type="password"
+                            id="admin-password"
+                            required
+                            class="neon-password-input"
+                            placeholder="Masukkan password..."
+                        >
+                        <span class="neon-lock-end" aria-hidden="true">
+                            <i class="fa-solid fa-lock"></i>
+                        </span>
+                    </div>
                 </div>
-                <button type="submit" class="w-full bg-tourmBlue hover:bg-secondary text-white font-semibold py-3 rounded-xl text-sm transition cursor-pointer">
+
+                <button type="submit" class="neon-submit-btn w-full font-bold py-3 rounded-full text-sm tracking-wide cursor-pointer">
                     Masuk ke Dashboard
                 </button>
             </form>
@@ -743,6 +879,13 @@
             status: "success",
             bannerUrl: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1920&q=80",
             logoUrl: "logoaser.png",
+            statistikSiswa: {
+                total: "540",
+                ma: "230",
+                mts: "310",
+                putra: "265",
+                putri: "275"
+            },
             dokumentasi: [
                 {
                     Judul: "Halaqah Tahfidz & Muraja'ah Pagi Santri",
@@ -881,6 +1024,28 @@
         let activeAdminToken = "";
         let dokSlideTimer = null;
         let dokSlideIndex = 0;
+
+        function renderStatistikSiswa(stats = {}) {
+            const defaults = FALLBACK_WEBSITE_DATA.statistikSiswa;
+            const total = stats.total ?? defaults.total;
+            const ma = stats.ma ?? defaults.ma;
+            const mts = stats.mts ?? defaults.mts;
+            const putra = stats.putra ?? defaults.putra;
+            const putri = stats.putri ?? defaults.putri;
+
+            const elTotal = document.getElementById("stat-total-siswa");
+            const elMa = document.getElementById("stat-siswa-ma");
+            const elMts = document.getElementById("stat-siswa-mts");
+            const elPutra = document.getElementById("stat-santri-putra");
+            const elPutri = document.getElementById("stat-santri-putri");
+
+            if (elTotal) elTotal.innerText = total;
+            if (elMa) elMa.innerText = ma;
+            if (elMts) elMts.innerText = mts;
+            if (elPutra) elPutra.innerText = putra;
+            if (elPutri) elPutri.innerText = putri;
+        }
+
         // Menampilkan modal notifikasi di tengah layar tanpa alert()
         function showCenterNotif(message, title = "Notifikasi", type = "info") {
             const modal = document.getElementById("custom-notif-modal");
@@ -1211,6 +1376,7 @@
         }
         function applyWebsiteData(data) {
             if (!data || data.status !== "success") return;
+            renderStatistikSiswa(data.statistikSiswa || {});
             renderDokumentasi(data.dokumentasi);
             globalNewsData = data.berita || [];
             renderBeritaLayout(globalNewsData);
@@ -1465,6 +1631,7 @@
                     status: "success",
                     bannerUrl: heroImg && heroImg.src ? heroImg.src : (base.bannerUrl || FALLBACK_WEBSITE_DATA.bannerUrl),
                     logoUrl: base.logoUrl || FALLBACK_WEBSITE_DATA.logoUrl,
+                    statistikSiswa: base.statistikSiswa || FALLBACK_WEBSITE_DATA.statistikSiswa,
                     dokumentasi: base.dokumentasi || FALLBACK_WEBSITE_DATA.dokumentasi,
                     berita: (globalNewsData && globalNewsData.length > 0) ? globalNewsData : (base.berita || FALLBACK_WEBSITE_DATA.berita),
                     programUnggulan: {
