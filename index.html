@@ -44,6 +44,11 @@
         .animate-dok-scroll:hover {
             animation-play-state: paused;
         }
+        #dokumentasi-track {
+            display: flex;
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform;
+        }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -317,17 +322,30 @@
         </div>
     </section>
 
-    <!-- DOKUMENTASI KEGIATAN MADRASAH -->
-    <section class="py-10 bg-white overflow-hidden border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 text-center">
-            <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
-            <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
-        </div>
-        <div class="w-full overflow-hidden relative py-2">
-            <div id="dokumentasi-container" class="animate-dok-scroll flex gap-6 px-3">
-                <div class="text-center py-6 text-slate-400 w-full text-sm">
-                    <i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Memuat dokumentasi kegiatan...
+    <!-- DOKUMENTASI KEGIATAN MADRASAH (TAMPIL 4 KARTU + PANAH KIRI KANAN) -->
+    <section id="dokumentasi-section" class="py-12 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-7 text-center">
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-1">Dokumentasi Kegiatan Madrasah</h2>
+                <p class="text-slate-600 text-xs sm:text-sm max-w-xl mx-auto">Potret aktivitas harian, kegiatan keagamaan, dan momen penting santri di lingkungan pondok.</p>
+            </div>
+
+            <div class="relative">
+                <button id="dok-prev-btn" type="button" onclick="stepDokumentasi(-1)" aria-label="Geser Dokumentasi ke Kiri" class="hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none">
+                    <i class="fa-solid fa-chevron-left text-sm"></i>
+                </button>
+
+                <div id="dokumentasi-viewport" class="overflow-hidden py-2">
+                    <div id="dokumentasi-track" class="gap-5">
+                        <div class="text-center py-6 text-slate-400 w-full text-sm">
+                            <i class="fa-solid fa-spinner fa-spin text-xl mr-2"></i> Memuat dokumentasi kegiatan...
+                        </div>
+                    </div>
                 </div>
+
+                <button id="dok-next-btn" type="button" onclick="stepDokumentasi(1)" aria-label="Geser Dokumentasi ke Kanan" class="hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white/95 hover:bg-emerald-700 text-slate-800 hover:text-white border border-slate-200 shadow-lg flex items-center justify-center transition focus:outline-none">
+                    <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -642,6 +660,8 @@
 
         let globalNewsData = [];
         let activeAdminToken = "";
+        let dokSlideTimer = null;
+        let dokSlideIndex = 0;
 
         function openPdfModal(jenjang) {
             const docInfo = PROFIL_PDF_URLS[jenjang];
@@ -760,6 +780,10 @@
         window.addEventListener('DOMContentLoaded', () => {
             fetchData();
             fetchJadwalSholat();
+            window.addEventListener('resize', () => {
+                layoutDokumentasiCards();
+                updateDokArrowsVisibility();
+            });
         });
 
         function fetchJadwalSholat() {
@@ -860,24 +884,127 @@
                 .catch(err => console.error('Gagal memuat data:', err));
         }
 
-        function renderDokumentasi(items) {
-            const container = document.getElementById('dokumentasi-container');
-            if(!items || items.length === 0) {
-                container.innerHTML = '<div class="w-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
+        function getVisibleDokCount() {
+            if (window.innerWidth >= 1024) return 4;
+            if (window.innerWidth >= 640) return 2;
+            return 1;
+        }
+
+        function getTotalDokCards() {
+            const track = document.getElementById('dokumentasi-track');
+            return track ? track.querySelectorAll('.dok-card').length : 0;
+        }
+
+        function updateDokArrowsVisibility() {
+            const prevBtn = document.getElementById('dok-prev-btn');
+            const nextBtn = document.getElementById('dok-next-btn');
+            if (!prevBtn || !nextBtn) return;
+
+            const total = getTotalDokCards();
+            const visible = getVisibleDokCount();
+            if (total > visible) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+            }
+        }
+
+        function layoutDokumentasiCards() {
+            const viewport = document.getElementById('dokumentasi-viewport');
+            const track = document.getElementById('dokumentasi-track');
+            if (!viewport || !track) return;
+
+            const cards = Array.from(track.querySelectorAll('.dok-card'));
+            if (cards.length === 0) return;
+
+            const visibleCount = getVisibleDokCount();
+            const gapPx = 20;
+            const viewportWidth = viewport.clientWidth;
+            const cardWidth = (viewportWidth - gapPx * (visibleCount - 1)) / visibleCount;
+
+            track.style.gap = gapPx + 'px';
+            cards.forEach(card => {
+                card.style.width = cardWidth + 'px';
+                card.style.flexShrink = '0';
+            });
+
+            const maxIndex = Math.max(0, cards.length - visibleCount);
+            if (dokSlideIndex > maxIndex) dokSlideIndex = 0;
+            const stepOffset = dokSlideIndex * (cardWidth + gapPx);
+            track.style.transform = `translateX(-${stepOffset}px)`;
+        }
+
+        function stepDokumentasi(direction) {
+            const totalItems = getTotalDokCards();
+            const visibleCount = getVisibleDokCount();
+            if (totalItems <= visibleCount) return;
+
+            const maxIndex = Math.max(0, totalItems - visibleCount);
+            dokSlideIndex += direction;
+            if (dokSlideIndex > maxIndex) {
+                dokSlideIndex = 0;
+            } else if (dokSlideIndex < 0) {
+                dokSlideIndex = maxIndex;
+            }
+            layoutDokumentasiCards();
+        }
+
+        function startDokumentasiAutoSlide(totalItems) {
+            if (dokSlideTimer) clearInterval(dokSlideTimer);
+            const visibleCount = getVisibleDokCount();
+            if (totalItems <= visibleCount) {
+                dokSlideIndex = 0;
+                layoutDokumentasiCards();
                 return;
             }
-            const htmlCards = items.map(item => `
-                <div class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 flex-shrink-0 w-72 group">
+
+            dokSlideTimer = setInterval(() => {
+                stepDokumentasi(1);
+            }, 3500);
+        }
+
+        function renderDokumentasi(items) {
+            const track = document.getElementById('dokumentasi-track');
+            const section = document.getElementById('dokumentasi-section');
+            if (!track) return;
+
+            if (dokSlideTimer) clearInterval(dokSlideTimer);
+            dokSlideIndex = 0;
+
+            if(!items || items.length === 0) {
+                track.style.transform = 'translateX(0px)';
+                track.innerHTML = '<div class="w-full text-center py-10 text-slate-400">Belum ada foto dokumentasi yang diunggah.</div>';
+                updateDokArrowsVisibility();
+                return;
+            }
+
+            track.innerHTML = items.map(item => `
+                <div class="dok-card bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-slate-100 group">
                     <div class="h-48 overflow-hidden relative bg-slate-100">
                         <img src="${optimizeDriveImage(item.URL_Foto, 600)}" alt="${item.Judul}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
-                    <div class="p-5">
+                    <div class="p-4">
                         <span class="text-xs text-tourmBlue font-semibold">${item.Tanggal}</span>
-                        <h3 class="font-bold text-slate-900 mt-1 text-base line-clamp-1">${item.Judul}</h3>
+                        <h3 class="font-bold text-slate-900 mt-1 text-sm sm:text-base line-clamp-1">${item.Judul}</h3>
                     </div>
                 </div>
             `).join('');
-            container.innerHTML = htmlCards + htmlCards;
+
+            layoutDokumentasiCards();
+            updateDokArrowsVisibility();
+            startDokumentasiAutoSlide(items.length);
+
+            if (section && !section.dataset.hoverBound) {
+                section.addEventListener('mouseenter', () => {
+                    if (dokSlideTimer) clearInterval(dokSlideTimer);
+                });
+                section.addEventListener('mouseleave', () => {
+                    startDokumentasiAutoSlide(getTotalDokCards());
+                });
+                section.dataset.hoverBound = 'true';
+            }
         }
 
         function renderBeritaLayout(items) {
